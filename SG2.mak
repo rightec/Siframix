@@ -5,8 +5,8 @@
 #=======================================================================
 
 # Target definition:
-TGTROM = 1		# flash rom compil.
-#TGTROM = 				# simulator compil.
+#TGTROM = 1		# flash rom compil.
+TGTROM = 				# simulator compil.
 
 # Standard defines:
 ##################
@@ -184,8 +184,8 @@ ifdef TGTROM
 
 $(Bin)/SG2.OUT: $(EXOBJS) SG2.LKR SG2.MAK
 	$(LK) SG2.LKR SG2.MAP
-	objcopy -v -I elf32-v850 -O binary -x SG2.OUR M3100_v3.XX.BIN
-	objcopy -v -I elf32-v850 -O srec -x SG2.OUR M3100_MC.REC
+#	$(LD) $(LDOPT)
+	objcopy -v -I elf32-v850 -O binary -x SG2.OUR M3300_v4.XX.BIN
 	size --target=elf32-v850 SG2.OUR
 	
 else
@@ -276,5 +276,3 @@ $(oDir)/NVRDRV.o : NVRDRV.CPP global.h NVRDRV.h
 $(oDir)/LEDS_PANEL.o : LEDS_PANEL.CPP global.h LEDS_PANEL.h
 	$(CC)  $(*F)
 	
-#$(oDir)/CHANNELS.o : CHANNELS.CPP global.h CHANNELS.h
-#	$(CC)  $(*F)	

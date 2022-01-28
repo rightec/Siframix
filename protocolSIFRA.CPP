@@ -14,20 +14,18 @@
 
 #include "protocolSIFRA.h"
 
+void (*fp)(void);
 STRUCTSTARTCMD StartCmd;
-max_weight_error_rst_t g_rstMaxWeight;
-restart_control_cmd_t g_restartControlCmd;
-structScalesPhaseCmd_t g_scalesPhaseCmd;
-structScalesNotCalibCmd_t g_scalesNotCalibCmd;
 STRUCTSTATUSCMD StatusCmd;
-STRUCTDEBUGCMD DebugCmd;
+structStatusDebug_t StatusDebug;
+structWeightCmd_t WeightCmd;
+structRestartFormulaCmd_t g_restartFormulaCmd;
+structScalesPhaseCmd_t g_scalesPhaseCmd;
 LINES_Status Via[ NUM_MAX_LINE];
-machineStatus_t g_stateMachine;
-BK_struct bk;
-FP_STRUCT g_encStruct[NUM_MAX_LINE];
-Restart_t g_restart;
+structMachineState_t g_stateMachine;
 
-word g_adc_real_value[ _MAX_LOAD_CHAN_ ];
+BK_struct bk;
+FP_STRUCT structEnc;
 
 extern const char sAppName[];
 extern const char sAppRevision[];
@@ -38,7 +36,7 @@ extern const int sAppNameLength;
 extern const int sAppRevisionLength;
 extern const int sAppDateLength;
 extern const int sHwVersionLength;
-extern ENCODER_Motor_Status	 MotorStatus[];
+
 extern ChannelsBackupParam Chan[];
 
 //---------------------------------------------------------------------------------------
@@ -51,11 +49,14 @@ SIFRAProtocol::SIFRAProtocol(UARTDevice device, int dim) :
 	stdUartProtocolAbstraction::setReceiverState(stdUart_waitDeviceID);
 	stdUartProtocolAbstraction::setLastDataReceivedBuffer(dim);
 	rstBytesReceived();
-	setNumOfEnabledLines(0);	// azzeri numero delle vie abilitate
 	m_show_adcvalue = False;
+	m_show_velpompe = False;
 	m_lastRemoteNodeID = 0;
 	m_localNodeID = 0;	
 	m_lastHwError = SIFRAUart_Hw_NoError;
+
+	m_numStopPkts = 0;
+	m_numStartPkts = 0;
 	
 	stdUartProtocolAbstraction::SetDataAnalyseCallBack(&SIFRADataAnalyse);
 
@@ -69,7 +70,6 @@ SIFRAProtocol::~SIFRAProtocol()
 
 bool SIFRAProtocol::SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstraction *protocol)
 {
-
 	unsigned char data;
 	int error;
 	bool hwErrorRecognised;
@@ -123,9 +123,9 @@ bool SIFRAProtocol::SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstra
 
 	switch(protocol->getReceiverState())
 	{
-		// tutti i moduli acquisiscono il messaggio e solo alla fine possono decidere se è destinato a loro e quindi da analizzare oppure se è da scartare			
+// tutti i moduli acquisiscono il messaggio e solo alla fine, possono decidere se è destinato a loro e quindi da analizzare oppure se è da scartare			
 		case stdUart_waitDeviceID:	// parto da qui
-			if((data == M3100) || (data == STOP_ALL))		// IDENTIFICATIVO MODULO
+			if((data == M3300) || (data == STOP_ALL))		// IDENTIFICATIVO MODULO
 			{
 				protocol->stopTxTimeoutTimer();
 				protocol->setTimeoutRx(500);
@@ -158,7 +158,7 @@ bool SIFRAProtocol::SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstra
 				}
 				else
 				{
-					protocol->setError(stdUart_UnknownOpcode, True);
+					protocol->setError(stdUart_UnknowOpcode, True);
 					protocol->stopRxTimeoutTimer();			
 					protocol->setReceiverState(stdUart_waitDeviceID);
 					PinEnRS485_DE = 0;
@@ -167,7 +167,7 @@ bool SIFRAProtocol::SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstra
 				}
 			break;
 
-		case stdUart_receivingData:	
+		case stdUart_receivingData:
 			// m_numBytesRecieved è stato incrementato all'uscita del giro precedenete, qui vale almeno 1
 			if (!protocol->addDataToReceiveBuffer(&data, protocol->getNumBytesReceived() -1 , 1))
 			{
@@ -186,28 +186,28 @@ bool SIFRAProtocol::SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstra
 		case stdUart_waitChecksum:
 			
 			protocol->stopRxTimeoutTimer();
-			((SIFRAProtocol*)protocol)->setLastRemoteNodeID(lastRemoteID);
+			((SIFRAProtocol*)protocol)->setLastRemoteNodeID(lastRemoteID);//protocol->setLastRemoteNodeID(lastRemoteID);
 
 			if((((SIFRAProtocol*)protocol)->getLastRemoteNodeID() == ((SIFRAProtocol*)protocol)->getLocalNodeID()) ||
 				(((SIFRAProtocol*)protocol)->getLastRemoteNodeID() == STOP_ALL))
 			{
 				protocol->setNumDataReceived(protocol->getPacketLength());
-				if(((SIFRAProtocol*)protocol)->checksum(data, (byte)opCode, (byte)lastRemoteID))		// devo sommare anche il primo char, lastRemoteID
+				if(((SIFRAProtocol*)protocol)->checksum(data, (byte)opCode, (byte)lastRemoteID))	// devo sommare anche il primo char, lastRemoteID
 				{
 					protocol->setReceivedOpCode(opCode);
 					protocol->newPacketReceived();
-					StatusCmd.commPacketsRx = protocol->getPacketsReceived();
+					StatusCmd.SIFRAComPacketsRx = protocol->getPacketsReceived();
 				}
 				else
 				{
 					protocol->setError(stdUart_ChecksumError, True);
+					protocol->rstBytesReceived();
 					protocol->setReceiverState(stdUart_waitDeviceID);
 					PinEnRS485_DE = 0;
-					protocol->rstBytesReceived();
 					return False;
 				}
 			}
-			else		// non è messaggio per me, resetta buffer, ignora opcode e ritorna allo stato iniziale
+			else		// non è messaggio per me, resetta buffer, ignora opcode e ritorna alo stato iniziale
 			{
 				PinEnRS485_DE = 0;	// libera la rete per la risposta del modulo giusto
 				opCode = 0;
@@ -220,34 +220,36 @@ bool SIFRAProtocol::SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstra
 			break;
 
 		case stdUart_waitStx:
-		case stdUart_waitNumPacketTransmit:
-		case stdUart_waitOpCode2:		
+		case stdUart_waitNumPacketTransmit:	
+		case stdUart_waitOpCode2:					
 		case stdUart_waitDataLength:
 		case stdUart_waitEtx:
 		default:
-			protocol->setError(stdUart_protocolStateUnknown, True);
+			protocol->setError(stdUart_stateProtocolUnknown, True);
 			break;
 	}
 	
 	protocol->newByteReceived();
 	
 	return False;
+	
 }
 
 
 void SIFRAProtocol::Manager()
 {
-	int error, opCode;
+	int error;
+	int opCode;
 
-	stdUartProtocolAbstraction::Manager();	// analisi dei dati ricevuti e verifica dei flag di errore di overflow
+	stdUartProtocolAbstraction::Manager();			// analisi dei dati ricevuti e verifica dei flag di errore di overflow
 
 	//---- Remapping stdUartProtocolAbstraction error ----
-	error = stdUartProtocolAbstraction::popError();			// se presente, preleva l'errore nella fifo degli errori
-	while (error != stdUart_NoError)		// verifica TUTTI gli eventuali errori presenti nella fifo degli errori
+	error = stdUartProtocolAbstraction::popError();		// se presente, preleva l'errore nella fifo degli errori
+	while (error != stdUart_NoError)					// verifica TUTTI gli eventuali errori presenti nella fifo degli errori
 	{
 		switch(error)
 		{
-			//  errori hardware
+			// errori hardware
 			case stdUart_Hw_ReceptionError:
 				m_lastHwError |=  SIFRAUart_Hw_ReceptionError;
 				sendMsg(SIFRAMsg_HwError);
@@ -272,12 +274,12 @@ void SIFRAProtocol::Manager()
 				m_lastHwError |= SIFRAUart_Hw_ErrorUnknown;
 				sendMsg(SIFRAMsg_HwError);
 				break;
-			//  errori di protocollo
-			case stdUart_UnknownOpcode:
+			// errori di protocollo
+			case stdUart_UnknowOpcode:
 				sendMsg(SIFRAMsg_opcodeUnknown);
 				break;
-			case stdUart_protocolStateUnknown:
-				sendMsg(SIFRAMsg_protocolStateUnknown);
+			case stdUart_stateProtocolUnknown:
+				sendMsg(SIFRAMsg_stateProtocolUnknown);
 				break;
 			case stdUart_TimeOutErrorRx:
 				sendMsg(SIFRAMsg_timoutRx);
@@ -297,9 +299,9 @@ void SIFRAProtocol::Manager()
 			case stdUart_DataReceivedBufferOverflow:
 				sendMsg(SIFRAMsg_dataReceivedBufferOverflow);
 				break;
-			//  errori sconosciuti
+			// errori sconosciuti
 			default:
-				sendMsg(SIFRAMsg_unknownError);
+				sendMsg(SIFRAMsg_unknownError);	
 				break;
 
 		}
@@ -307,127 +309,94 @@ void SIFRAProtocol::Manager()
 	}
 	
 	//------- Checking for packets receiving ----------------
-	if(stdUartProtocolAbstraction::popPacketReceived(opCode))	// se c'è un comando in coda, lo rispedicse per conferma
+	/**
+	* Identifico solamente i comandi previsti per il modulo M3300, quelli per gli altri moduli vengono filtrati dalla DataAnalyse richiamata nella Manager della classe protocolStdUart
+	*/
+	if(stdUartProtocolAbstraction::popPacketReceived(opCode))	// se c'è un comando in coda, lo rispedisce per conferma
 	{
 		switch (opCode)
 		{
-			case SIFRA_SET_STOP_ALL:			// 0x00
-				SIFRA_set_Stop_All();			// handle comando stop generale			
+			case SIFRA_SET_STOP_ALL:
+				SIFRA_set_Stop_All();		// handle comando stop generale
 				break;
 			case SIFRA_M3000_STOP:
-				SIFRA_set_Stop_All();
+				SIFRA_set_Stop_All();		// handle comando stop generale
 				last_opCode = opCode;
 				sendAcknowledge();
 				break;
-			case SIFRA_GET_STATUS_M3100:
-				SIFRA_getStatusCmdDecode();	// status
+			case SIFRA_GET_STATUS_M3300:
+				SIFRA_getStatusCmdDecode();		// status
 				break;
-			case SIFRA_NEW_LINES_M3100:
-				SIFRA_setLineToIdentify();
+			case SIFRA_SET_START_M3300:
+				SIFRA_setStart();
+				SIFRA_decodeStartCmd(stdUartProtocolAbstraction::m_lastDataReceived);
+				break;
+			case SIFRA_GET_DEBUG_VIA_M3300:
+				SIFRA_getDebugViaCmdDecode();
+				break;
+			case SIFRA_GET_DEBUG_START_M3300:
+				SIFRA_getDebugStartCmdDecode();
+				break;
+			case SIFRA_GET_DEBUG_STATUS_M3300:
+				SIFRA_getDebugStatusCmdDecode();
+				break;
+			case SIFRA_GET_DEBUG_BACKUP_RAM_M3300:
+				SIFRA_getDebugRamCmdDecode();
+				break;
+			case SIFRA_SET_WEIGHT_SENSIBILITY_M3300:
+				SIFRA_setWeightSensibility();
+				last_opCode = opCode;			// per la risposta
+				SIFRA_decodeWeightSensibilityCmd(stdUartProtocolAbstraction::m_lastDataReceived);
+				break;
+			case SIFRA_RESTART_FORMULA_M3300:
+				SIFRA_restartFormula();
+				last_opCode = opCode;			// per la risposta
+				SIFRA_decodeRestartFormulaCmd(stdUartProtocolAbstraction::m_lastDataReceived);
+				break;
+			case SIFRA_ERROR_RESTART_CONTROL:
+				SIFRA_restartWeightCoverControl();
 				last_opCode = opCode;
 				break;
-			case SIFRA_RESET_MAX_WEIGHT:
-				SIFRA_decodeResetMaxWeight(stdUartProtocolAbstraction::m_lastDataReceived);
-				SIFRA_resetMaxWeightError();
-				last_opCode = opCode;
+			case SIFRA_GET_INFO_M3300:
+				SIFRA_getInfoCmdDecode();	
 				break;
-			case SIFRA_RESTART_CONTROL:
-				SIFRA_decodeRestartControlCmd(stdUartProtocolAbstraction::m_lastDataReceived);
-				SIFRA_restartControl();
-				last_opCode = opCode;
-				break;
-			case SIFRA_GET_SCALES_STATE_M3100:
+			case SIFRA_GET_SCALES_STATE_M3300:
 				SIFRA_setScalesPhase();
 				last_opCode = opCode;
 				SIFRA_decodeScalesPhaseCmd(stdUartProtocolAbstraction::m_lastDataReceived);
 				break;
-			case SIFRA_GET_CELLS_NOT_CALIB:
+			case SIFRA_GET_SCALES_NOT_CALIB_M3300:
 				SIFRA_setScalesNotCalib();
 				last_opCode = opCode;
-				SIFRA_decodeScalesNotCalibCmd(stdUartProtocolAbstraction::m_lastDataReceived);
 				break;
-			case SIFRA_SET_START_M3100:
-				SIFRA_setStart();
-				SIFRA_decodeStartCmd( stdUartProtocolAbstraction::m_lastDataReceived);
-				break;
-			case SIFRA_GET_INFO_M3100:
-				SIFRA_getInfoCmdDecode();		// ora non usato: versioni hw e fw	
-				break;
-			case SIFRA_GET_DEBUG_M3100:
-				SIFRA_getDebugCmdDecode();	
-				break;
-			case SIFRA_GET_DEBUG_VIE_1_3_M3100:
-				SIFRA_getDebugVie_1_3_CmdDecode();	
-				break;
-			case SIFRA_GET_DEBUG_VIE_4_5_M3100:
-				SIFRA_getDebugVie_4_5_CmdDecode();	
-				break;
-			case SIFRA_GET_DEBUG_START_M3100:
-				SIFRA_getDebugStartCmdDecode();	
-				break;
-			case SIFRA_GET_DEBUG_RAM_M3100:
-				SIFRA_getDebugRamCmdDecode();
-				break;
-            		case SIFRA_ZERO_CELLS_M3100:
-		 		SIFRA_zeroLoadCmdDecode();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SETZERO_CELL1:
-				SIFRA_setZeroCell1();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SETZERO_CELL2:
-				SIFRA_setZeroCell2();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SETZERO_CELL3:
-				SIFRA_setZeroCell3();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SETZERO_CELL4:
-				SIFRA_setZeroCell4();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SETZERO_CELL5:
-				SIFRA_setZeroCell5();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SET_CAL_CELL1:
-				SIFRA_setGainCell1();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SET_CAL_CELL2:
-				SIFRA_setGainCell2();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SET_CAL_CELL3:
-				SIFRA_setGainCell3();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SET_CAL_CELL4:
-				SIFRA_setGainCell4();
-				last_opCode = opCode;	// per la risposta
-				break;
-			case SIFRA_SET_CAL_CELL5:
-				SIFRA_setGainCell5();
-				last_opCode = opCode;	// per la risposta
+			case SIFRA_SETZERO_VERIFICATION:
+				SIFRA_setZeroVerification();
+				last_opCode = opCode;			// per la risposta
 				break;
 			case SIFRA_RESET_CALIB_PARAMS:
-				last_opCode = opCode;	// per la risposta
+				last_opCode = opCode;			// per la risposta
 				SIFRA_setResetCalib();
+				break;
+			case SIFRA_SETZERO_CELL8_CELL15:
+				SIFRA_setZeroCell8_Cell15();
+				last_opCode = opCode;	// per la risposta
+				break;
+			case SIFRA_SET_CAL_CELL8:
+				SIFRA_setGainCell8();
+				last_opCode = opCode;	// per la risposta
+				break;
+			case SIFRA_SET_CAL_CELL15:
+				SIFRA_setGainCell15();
+				last_opCode = opCode;	// per la risposta
 				break;
 			case SIFRA_JUMP_TO_LOADER:
 				SIFRA_setJumpToLoader();
 				last_opCode = opCode;	// per la risposta
 				break;
-			case E_SIFRA_LOOP_CMD:
-				SIFRA_setLoopApplication();
-				last_opCode = opCode;	// per la risposta
-				break;
 			default:
 				StatusCmd.status = STATO_ERRORE;
-				StatusCmd.errors = ERR_SYSTEM;
-				StatusCmd.log_error = ERR_CASE_OPCODE_UNKNOWN;
+				StatusCmd.statusChan[_ADC1_] = ERR_GENERIC;
+				StatusCmd.error_monitor = ERR_OPCODE_UNKNOWN;
 				break;
 		}
 	}
@@ -435,8 +404,8 @@ void SIFRAProtocol::Manager()
 
 int SIFRAProtocol::SIFRA_decodeStartCmd( byte *cmd_byte_buffer)
 {
-	byte i = 0;
-	byte num_line;
+short int i = 0;
+short int num_line;
 
 	StartCmd.function = ( 0x00 | cmd_byte_buffer[ i++ ]) << 8;	// MSB peso via 1
 	StartCmd.function |= cmd_byte_buffer[ i++ ];		// POS_FUNC_IN_CMD = 1
@@ -444,37 +413,39 @@ int SIFRAProtocol::SIFRA_decodeStartCmd( byte *cmd_byte_buffer)
 	StartCmd.support = cmd_byte_buffer[ i++ ];		// POS_SUPP_IN_CMD = 2
 	for( num_line = 0; num_line < NUM_MAX_LINE; num_line++)
 	{
+		#ifdef _RICEVI_PESI_SPECIFICI
+			StartCmd.peso_spec[ num_line ] = ( 0x00 | cmd_byte_buffer[ i++ ]) << 8;	// MSB peso via 1
+			StartCmd.peso_spec[ num_line ] |= cmd_byte_buffer[ i++ ];	// LSB peso via 1
+		#else
+			StartCmd.peso_spec[ num_line ] = 1.000;
+		#endif
+	}
+	for( num_line = 0; num_line < NUM_MAX_LINE; num_line++)
+	{
 		StartCmd.peso_linea[ num_line ] = ( 0x00 | cmd_byte_buffer[ i++ ]) << 8;	// MSB peso via 1
 		StartCmd.peso_linea[ num_line ] |= cmd_byte_buffer[ i++ ];	// LSB peso via 1
 	}
 	for( num_line = 0; num_line < NUM_MAX_LINE; num_line++)
 	{
-		StartCmd.tara_linea[ num_line ] = ( 0x00 | cmd_byte_buffer[ i++ ]) << 8;	// MSB tara via 1
-		StartCmd.tara_linea[ num_line ] |= cmd_byte_buffer[ i++ ];	// LSB tara via 1
-	}
-	for( num_line = 0; num_line < NUM_MAX_LINE; num_line++)
-	{
-		StartCmd.peso_spec[ num_line ] = ( 0x00 | cmd_byte_buffer[ i++ ]) << 8;	// MSB peso specifico via 1
-		StartCmd.peso_spec[ num_line ] |= cmd_byte_buffer[ i++ ];	// LSB peso specifico via 1
+		StartCmd.cap_linea[ num_line ] = ( 0x00 | cmd_byte_buffer[ i++ ]) << 8;	// MSB tara via 1
+		StartCmd.cap_linea[ num_line ] |= cmd_byte_buffer[ i++ ];	// LSB tara via 1
 	}
 	return 1;
 }
 
-int SIFRAProtocol::SIFRA_decodeResetMaxWeight( byte *cmd_byte_buffer)
+int SIFRAProtocol::SIFRA_decodeWeightSensibilityCmd( byte *cmd_byte_buffer)
 {
 	byte i = 0;
 
-	g_rstMaxWeight.lines = cmd_byte_buffer[i];
-
+	WeightCmd.sensibility = cmd_byte_buffer[i];
 	return 1;
 }
 
-int SIFRAProtocol::SIFRA_decodeRestartControlCmd( byte *cmd_byte_buffer)
+int SIFRAProtocol::SIFRA_decodeRestartFormulaCmd( byte *cmd_byte_buffer)
 {
 	byte i = 0;
 
-	g_restartControlCmd.type_of_formula = cmd_byte_buffer[i];
-
+	g_restartFormulaCmd.type_of_formula = cmd_byte_buffer[i];
 	return 1;
 }
 
@@ -489,31 +460,28 @@ int SIFRAProtocol::SIFRA_decodeScalesPhaseCmd( byte *cmd_byte_buffer)
 	return 1;
 }
 
-int SIFRAProtocol::SIFRA_decodeScalesNotCalibCmd( byte *cmd_byte_buffer)
-{
-	byte i = 0;
-
-	g_scalesNotCalibCmd.scales_not_calib = cmd_byte_buffer[i];
-	
-	return 1;
-}
-
 /**
-Sends answer to start command, with request parameters
+* Sends answer to start command, with request parameters
 */
 int SIFRAProtocol::sendSIFRAStart()
 {
 	byte packet[_PKT_START_LENGTH];
 	byte i = 0;
 	byte num_via = 0;
-	
-	packet[i++] = M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_SET_START_M3100;
+
+	packet[i++] = M3300;
+	packet[i++] = SIFRA_SET_START_M3300;	// uguale anche per M3200
 	
 	packet[i++] = (StartCmd.function & 0xFF00) >> 8;	// funzione impostata
 	packet[i++] = (StartCmd.function & 0x00FF);
-	packet[i++] = 0x00;	// byte nullo previsto dal protocollo
+	packet[i++] = 0x00;					// byte nullo previsto dal protocollo
 	packet[i++] = StartCmd.support;	// 01
+
+	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
+	{
+		packet[i++] = (StartCmd.peso_spec[ num_via] & 0xFF00) >> 8;
+		packet[i++] = (StartCmd.peso_spec[ num_via] & 0x00FF);
+	}
 	
 	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
 	{
@@ -523,17 +491,11 @@ int SIFRAProtocol::sendSIFRAStart()
 
 	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
 	{
-		packet[i++] = (StartCmd.tara_linea[ num_via] & 0xFF00) >> 8;
-		packet[i++] = (StartCmd.tara_linea[ num_via] & 0x00FF);
+		packet[i++] = (StartCmd.cap_linea[ num_via] & 0xFF00) >> 8;
+		packet[i++] = (StartCmd.cap_linea[ num_via] & 0x00FF);
 	}
 	
-	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
-	{
-		packet[i++] = (StartCmd.peso_spec[ num_via] & 0xFF00) >> 8;
-		packet[i++] = (StartCmd.peso_spec[ num_via] & 0x00FF);
-	}
-	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
 	PinEnRS485_DE = 1;
 	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);
@@ -548,75 +510,55 @@ int SIFRAProtocol::sendSIFRAStatus()
 	byte i = 0;
 	byte num_via = 0;
 	
-	packet[i++] = M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_GET_STATUS_M3100;
-
-	packet[i++] = g_restart.tipo_linea;
-	packet[i++] = StatusCmd.status;	// STATO		
-	// indicazione tipo di errore sulle vie: 5 per M3100
-	for( num_via = 0; num_via < _MAX_LOAD_CHAN_; num_via++)	// errore su tutte le vie
-	{
-		packet[i++] = (byte)((StatusCmd.statusChan[num_via] & 0xFF00) >> 8);	
-		packet[i++] = (byte)(StatusCmd.statusChan[num_via] & 0x00FF);		
-	}
+	packet[i++] = M3300;
+	packet[i++] = SIFRA_GET_STATUS_M3300; 
 	
-	// indicazione peso erogato per ogni via: 5 per M3100
-	if(m_show_adcvalue == True)	// debug adc celle
+	packet[i++] = StatusCmd.tot_enabled_lines;
+	packet[i++] = StatusCmd.status;
+	for(num_via = 0; num_via < (_MAX_LOAD_CHAN_ ); num_via++)				// errore su tutte le vie
 	{
-		// nei campi peso erogato vengono mostrati i valori di ADC letti sulle 5 vie
-		for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)	// peso erogato di tutte le vie
-		{	
-			packet[i++] = (byte)((g_adc_real_value[num_via] & 0xFF00) >> 8);
-			packet[i++] = (byte)((g_adc_real_value[num_via] & 0x00FF));
-		}
+		packet[i++] = (StatusCmd.statusChan[num_via] & 0xFF00) >> 8;	
+		packet[i++] = (StatusCmd.statusChan[num_via] & 0x00FF);
 	}
-	else 
-	{	
-		for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)	// peso erogato di tutte le vie
-		{	// invece che 20g sommo 1kg
-			packet[i++] = (byte)(((Via[num_via].peso_erogato + 200) & 0xFF00) >> 8);
-			packet[i++] = (byte)(((Via[num_via].peso_erogato + 200) & 0x00FF));
-		}
-	}
-	// indicazione del peso attuale: uno per ogni cella nell'M3100
-	for( num_via = 0; num_via < (NUM_MAX_LINE); num_via++)	// peso erogato di tutte le vie
+	packet[i++] = (StatusCmd.next_line & 0xFF00) >> 8;
+	packet[i++] = (StatusCmd.next_line & 0x00FF);
+	for(num_via = 0; num_via < NUM_MAX_LINE; num_via++)	// peso erogato di tutte le vie
 	{
-		packet[i++] = (byte)((loadchan[num_via] & 0xFF000000) >> 24);	// peso complessivo sulla cella
-		packet[i++] = (byte)((loadchan[num_via] & 0x00FF0000) >> 16);	// peso complessivo sulla cella
-		packet[i++] = (byte)((loadchan[num_via] & 0x0000FF00) >> 8);	// peso complessivo sulla cella
-		packet[i++] = (byte)((loadchan[num_via] & 0x000000FF));
+		packet[i++] = ((Via[num_via].peso_erogato + 200) & 0xFF00) >> 8;
+		packet[i++] = ((Via[num_via].peso_erogato + 200) & 0x00FF);
 	}
-	packet[i++] = (byte)StatusCmd.cover_open;
-	packet[i++] = (byte)((StatusCmd.errors & 0xFF00) >> 8);
-	packet[i++] = (byte)(StatusCmd.errors & 0x00FF);
-	packet[i++] = StatusCmd.log_error;
-	packet[i++] = (byte)(((StatusCmd.commPacketsRx) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.commPacketsRx) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.commErrorHw) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.commErrorHw) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.commErrorProtocol) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.commErrorProtocol) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.commErrorUnknown) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.commErrorUnknown) & 0x00FF);
-	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
+	packet[i++] = (byte)((total_weight & 0xFF000000) >> 24);	// peso complessivo sulla cella
+	packet[i++] = (byte)((total_weight & 0x00FF0000) >> 16);	// peso complessivo sulla cella
+	packet[i++] = (byte)((total_weight & 0x0000FF00) >> 8);	// peso complessivo sulla cella
+	packet[i++] = (byte)((total_weight & 0x000000FF));
+	for(num_via = 0; num_via < (NUM_MAX_LINE); num_via++)
 	{
-		packet[i++] = StatusCmd.error_stop[num_via];
+		packet[i++] = (Via[ num_via ].capacita & 0xFF00) >> 8;
+		packet[i++] = (Via[ num_via ].capacita & 0x00FF);
 	}
-	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
-	{
-		packet[i++] = (byte)((Via[num_via].variazione_peso_stop & 0xFF00) >> 8);
-		packet[i++] = (byte)(Via[num_via].variazione_peso_stop & 0x00FF);
-	}
-	for( num_via = 0; num_via < NUM_MAX_LINE; num_via++)
-	{
-		packet[i++] = (byte)Chan[num_via].AreCalibrate;
-	}
+	packet[i++] = StatusCmd.error_monitor;
+	packet[i++] = (byte)cpld_CoverPump;
+	packet[i++] = (byte)(((StatusCmd.SIFRAComPacketsRx) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.SIFRAComPacketsRx) & 0x00FF);
+	packet[i++] = (byte)(((StatusCmd.SIFRAComHwErrors) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.SIFRAComHwErrors) & 0x00FF);
+	packet[i++] = (byte)(((StatusCmd.SIFRAComProtocolErrors) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.SIFRAComProtocolErrors) & 0x00FF);
+	packet[i++] = (byte)(((StatusCmd.SIFRAComUnknownErrors) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.SIFRAComUnknownErrors) & 0x00FF);
+	packet[i++] = StatusCmd.error_stop;
+	packet[i++] = (byte)(((StatusCmd.variazione_peso) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.variazione_peso) & 0x00FF);
+	packet[i++] = (byte)(Chan[_ADC1_].AreCalibrate);
+	packet[i++] = (byte)(Chan[_ADC2_].AreCalibrate);
+	packet[i++] = StatusCmd.test_pinch_done;
+	packet[i++] = StatusCmd.statusAirSensors;
 	packet[i++] = StatusCmd.state;
 	packet[i++] = StatusCmd.prevState;
 	packet[i++] = StatusCmd.phase;
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
-	PinEnRS485_DE = 1;	// abilito il tranceiver sulla rete 422
+	PinEnRS485_DE = 1;
 	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
 }
 
@@ -629,292 +571,285 @@ int SIFRAProtocol::sendSIFRAInfo()
 	byte i = 0;
 	byte k;
 	
-	packet[i++] =  M3100;		// NODEID perifierica
-
-	packet[i++] = SIFRA_GET_INFO_M3100;
+	packet[i++] = M3300;
+	packet[i++] = SIFRA_GET_INFO_M3300;
 
 	packet[i++] = 0x00;	// byte nullo
 	for (k = 0; k < sAppRevisionLength; k++)
 	{
-		packet[i++] = sAppRevision[k];		// 8 bytes
+		packet[i++] = sAppRevision[k];
 	}
 	packet[i++] = 0x00;	// byte nullo
 	for (k = 0; k < sAppDateLength; k++)
 	{
-		packet[i++] = sAppDate[k];		// 8 bytes
+		packet[i++] = sAppDate[k];
 	}
 	packet[i++] = 0x00;	// byte nullo
 	for (k = 0; k < sHwVersionLength; k++)
 	{
-		packet[i++] = sHwVersion[k];		// 8 bytes
+		packet[i++] = sHwVersion[k];
 	}
 	packet[i++] = 0x00;	// byte nullo	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
 	PinEnRS485_DE = 1;
 	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);
 }
 
 /**
-* Sends status command
+* Sends debug command with data of Via structure
 */
-int SIFRAProtocol::sendSIFRADebug()
+int SIFRAProtocol::sendSIFRAViaDebug()
 {	
-	byte packet[_PKT_DEBUG_LENGTH];		//pacchetto di _PKT_DEBUG_LENGTH bytes
+	byte packet[_PKT_DBG_VIA_LENGTH];
 	byte i = 0;
-	byte num_via;
-	
-	packet[i++] =  M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_GET_DEBUG_M3100;
-	
-	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
-	{
-		packet[i++] = (byte)(((DebugCmd.peso_init[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.peso_init[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((DebugCmd.peso_real_time[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.peso_real_time[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((DebugCmd.enc_value[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.enc_value[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((DebugCmd.enc_value_control[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.enc_value_control[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((DebugCmd.enc_movement[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.enc_movement[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((DebugCmd.enc_upper_limit[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.enc_upper_limit[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((DebugCmd.enc_lower_limit[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((DebugCmd.enc_lower_limit[num_via]) & 0x00FF);
-		packet[i++] = DebugCmd.air_state[num_via];
-	}
-	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
-	i++;
-	PinEnRS485_DE = 1;
-	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
-}
-
-/**
-* Sends debug vie 1-3 command
-*/
-int SIFRAProtocol::sendSIFRADebugVie_1_3()
-{	
-	byte packet[_PKT_DEBUG_VIE_1_3_LENGTH];
-	byte i = 0;
-	byte num_via;
+	int num_via;
 	word peso_spec;
-	word flusso;
-	
-	packet[i++] =  M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_GET_DEBUG_VIE_1_3_M3100;
-	
-	for(num_via = 0; num_via < 3; num_via++)
+
+
+
+	num_via = StatusCmd.next_line;
+	if(num_via < 0 || num_via > NUM_MAX_LINE)
 	{
-		peso_spec = (word)(Via[num_via].peso_spec*1000.0);
-		flusso = (word)(Via[num_via].flusso_pompa*10.0);
-		packet[i++] = (byte)(Via[num_via].abilitazione);
-		packet[i++] = (byte)(Via[num_via].da_eseguire);
-		packet[i++] = (byte)(Via[num_via].eseguita);
-		packet[i++] = (byte)(Via[num_via].restart_bag);
-		packet[i++] = (byte)(Via[num_via].stato_led);
-		packet[i++] = Via[num_via].stato_luci;
-		packet[i++] = Via[num_via].fase_luci;
-		packet[i++] = (byte)(((Via[num_via].vel) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].vel) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].peso_da_erogare) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_da_erogare) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].peso_erogato) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_erogato) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].peso_gia_erogato) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_gia_erogato) & 0x00FF);
-		/*
-		packet[i++] = (byte)(((Via[num_via].peso_stop) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_stop) & 0x00FF);
-		*/
-		packet[i++] = (byte)(((Via[num_via].variazione_peso_stop) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].variazione_peso_stop) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].tara) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].tara) & 0x00FF);
-		packet[i++] = (byte)(((peso_spec) & 0xFF00) >> 8);
-		packet[i++] = (byte)((peso_spec) & 0x00FF);
-		packet[i++] = (byte)(((flusso) & 0xFF00) >> 8);
-		packet[i++] = (byte)((flusso) & 0x00FF);
+		num_via = 0;
 	}
+
+	peso_spec = (word)(Via[num_via].peso_spec * 1000.0);
 	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i++] =  M3300;		// NODEID perifierica
+	packet[i++] = SIFRA_GET_DEBUG_VIA_M3300;
+
+	packet[i++] = (byte)(((StatusCmd.next_line) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.next_line) & 0x00FF);
+	packet[i++] = (byte)(Via[num_via].abilitazione);
+	packet[i++] = (byte)(Via[num_via].da_eseguire);
+	packet[i++] = (byte)(Via[num_via].eseguita);
+	packet[i++] = (byte)(Via[num_via].stato_led);
+	packet[i++] = (byte)(Via[num_via].stato_luci);
+	packet[i++] = (byte)(Via[num_via].fase_luci);
+
+	packet[i++] = (byte)(((Via[num_via].peso_da_erogare) & 0xFF00) >> 8);
+	packet[i++] = (byte)((Via[num_via].peso_da_erogare) & 0x00FF);
+
+	packet[i++] = (byte)(((Via[num_via].capacita) & 0xFF00) >> 8);
+	packet[i++] = (byte)((Via[num_via].capacita) & 0x00FF);
+
+	packet[i++] = (byte)(((Via[num_via].peso_erogato) & 0xFF00) >> 8);
+	packet[i++] = (byte)((Via[num_via].peso_erogato) & 0x00FF);
+
+	packet[i++] = (byte)(((Via[num_via].peso_gia_erogato) & 0xFF00) >> 8);
+	packet[i++] = (byte)((Via[num_via].peso_gia_erogato) & 0x00FF);
+
+	packet[i++] = (byte)(((Via[num_via].peso_iniziale) & 0xFF00) >> 8);
+	packet[i++] = (byte)((Via[num_via].peso_iniziale) & 0x00FF);
+
+	packet[i++] = (byte)(((Via[num_via].peso_finale) & 0xFF00) >> 8);
+	packet[i++] = (byte)((Via[num_via].peso_finale) & 0x00FF);
+
+	packet[i++] = (byte)(((peso_spec) & 0xFF00) >> 8);
+	packet[i++] = (byte)((peso_spec) & 0x00FF);
+
+	packet[i++] = g_stateMachine.sampleState;
+	packet[i++] = g_stateMachine.calibState;
+	packet[i++] = g_stateMachine.saccaState;
+	packet[i++] = g_stateMachine.rtState;
+	packet[i++] = g_stateMachine.stState;
+	packet[i++] = g_stateMachine.pinchState;
+	packet[i++] = g_stateMachine.ledState;
+	packet[i++] = g_stateMachine.driverState;
+	packet[i++] = g_stateMachine.serviceState;
+	packet[i++] = g_stateMachine.nonCalaState;
+	
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
 	PinEnRS485_DE = 1;
-	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
+	
+	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);
 }
 
 /**
-* Sends debug vie 4-5 command
+* Sends debug command with data of StartCmd structure
 */
-int SIFRAProtocol::sendSIFRADebugVie_4_5()
+bool SIFRAProtocol::sendSIFRAStartDebug()
 {	
-	byte packet[_PKT_DEBUG_VIE_4_5_LENGTH];
-	byte i = 0;
-	byte num_via;
-	word peso_spec;
-	word flusso;
-	
-	packet[i++] =  M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_GET_DEBUG_VIE_4_5_M3100;
-	
-	for(num_via = 3; num_via < NUM_MAX_LINE; num_via++)
-	{
-		peso_spec = (word)(Via[num_via].peso_spec*1000.0);
-		flusso = (word)(Via[num_via].flusso_pompa*10.0);
-		packet[i++] = (byte)(Via[num_via].abilitazione);
-		packet[i++] = (byte)(Via[num_via].da_eseguire);
-		packet[i++] = (byte)(Via[num_via].eseguita);
-		packet[i++] = (byte)(Via[num_via].restart_bag);
-		packet[i++] = (byte)(Via[num_via].stato_led);
-		packet[i++] = Via[num_via].stato_luci;
-		packet[i++] = Via[num_via].fase_luci;
-		packet[i++] = (byte)(((Via[num_via].vel) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].vel) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].peso_da_erogare) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_da_erogare) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].peso_erogato) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_erogato) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].peso_gia_erogato) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_gia_erogato) & 0x00FF);
-		/*
-		packet[i++] = (byte)(((Via[num_via].peso_stop) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].peso_stop) & 0x00FF);
-		*/
-		packet[i++] = (byte)(((Via[num_via].variazione_peso_stop) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].variazione_peso_stop) & 0x00FF);
-		packet[i++] = (byte)(((Via[num_via].tara) & 0xFF00) >> 8);
-		packet[i++] = (byte)((Via[num_via].tara) & 0x00FF);
-		packet[i++] = (byte)(((peso_spec) & 0xFF00) >> 8);
-		packet[i++] = (byte)((peso_spec) & 0x00FF);
-		packet[i++] = (byte)(((flusso) & 0xFF00) >> 8);
-		packet[i++] = (byte)((flusso) & 0x00FF);
-	}
-
-	packet[i++] = (byte)StatusCmd.led_aria_en;
-	packet[i++] = (byte)StatusCmd.air_block_en[_VIA_1_];
-	packet[i++] = (byte)StatusCmd.air_block_en[_VIA_2_];
-	packet[i++] = (byte)StatusCmd.air_block_en[_VIA_3_];
-	packet[i++] = (byte)StatusCmd.air_block_en[_VIA_4_];
-	packet[i++] = (byte)StatusCmd.air_block_en[_VIA_5_];
-	packet[i++] = (byte)StatusCmd.fillingOnCourse;
-	packet[i++] = StatusCmd.state;
-	packet[i++] = StatusCmd.prevState;
-	packet[i++] = StatusCmd.phase;
-	packet[i++] = StatusCmd.status;
-	packet[i++] = StatusCmd.flagsErrorLine;
-	packet[i++] = (byte)(((StatusCmd.statusChan[_VIA_1_]) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.statusChan[_VIA_1_]) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.statusChan[_VIA_2_]) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.statusChan[_VIA_2_]) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.statusChan[_VIA_3_]) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.statusChan[_VIA_3_]) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.statusChan[_VIA_4_]) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.statusChan[_VIA_4_]) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.statusChan[_VIA_5_]) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.statusChan[_VIA_5_]) & 0x00FF);
-	packet[i++] = StatusCmd.errors;
-	packet[i++] = StatusCmd.log_error;
-	packet[i++] = (byte)(((StatusCmd.commErrorHw) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.commErrorHw) & 0x00FF);
-	packet[i++] = (byte)(((StatusCmd.commErrorProtocol) & 0xFF00) >> 8);
-	packet[i++] = (byte)((StatusCmd.commErrorProtocol) & 0x00FF);
-	packet[i++] = (byte)StatusCmd.cover_open;
-	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
-	i++;
-	PinEnRS485_DE = 1;
-	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
-}
-
-/**
-* Sends debug start command
-*/
-int SIFRAProtocol::sendSIFRADebugStart()
-{	
-	byte packet[_PKT_DEBUG_START_LENGTH];
+	byte packet[_PKT_DBG_START_LENGTH];
 	byte i = 0;
 	byte num_via;
 	
-	packet[i++] =  M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_GET_DEBUG_START_M3100;
-
+	packet[i++] =  M3300;		// NODEID perifierica
+	packet[i++] = SIFRA_GET_DEBUG_START_M3300;
+	
+	// valore encoder per ogni via, essendo una word lo splitto in 2 byte
 	packet[i++] = (byte)(((StartCmd.function) & 0xFF00) >> 8);
 	packet[i++] = (byte)((StartCmd.function) & 0x00FF);
+
 	packet[i++] = (byte)(StartCmd.support);
-	for(num_via = 0; num_via < NUM_MAX_LINE; num_via++)
+
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
 	{
-		packet[i++] = (byte)(((StartCmd.peso_linea[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((StartCmd.peso_linea[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((StartCmd.tara_linea[num_via]) & 0xFF00) >> 8);
-		packet[i++] = (byte)((StartCmd.tara_linea[num_via]) & 0x00FF);
 		packet[i++] = (byte)(((StartCmd.peso_spec[num_via]) & 0xFF00) >> 8);
 		packet[i++] = (byte)((StartCmd.peso_spec[num_via]) & 0x00FF);
 	}
 
-	packet[i++] = g_stateMachine.calibState;
-	packet[i++] = g_stateMachine.rtState;
-	packet[i++] = g_stateMachine.saccaState;
-	packet[i++] = g_stateMachine.manualState;
-	packet[i++] = g_stateMachine.driverState;
-	packet[i++] = g_stateMachine.ledState;
-	packet[i++] = g_stateMachine.serviceState;
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
+	{
+		packet[i++] = (byte)(((StartCmd.peso_linea[num_via]) & 0xFF00) >> 8);
+		packet[i++] = (byte)((StartCmd.peso_linea[num_via]) & 0x00FF);
+	}
 
-	packet[i++] = g_restart.tipo_linea;
-	packet[i++] = g_restart.restart_bk;
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
+	{
+		packet[i++] = (byte)(((StartCmd.cap_linea[num_via]) & 0xFF00) >> 8);
+		packet[i++] = (byte)((StartCmd.cap_linea[num_via]) & 0x00FF);
+	}
 	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
 	PinEnRS485_DE = 1;
 	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
 }
 
 /**
-* Sends debug ram command
+* Sends debug command with status data
 */
-int SIFRAProtocol::sendSIFRADebugRam()
+bool SIFRAProtocol::sendSIFRAStatusDebug()
 {	
-	byte packet[_PKT_DEBUG_RAM_LENGTH];
+	byte packet[_PKT_DBG_STATUS_LENGTH];
 	byte i = 0;
 	byte num_via;
-	word enc;
-	word toll;
 	
-	packet[i++] =  M3100;		// NODEID perifierica
-	packet[i++] = SIFRA_GET_DEBUG_RAM_M3100;
+	packet[i++] =  M3300;		// NODEID perifierica
+	packet[i++] = SIFRA_GET_DEBUG_STATUS_M3300;
 
-	packet[i++] = bk.start_cmd;
-	packet[i++] = bk.vie_da_eseguire;
-	packet[i++] = bk.vie_eseguite;
-	for(num_via = 0; num_via < NUM_MAX_LINE; num_via++)
+	packet[i++] = (byte)StatusCmd.air_block_en;
+	packet[i++] = (byte)StatusCmd.m_FillingOnCourse;
+	packet[i++] = StatusCmd.status;
+	packet[i++] = StatusCmd.flagsErrorLine;
+	packet[i++] = StatusCmd.tot_enabled_lines;
+
+	packet[i++] = (byte)(((StatusCmd.next_line) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.next_line) & 0x00FF);
+
+	for(num_via = 0; num_via < (_MAX_LOAD_CHAN_); num_via++)	
 	{
-		packet[i++] = (byte)(bk.abilitazione[num_via]);
+		packet[i++] = (byte)(((StatusCmd.statusChan[num_via]) & 0xFF00) >> 8);
+		packet[i++] = (byte)((StatusCmd.statusChan[num_via]) & 0x00FF);
+	}
+
+	packet[i++] = (byte)(((StatusCmd.SIFRAComUnknownErrors) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusCmd.SIFRAComUnknownErrors) & 0x00FF);
+
+	packet[i++] = StatusCmd.error_monitor;
+
+	packet[i++] = StatusDebug.sifraStatus;
+	packet[i++] = StatusDebug.sifraPrevStatus;
+	packet[i++] = StatusDebug.sifraPhase;
+
+	packet[i++] = (byte)(((StatusDebug.peso_current_time_int) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.peso_current_time_int) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.peso_current_time_word) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.peso_current_time_word) & 0x00FF);
+
+	packet[i++] = StatusDebug.sacca_manager_state;
+
+	packet[i++] = (byte)(((StatusDebug.peso_parziale) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.peso_parziale) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.sampleMngr_cycles) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.sampleMngr_cycles) & 0x00FF);
+	
+	packet[i++] = (byte)(((StatusDebug.weight) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.weight) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.enc_value) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.enc_value) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.enc_value_control) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.enc_value_control) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.enc_movement) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.enc_movement) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.enc_up_limit) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.enc_up_limit) & 0x00FF);
+
+	packet[i++] = (byte)(((StatusDebug.enc_low_limit) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.enc_low_limit) & 0x00FF);
+	
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
+	{
+		packet[i++] = StatusDebug.air_state[num_via];
+	}
+
+	packet[i++] = StatusDebug.cover_pump;
+	packet[i++] = StatusDebug.error_control;
+
+	packet[i++] = (byte)(((StatusDebug.init_weight) & 0xFF00) >> 8);
+	packet[i++] = (byte)((StatusDebug.init_weight) & 0x00FF);
+	
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
+	i++;
+	PinEnRS485_DE = 1;
+	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
+}
+
+/**
+* Sends debug command with data of bk and fp structure (data in RAM tamponata)
+*/
+bool SIFRAProtocol::sendSIFRARamDebug()
+{	
+	byte packet[_PKT_DBG_BACKUP_RAM_LENGTH];
+	byte i = 0;
+	byte num_via;
+
+	word paramEncoder;
+	word paramTolleranza;
+
+	paramEncoder = (word)(structEnc.param_encoder * 10.0);
+	paramTolleranza = (word)(structEnc.tolleranza * 100.0);
+	
+	packet[i++] =  M3300;		// NODEID perifierica
+	packet[i++] = SIFRA_GET_DEBUG_BACKUP_RAM_M3300;
+	
+	packet[i++] = (byte)(((bk.nextLine) & 0xFF00) >> 8);
+	packet[i++] = (byte)((bk.nextLine) & 0x00FF);
+
+	packet[i++] = (byte)(bk.num_vie_da_eseguire);
+	packet[i++] = (byte)(bk.vie_da_eseguire);
+	packet[i++] = (byte)(bk.vie_eseguite);
+
+	packet[i++] = (byte)(((bk.peso_stop) & 0xFF000000) >> 24);
+	packet[i++] = (byte)(((bk.peso_stop) & 0x00FF0000)>> 16);
+	packet[i++] = (byte)(((bk.peso_stop) & 0x0000FF00) >> 8);
+	packet[i++] = (byte)((bk.peso_stop) & 0x000000FF);
+
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
+	{
+		packet[i++] = bk.abilitazione[num_via];
+	}
+
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
+	{
 		packet[i++] = (byte)(((bk.peso_erogato[num_via]) & 0xFF00) >> 8);
 		packet[i++] = (byte)((bk.peso_erogato[num_via]) & 0x00FF);
-		packet[i++] = (byte)(((bk.peso_stop[num_via]) & 0xFF000000) >> 24);
-		packet[i++] = (byte)(((bk.peso_stop[num_via]) & 0x00FF0000) >> 16);
-		packet[i++] = (byte)(((bk.peso_stop[num_via]) & 0x0000FF00) >> 8);
-		packet[i++] = (byte)((bk.peso_stop[num_via]) & 0x000000FF);
 	}
 
-	for(num_via = 0; num_via < NUM_MAX_LINE; num_via++)
+	for(num_via = 0; num_via < (NUM_MAX_LINE ); num_via++)	
 	{
-		enc = (word)(g_encStruct[num_via].param_encoder[0]*10.0);
-		toll = (word)(g_encStruct[num_via].tolleranza[0]*100.0);
-		packet[i++] = (byte)(((enc) & 0xFF00) >> 8);
-		packet[i++] = (byte)((enc) & 0x00FF);
-		packet[i++] = (byte)(((toll) & 0xFF00) >> 8);
-		packet[i++] = (byte)((toll) & 0x00FF);
-		enc = (word)(g_encStruct[num_via].param_encoder[1]*10.0);
-		toll = (word)(g_encStruct[num_via].tolleranza[1]*100.0);
-		packet[i++] = (byte)(((enc) & 0xFF00) >> 8);
-		packet[i++] = (byte)((enc) & 0x00FF);
-		packet[i++] = (byte)(((toll) & 0xFF00) >> 8);
-		packet[i++] = (byte)((toll) & 0x00FF);
+		packet[i++] = (byte)(((bk.capacita[num_via]) & 0xFF00) >> 8);
+		packet[i++] = (byte)((bk.capacita[num_via]) & 0x00FF);
 	}
+
+	packet[i++] = (byte)(((paramEncoder) & 0xFF00) >> 8);
+	packet[i++] = (byte)((paramEncoder) & 0x00FF);
+
+	packet[i++] = (byte)(((paramTolleranza) & 0xFF00) >> 8);
+	packet[i++] = (byte)((paramTolleranza) & 0x00FF);
+
+	packet[i++] = (byte)(structEnc.restart);
 	
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
 	PinEnRS485_DE = 1;
 	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);	 
@@ -934,62 +869,60 @@ The packet is builded as follow:
 int SIFRAProtocol::sendAcknowledge()	//int SIFRAProtocol::sendAcknowledge(byte ack)
 {
 	byte packet[_PKT_ACK_LENGTH];
-	byte i = 0;
+	int i = 0;
 	
 	packet[i++] = getLocalNodeID();
 	packet[i++] = last_opCode;		
-	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i );
+	packet[i] = stdUartProtocolAbstraction::calculateChecksum(&packet[0], i);
 	i++;
 	PinEnRS485_DE = 1;
 	return stdUartProtocolAbstraction::SendCommand(packet, i, 0);
 }
 
 /**
-* Calculates physical load of every line in M3100
-* NON MODIFICARE PER ALCUN MOTIVO I CAST ED IN GENERALE TALE METODO, RESTITUISCE CORRETTAMENTE PESI SIA POSITIVI CHE NEGATIVI
+* Calculates phisical load in M3300.
+* Return load with cents of ml for the calculation, while the load for M3000 is with tenths of ml.
 */
-long SIFRAProtocol::sendSIFRALoadSamples(dword samples, int chan)
+long SIFRAProtocol::sendSIFRALoadSamples( float loadsystem)
 {
-	double calc_sample = 0;
-	long result;
 	
-	calc_sample = weightChan->getGain(chan)* ((int)samples - (int)weightChan->getOffset(chan));
-	/*
-	if(m_show_adcvalue == True)	// funzione di debug: si invia il valore dell'adc (filtrato) non convertito in grammi,
-	{
-		loadchan[ chan ] = samples;	//(int)(_CONV_X_PROTOCOLLO * samples + _OFFSET_SU_ZERO); // adc espresso in modulo 2alla16
-	}
-	else		// via normale: si invia il dato di peso convertito in grammi con i dati di calibrazione memorizzati
-	{
-		loadchan[ chan ] = (int)(_CONV_X_PROTOCOLLO * calc_sample + _OFFSET_SU_ZERO);
-	}
-	*/
-	loadchan[chan] = (int)((_CONV_X_PROTOCOLLO * calc_sample) + _OFFSET_SU_ZERO);
-	result = (long)(_CONV_IN_DECIMI * calc_sample);
-	
-	return result;	// il peso sarà espresso in decimi di grammo con risuluzione +/-0.1g
-	
-}
+#ifdef _PESI_IN_GRAMMI
 
-/* ESESMPIO
-1) calc_sample = 80,35567 -> x 5,0 -> 401,77835 -> + 200 -> 601,77835 -> (int)() -> 601 spedito -- RICEVUTO 601 - 200 = 401 -> /5.0 -> 80.2
-m_peso_attuale = 
-2) calc_sample = 80.2 -> x 5.0 -> 401.0 -> + 200 -> 601.0 -> (int)() -> 601 spedito -- RICEVUTO 601 - 200 = 401 -> /5.0 -> 80.2
-3) calc_sample = 80.4 -> x 5.0 -> 402.0 -> + 200 -> 602.0 -> (int)() -> 602 spedito -- RICEVUTO 602 - 200 = 402 -> /5.0 -> 80.4
-*/
+	float load = loadsystem * _CONV_IN_DECIMI;
+	// calcolo il valore da passare al sistema M3300, dato intero (32bit)
+	long calc_sample = (long)(load); // prendo decimi e centesimi	
+	if((loadsystem*100 - calc_sample * 10) > 5) calc_sample++;	// arrotondamento all'intero + vicino
 
-/**
-* Calculates phisical load in M3300
-*/
-int SIFRAProtocol::sendSIFRALoadSamples(dword *loadsystem)
-{
-	byte i;
+	#ifdef _SMOOTHING_FILT_
+		// routine per evitare che gli arrotondamenti facciano muovere il valore dle pesp calcolato, a fronte della variaizone di uno solo dei due ADC e di
+		// un solo punto di adc
+		static float lastoldvalue = 0;
+		float diffvalue = loadsystem - lastoldvalue;
+		if((diffvalue < 0.09) && (diffvalue > -0.09))	// se la differena è inferiore ad un decimo
+			loadsystem = lastoldvalue;				// allora non aggiorno il valore perchè le approssimazioni successive genererebbero un delta
+		else
+			lastoldvalue = loadsystem;			// altrimenti aggiorno
+	#endif
+	// ora invece lavoro sul dato da passare a tastiera, in 16bit
+	if((load + _OFFSET_SU_ZERO) > 0x0000FFFE)
+		total_weight = 0xFFFE;
+	else
+		total_weight = (long)(load + _OFFSET_SU_ZERO);
 	
-	for( i = 0; i < _MAX_LOAD_CHAN_; i++)
-	{
-		g_adc_real_value[i] = (word)loadsystem[i];
-	}
-	return 0;
+#else		// peso espresso in decimi di grammo
+	// calcolo il valore da passare al sistema M3300, dato intero (32bit)
+	long calc_sample = (long)(loadsystem);
+	if((loadsystem*10 - calc_sample * 10) > 5)
+		calc_sample++;	// arrotondamento all'intero + vicino
+	// ora invece lavoro sul dato da passare a tastiera, in 16bit
+	if((calc_sample + _OFFSET_SU_ZERO) > 0x0000FFFE)
+		total_weight = 0xFFFE;
+	else
+		total_weight = calc_sample + _OFFSET_SU_ZERO;
+	
+#endif
+
+	return calc_sample;
 }
 
 // mette in spedizione (cioè nella fifo delle cose da re-inviare) il comando ricevuto
@@ -1000,23 +933,9 @@ int SIFRAProtocol::SIFRA_getInfoCmdDecode()
 }
 
 // mette in spedizione (cioè nella fifo delle cose da re-inviare) il comando ricevuto
-int SIFRAProtocol::SIFRA_getDebugCmdDecode()
+int SIFRAProtocol::SIFRA_getDebugViaCmdDecode()
 {
-	sendMsg(SIFRAMsg_debugAsked);
-	return 1;
-}
-
-// mette in spedizione (cioè nella fifo delle cose da re-inviare) il comando ricevuto
-int SIFRAProtocol::SIFRA_getDebugVie_1_3_CmdDecode()
-{
-	sendMsg(SIFRAMsg_debugVie_1_3_Asked);
-	return 1;
-}
-
-// mette in spedizione (cioè nella fifo delle cose da re-inviare) il comando ricevuto
-int SIFRAProtocol::SIFRA_getDebugVie_4_5_CmdDecode()
-{
-	sendMsg(SIFRAMsg_debugVie_4_5_Asked);
+	sendMsg(SIFRAMsg_debugViaAsked);
 	return 1;
 }
 
@@ -1028,6 +947,13 @@ int SIFRAProtocol::SIFRA_getDebugStartCmdDecode()
 }
 
 // mette in spedizione (cioè nella fifo delle cose da re-inviare) il comando ricevuto
+int SIFRAProtocol::SIFRA_getDebugStatusCmdDecode()
+{
+	sendMsg(SIFRAMsg_debugStatusAsked);
+	return 1;
+}
+
+// mette in spedizione (cioè nella fifo delle cose da re-inviare) il comando ricevuto
 int SIFRAProtocol::SIFRA_getDebugRamCmdDecode()
 {
 	sendMsg(SIFRAMsg_debugRamAsked);
@@ -1035,41 +961,26 @@ int SIFRAProtocol::SIFRA_getDebugRamCmdDecode()
 }
 
 /**
-Sends to protocol the overall stop command
+* Sends to protocol the set weight sensibility command
 */
-int SIFRAProtocol::SIFRA_set_Stop_All()
+int SIFRAProtocol::SIFRA_setWeightSensibility()
 {
-	sendMsg(SIFRAMsg_StopAll);
+	sendMsg(SIFRAMsg_SetWeightSensibility);
+	return 1;
+}
+
+int SIFRAProtocol::SIFRA_restartWeightCoverControl()
+{
+	sendMsg(SIFRAMsg_restartWeightCoverControl);
 	return 1;
 }
 
 /**
-Sends to protocol the status ask command
+* Sends to protocol the set weight sensibility command
 */
-int SIFRAProtocol::SIFRA_getStatusCmdDecode()
+int SIFRAProtocol::SIFRA_restartFormula()
 {
-	sendMsg(SIFRAMsg_statusAsked);
-	return 1;
-}
-
-/**
-Sends to protocol the status ask command
-*/
-int SIFRAProtocol::SIFRA_setLineToIdentify()
-{
-	sendMsg(SIFRAMsg_newLines);
-	return 1;
-}
-
-int SIFRAProtocol::SIFRA_resetMaxWeightError()
-{
-	sendMsg(SIFRAMsg_maxWeightReset);
-	return 1;
-}
-
-int SIFRAProtocol::SIFRA_restartControl()
-{
-	sendMsg(SIFRAMsg_restartControl);
+	sendMsg(SIFRAMsg_restartFormula);
 	return 1;
 }
 
@@ -1092,94 +1003,39 @@ int SIFRAProtocol::SIFRA_setScalesNotCalib()
 }
 
 /**
+Sends to protocol the overall stop command
+*/
+int SIFRAProtocol::SIFRA_set_Stop_All()
+{
+	sendMsg(SIFRAMsg_StopAll);
+	m_numStopPkts++;
+	return 1;
+}
+/**
+Sends to protocol the status ask command
+*/
+int SIFRAProtocol::SIFRA_getStatusCmdDecode()
+{
+	sendMsg(SIFRAMsg_statusAsked);
+	return 1;
+}
+/**
 Sends to protocol the start command
 */
 int SIFRAProtocol::SIFRA_setStart()
 {
 	sendMsg(SIFRAMsg_setStart);
+	m_numStartPkts++;
 	return 1;
 }
 /**
-Sends to protocol the cell1 zero calibration command
+Sends to protocol the cell8 and cell15 zero calibration command
 */
-int SIFRAProtocol::SIFRA_setZeroCell1()
+int SIFRAProtocol::SIFRA_setZeroVerification()
 {
-	sendMsg(SIFRAMsg_setOffset1);
+	sendMsg(SIFRAMsg_setZeroVerification);
 	return 1;
 }
-/**
-Sends to protocol the cell2 zero calibration command
-*/
-int SIFRAProtocol::SIFRA_setZeroCell2()
-{
-	sendMsg(SIFRAMsg_setOffset2);
-	return 1;
-}
-/**
-Sends to protocol the cell3 zero calibration command
-*/
-int SIFRAProtocol::SIFRA_setZeroCell3()
-{
-	sendMsg(SIFRAMsg_setOffset3);
-	return 1;
-}
-/**
-Sends to protocol the cell4 zero calibration command
-*/
-int SIFRAProtocol::SIFRA_setZeroCell4()
-{
-	sendMsg(SIFRAMsg_setOffset4);
-	return 1;
-}
-/**
-Sends to protocol the cell5 zero calibration command
-*/
-int SIFRAProtocol::SIFRA_setZeroCell5()
-{
-	sendMsg(SIFRAMsg_setOffset5);
-	return 1;
-}
-/**
-Sends to protocol the cell1 gain calibration command
-*/
-int SIFRAProtocol::SIFRA_setGainCell1()
-{
-	sendMsg(SIFRAMsg_setGain1);
-	return 1;
-}
-/**
-Sends to protocol the cell2 gain calibration command
-*/
-int SIFRAProtocol::SIFRA_setGainCell2()
-{
-	sendMsg(SIFRAMsg_setGain2);
-	return 1;
-}
-/**
-Sends to protocol the cell3 gain calibration command
-*/
-int SIFRAProtocol::SIFRA_setGainCell3()
-{
-	sendMsg(SIFRAMsg_setGain3);
-	return 1;
-}
-/**
-Sends to protocol the cell4 gain calibration command
-*/
-int SIFRAProtocol::SIFRA_setGainCell4()
-{
-	sendMsg(SIFRAMsg_setGain4);
-	return 1;
-}
-/**
-Sends to protocol the cell5 gain calibration command
-*/
-int SIFRAProtocol::SIFRA_setGainCell5()
-{
-	sendMsg(SIFRAMsg_setGain5);
-	return 1;
-}
-
 /**
 * Sends to protocol the command used to reset calibration data saved in EEPROM
 */
@@ -1188,7 +1044,30 @@ int SIFRAProtocol::SIFRA_setResetCalib()
 	sendMsg(SIFRAMsg_resetCalib);
 	return 1;
 }
-
+/**
+Sends to protocol the cell6 and cellH2O zero calibration command
+*/
+int SIFRAProtocol::SIFRA_setZeroCell8_Cell15()
+{
+	sendMsg(SIFRAMsg_setZeroCalib);
+	return 1;
+}
+/**
+Sends to protocol the cell6 (m3200) or cell8(M3300) gain calibration command
+*/
+int SIFRAProtocol::SIFRA_setGainCell8()
+{
+	sendMsg(SIFRAMsg_setGain8);
+	return 1;
+}
+/**
+Sends to protocol the cellH2O (m3200) or cell15(M3300) gain calibration command
+*/
+int SIFRAProtocol::SIFRA_setGainCell15()
+{
+	sendMsg(SIFRAMsg_setGain15);
+	return 1;
+}
 /**
 Sends to protocol the jump-to-loader command
 */
@@ -1199,17 +1078,58 @@ int SIFRAProtocol::SIFRA_setJumpToLoader()
 }
 
 /**
-Sends to protocol the loop command
+Manager of the command board jump to loader.
+
+The command is received and decoded from the class AcqHrProtocol which sends a message to the board manager.
+@return always 1
 */
-int SIFRAProtocol::SIFRA_setLoopApplication()
+int SIFRAProtocol::jumpToLoaderHandler()
 {
-	sendMsg(E_SIFRAMsg_loopApplication);
+	DecTimer wait;
+
+	wait.Preset(500);
+	while(!wait.Match());
+
+	while (GetNumBytesInTransmissionBuffer() > 0)
+	{
+		wait.Preset(100);
+		while(!wait.Match());
+	}
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	
+	stay_in_loader_flag0 = 0xA5;
+	stay_in_loader_flag1 = 0xA5;
+	
+	fp = (void (*)()) LOADER_FLASH_START_ADDRESS;	// SALTA IN LOADER
+    	(*fp)();
+		
 	return 1;
 }
-		
-int SIFRAProtocol::SIFRA_zeroLoadCmdDecode()
+
+/**
+Reset application and restar system automatically
+@return always 1
+*/
+int SIFRAProtocol::resetApplicationHandler()
 {
-	sendMsg(SIFRAMsg_setZeroCalib);
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	
+	restart_command = 0xA5;	// salvo in ram tamponata il comando di reset ricevuto da tastiera
+	
+	fp = (void (*)()) __APPLICATION_START_ADDRESS__;	// inizio dell'applicone
+    	(*fp)();
+		
 	return 1;
 }
 
@@ -1234,7 +1154,8 @@ byte SIFRAProtocol::getLastRemoteNodeID()
 }
 
 /**
-* Checks opcode just received for module M3100. Then indicates how many bytes have to be recevied and analysed.
+checks opcode just received in base of different hardware version. Then indicates how much bytes
+have to be recevied and analysed
 */
 bool SIFRAProtocol::checkOpCode (byte data, int NodeID, int &numDataToReceive)
 {
@@ -1242,65 +1163,53 @@ bool SIFRAProtocol::checkOpCode (byte data, int NodeID, int &numDataToReceive)
 	// caso di pacchetto di comandi vari (caso di start)
 	// casi di comandi singoli seguiti subito dal ckecksum
 	numDataToReceive = 0;
-	
 	if(data == SIFRA_SET_STOP_ALL)
 	{
 		numDataToReceive = 0;	// è il comando di stop a tutto
 		return True;
 	}
-	
 	switch( NodeID)
-	{
-		case M3100:
+	{	
+		case M3300:
 			switch(data)
 			{
-				case SIFRA_SET_START_M3100:	// messaggio di START con gli eventuali parametri
-					numDataToReceive = _PKT_START_DATA_M3100;
+				case SIFRA_SET_START_M3300:	// messaggio di START con gli eventuali parametri
+					numDataToReceive = _PKT_START_DATA_M3300;
 					return True;
 					break;
-				case SIFRA_RESET_MAX_WEIGHT:
-				case SIFRA_RESTART_CONTROL:
-				case SIFRA_GET_CELLS_NOT_CALIB:
-					numDataToReceive = _PKT_RST_MAX_WEIGHT_M3100;
+				case SIFRA_SET_WEIGHT_SENSIBILITY_M3300:
+				case SIFRA_RESTART_FORMULA_M3300:
+					numDataToReceive = _PKT_WEIGHT_DATA_M3300;
 					return True;
 					break;
-				case SIFRA_GET_SCALES_STATE_M3100:
-					numDataToReceive = _PKT_SCALES_PHASE_LEN_M3100;
+				case SIFRA_GET_SCALES_STATE_M3300:
+					numDataToReceive = _PKT_SCALES_DATA_M3300;
 					return True;
 					break;
-				case SIFRA_GET_STATUS_M3100:	// messaggio richiesta stato
-				case SIFRA_SETZERO_CELL1:	// calib. zero cella 1
-				case SIFRA_SETZERO_CELL2:	// calib. zera cella 2
-				case SIFRA_SETZERO_CELL3:	// calib. zera cella 3
-				case SIFRA_SETZERO_CELL4:	// calib. zera cella 4
-				case SIFRA_SETZERO_CELL5:	// calib. zero cella 5
-				case SIFRA_SET_CAL_CELL1:	// guadagno cella 1
-				case SIFRA_SET_CAL_CELL2:	// guadagno cella 2
-				case SIFRA_SET_CAL_CELL3:	// guadagno cella 3
-				case SIFRA_SET_CAL_CELL4:	// guadagno cella 4
-				case SIFRA_SET_CAL_CELL5:	// guadagno cella 5
-				case SIFRA_RESET_CALIB_PARAMS:		// reset parametri di calibrazione
-				case SIFRA_ZERO_CELLS_M3100:	// zero generale per tutte le celle di carico
-				case SIFRA_GET_DEBUG_M3100:	// debug M3100
-				case SIFRA_GET_DEBUG_VIE_1_3_M3100:
-				case SIFRA_GET_DEBUG_VIE_4_5_M3100:
-				case SIFRA_GET_DEBUG_START_M3100:
-				case SIFRA_GET_DEBUG_RAM_M3100:
-				case SIFRA_GET_INFO_M3100:	// richiesta versione HW e FW
-				case SIFRA_NEW_LINES_M3100:	// indicazione linee nuove ricevuta dalla tastiera
-				case SIFRA_JUMP_TO_LOADER:	// salto in loader per riprogrammazione
+				case SIFRA_GET_STATUS_M3300:					// messaggio richiesta stato
+				case SIFRA_GET_DEBUG_VIA_M3300:				// messaggio richiesta debug struttura via
+				case SIFRA_GET_DEBUG_START_M3300:			// messaggio richiesta debug struttura start
+				case SIFRA_GET_DEBUG_STATUS_M3300:			// messaggio richiesta debug struttura status
+				case SIFRA_GET_DEBUG_BACKUP_RAM_M3300:		// messaggio richiesta debug struttura ram tamponata
+				case SIFRA_ERROR_RESTART_CONTROL:			// messaggio usato per riprendere controllo su peso massimo
+				case SIFRA_SETZERO_VERIFICATION:				// comando gestire calibrazione di zero ad inizio di verifica bilance
+				case SIFRA_RESET_CALIB_PARAMS:				// comando usato per resettare i parametri di calibrazione
+				case SIFRA_SETZERO_CELL8_CELL15:				// calib. zero cella 8-15
+				case SIFRA_SET_CAL_CELL8:					// guadagno cella 8
+				case SIFRA_SET_CAL_CELL15:					// guadagno cella 15
+				case SIFRA_GET_INFO_M3300:					// richiesta versione HW e FW
+				case SIFRA_GET_SCALES_NOT_CALIB_M3300:		// comando usato per impostare la non calibrazione delle celle di carico
+				case SIFRA_JUMP_TO_LOADER:					// salto in loader per riprogrammazione
 				case SIFRA_M3000_STOP:
-				case E_SIFRA_LOOP_CMD:
-					numDataToReceive = 0;	// + il chk
+					numDataToReceive = 0;
 					return True;
 					break;
 				default:
-					return False;
 					break;
 			}
 			break;
-			
-		case M3300:
+
+		case M3100:
 		case M3800:
 		default:
 			break;
@@ -1308,7 +1217,8 @@ bool SIFRAProtocol::checkOpCode (byte data, int NodeID, int &numDataToReceive)
 	
 	numDataToReceive = 0;
 	
-	return False;											
+	return False;
+	
 }
 
 bool SIFRAProtocol::checksum(byte receivedChk, byte opCode, byte nodeID)
@@ -1328,7 +1238,7 @@ bool SIFRAProtocol::checksum(byte receivedChk, byte opCode, byte nodeID)
 	{
 		return True;
 	}
-	return False;
+	return false;
 }
 
 /**

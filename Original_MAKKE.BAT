@@ -7,4 +7,3 @@
 @set TMPDIR=c:/gcc850
 @set PATH=c:\gcc850\bin;c:\gcc850\lib;c:\gcc850\source\M3300_CPU;%PATH%
 make.exe -s -f SG2.mak
-copy M3300_v4.XX.BIN X:\Download_On_Host

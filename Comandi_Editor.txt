@@ -1,0 +1,25 @@
+Settaggi Programma Source Insight
+
+Tasto: Run Project (Punto eclamativo rosso)
+Run: C:\GNAT\2011\bin\gps.exe  --debug="sg2.out" --debugger c:\gcc850\bin\gdb.exe
+Dir: .
+Opzioni attive: Control --> Pause when done
+		Source Links in Output --> Pattern Contains --> File, then Line
+
+Tasto: Build Project
+Run: makke.bat
+Dir: .
+Opzioni attive: Output --> Capture Output
+		Control --> Save Files First
+		Source Links in Output --> Parse Links in Output
+		Source Links in Output --> File, then Line
+		Source Links in Output --> Pattern --> ^\([a-zA-Z].*\)(\([0-9][0-9]*\)).*
+
+Tasto: Clean Build
+Run: remobj.bat
+Dir: .
+Opzioni attive: Output --> Capture Output
+		Control --> Save Files First
+		Source Links in Output --> Parse Links in Output
+		Source Links in Output --> File, then Line
+		Source Links in Output --> Pattern --> ^\([a-zA-Z].*\)(\([0-9][0-9]*\)).*

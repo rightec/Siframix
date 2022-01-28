@@ -12,26 +12,12 @@
 #ifndef _ADC_H
 #define _ADC_H
 
-
 #include "global.h"				
 #include "swtim.h"	
 #include "sioSG2.h"
 #include "alloc.h"
 #include "I2Ceeprom.h"
 #include "channels.h"
-
-#ifdef __APP_IN_RAM__
-typedef CSmallRingBuf<unsigned short, 20> ADC_FIFO_SMALL; 
-typedef CSmallRingBuf<unsigned short, 512> ADC_FIFO_MEDIUM; 
-typedef CSmallRingBuf<unsigned short, 1024> ADC_FIFO_BIG; 
-#else
-typedef CSmallRingBuf<unsigned short, 20> ADC_FIFO_SMALL; 
-typedef CSmallRingBuf<unsigned short, 1024> ADC_FIFO_MEDIUM; 
-typedef CSmallRingBuf<unsigned short, 2048> ADC_FIFO_BIG; 
-#endif
-
-#define DIM_AVE_FILT 60
-#define MAX_ADC 262143
 
 //-- deifne per canali analogici generici ---
 #define		CHAN_NAME_SIZE			6 // E' la stessa cosa di SIZEOF_CHAN_NAME definita in esame.h
@@ -41,11 +27,22 @@ typedef CSmallRingBuf<unsigned short, 2048> ADC_FIFO_BIG;
 #define _TIME_	1
 #define _MASK_24BIT_VALID 		0x00FFFFFF	// il dato letto a 32bit dall'ADC, solo 24bit sono di dato campionato
 #define _MASK_IF_OVERFLOW		0x00000004	// verifica il bit di overflow
-#define CS5530_gain			0x01000000	// guadagno imposto di 1.0
-#define CS5530_doublegain	0x01380000	// guadagno imposto di 1.21
+#define CS5530_gain			0x01200000	// guadagno imposto di 1.125
+//#define CS5530_gain			0x01400000	// guadagno imposto di 1.250
+//#define CS5530_gain			0x01000000	// 1 per uniformarlo al M3100
+#define CS5530_doublegain	0x01700000	// guadagno imposto di 1.4375 corrispondente a 13500 punti per 1000
+#define MASK_CONFIG_REG	0xFB887E00	// conf reg : XXXXX0XXX000X0000XXXXXX000000000
+
 #define MAX_VALUE_16_BIT	65535
 
-//------------------------
+enum read_gain_offset_value_t
+{
+	E_READ_IDLE = 0,
+	E_READ_ERROR,
+	E_READ_NO_BK_FACTORY,
+	E_READ_BK_FACTORY,
+	E_READ_NUM
+};
 
 enum ChanCATEGORY
 {
@@ -208,48 +205,44 @@ typedef CS5530_configRegisterStatus CS5530_configRegisterStatus;
 #define DIM_BYTE_FIFOADC	15	
 
 #define CHAN_CALIB_CHECK_FACTORY_VAL		0xAA
-#define CHAN_CALIB_RESET_VAL 				0x55
+#define CHAN_CALIB_RESET_VALUE			0x55
 
-#define WEIGHT_DEFAULT_OFFSET				6553	// corrisponde al 10% del FS della cella di carico. Per FS 12 Kg, corrisponde a 1,2 Kg.
-#define WEIGHT_DEFAULT_GAIN				0.2		// 1.0, valore impostato inizialmente.
+#define WEIGHT_DEFAULT_OFFSET		25000	
+#define WEIGHT_DEFAULT_GAIN		1.03
+
+#define WEIGHT_DEFAULT_2Kg_LOAD			21000
+#define WEIGHT_DEFAULT_2Kg_NO_LOAD		100
 
 #define WEIGHT_GAIN_LIMIT_LOW				0.0
-#define WEIGHT_GAIN_LIMIT_HIGH			1.0
+#define WEIGHT_GAIN_LIMIT_HIGH			2.0
 
 #define WEIGHT_OFFSET_LIMIT_LOW			1000
-#define WEIGHT_OFFSET_LIMIT_HIGH			32500
+#define WEIGHT_OFFSET_LIMIT_HIGH			40000
 
-enum read_gain_offset_value_t
-{
-	E_READ_IDLE = 0,
-	E_READ_ERROR,
-	E_READ_NO_BK_FACTORY,
-	E_READ_BK_FACTORY,
-	E_READ_NUM
-};
 
 typedef struct
 {
-	ANALOGType 	  		KindOfChan;
-	ANALOGType 	  		PlugState;	// Serve per rilevare distacchi o inserzione di nuovi canali
-	ChanCATEGORY		Category;
-	unsigned char 		Calibration	: 1;
-	short int	  			value;			// E' il valore corrente dell'ADC
-	short int     			maxvalue;		// Serve a rilevare picchi in modulo dell'ADC.
-	short int	  			CalValue[2][2];	// Nel PH corrispone a pH alto
-	short int	  			OFFSET[2];
-	float  		  		Gain[2];
-	short int	  			PhysicalRef[2][2];	// col pH: PhysicalRef[0] = pHHi; PhysicalRef[1] = pHLow;
-	float 		  		PhysicalValue;
-	unsigned short  		freq; 		 	// La frequenza pu= essere trattata come multipla di 1Hz		
-	unsigned short		ToNextSample;	// Conta quanti INTERRUPT da 1msec mancano al prossimo Sample
-	char					nameOfChan[CHAN_NAME_SIZE];		// Dati da MMC: solo chiacchere e distintivo
-	char					loc[CHAN_LOC_SIZE];
-	byte					type;
-	Index_Udm			Unity;
-	int					range;
-	bool					UARTacq;
-	bool					isForUro;
+	ANALOGType 	  	KindOfChan;
+	ANALOGType 	  	PlugState;	// Serve per rilevare distacchi o inserzione di nuovi canali
+	ChanCATEGORY	Category;
+	unsigned char 	Calibration	: 1;
+	short int	  		value;			// E' il valore corrente dell'ADC
+	short int     		maxvalue;		// Serve a rilevare picchi in modulo dell'ADC.
+	short int	  		CalValue[2][2];	// Nel PH corrispone a pH alto
+	short int	  		OFFSET[2];
+	float  		  	Gain[2];
+	short int	  		PhysicalRef[2][2];	// col pH: PhysicalRef[0] = pHHi; PhysicalRef[1] = pHLow;
+	float 		  	PhysicalValue;
+	unsigned short  	freq; 		 	// La frequenza pu= essere trattata come multipla di 1Hz		
+	unsigned short	ToNextSample;	// Conta quanti INTERRUPT da 1msec mancano al prossimo Sample
+	char				nameOfChan[CHAN_NAME_SIZE];		// Dati da MMC: solo chiacchere e distintivo
+	char				loc[CHAN_LOC_SIZE];
+	byte				type;
+	Index_Udm		Unity;
+	int				range;
+	bool				UARTacq;
+	bool				isForUro;
+// Buffer di filtraggio per rimediare alle bizze dell' ADC del micro nuovo
 }AnalogChan;
 
 #define DIM_STRING_DATE_CALIB 9	// data MM/DD/YY + finestringa
@@ -258,7 +251,7 @@ typedef struct
 typedef struct
 {
 	long			prsOUT_Average;
-	byte              prsOUT_num_of_sample;
+	byte			prsOUT_num_of_sample;
 	short		prsOUTCalVal[2];
 	float			prsOUTgain;
 	short 		prsOUT_adc_val;
@@ -270,18 +263,15 @@ typedef struct
 
 typedef struct
 {
-	long			Weight_Average;
-	byte              Weight_num_of_sample;
 	float			WeightFactoryGain;		// 4 byte
-	word			WeightFactoryOffset;		// 2 byte	-> 6
-	float			Weightgain;				// 4 byte	-> 10
-	word			Weightoffset;			// 2 byte -> 12
-	word 		AdcOf2Kg;				// 2 byte -> 14
-	int			ChanERROR;
-	bool 		AreCalibrate;				// 1 byte	-> 15
-	byte			typeOfOffsetCal;
-	byte			typeOfGainCal;
-	char			last_calib[ DIM_STRING_DATE_CALIB ];
+	word			WeightFactoryOffset;		// 2 byte
+	float			Weightgain;				// 4 byte
+	word			Weightoffset;			// 2 byte
+	int			AdcTo2Kg;				// 4 byte, può essere occasionalmente negativa
+	int			AdcTo2Kg_dx;			// 4 byte, può essere occasionalmente negativa
+	byte			typeOfOffsetCal;			// 1 byte, usato per leggere il valore del byte che indica se i valori di offset associati alla cella corrispondono ad una calibrazione valida
+	byte			typeOfGainCal;			// 1 byte, usato per leggere il valore del byte che indica se i valori di guadagno associati alla cella corrispondono ad una calibrazione valida
+	bool 		AreCalibrate;				// 1 byte
 } ChannelsBackupParam;
 
 #define CS_ADC1_LOW() (PinCSadc1 = 0)
@@ -306,15 +296,13 @@ void samplePower();
 //------------- External Adc --------------------------------------
 byte get_factory_adc_param();
 byte get_adc_param();
-int backup_adc_param(byte numchan);
-int backup_new_offset_value(byte numchan, word NewOffset);
-int backup_new_gain_value(byte numchan, float NewGain);
-int backup_factory_offset_value(byte numchan, word FactoryOffset);
-int backup_factory_gain_param(byte numchan, float FactoryGain, word adc2Kg);
+bool backup_new_offset_value(byte numchan, word NewOffset);
+bool backup_new_gain_value(byte numchan, float NewGain);
+bool backup_factory_offset_value(byte numchan, word FactoryOffset);
+bool backup_factory_gain_param(byte numchan, float FactoryGain, int adc2Kg, int adc2Kgdx);
 bool backup_calib_state(byte __numchan, byte __calib);
-bool reset_backup_factory_values(byte numchan, byte areCalib);
-int backup_factory_adc_param(byte numchan);
 int backup_date_adc_param(char *s);
+bool reset_backup_factory_values(byte numchan, byte areCalib);
 void adc_serial_init();
 void load_startSampling();
 void load_stopSampling();
@@ -347,7 +335,7 @@ bool CS5530_checkBlockCells(dword *loadsystem);
 void CS5530_setWatchdogAdcTimer(dword match_time);
 bool CS5530_getWatchdogAdcTimer();
 void CS5530_resetAdcComunication();
-bool CS5530_validDataPresentInADCBufferSpi1();
+bool CS5530_validDataPresentInADCBuffer();
 void CS5530_rstValidDataPresentInADCBuffer();
 void SPI_StartTx();
 void setSPI1mode();
@@ -361,7 +349,7 @@ void CS5530_setRstSysSpi2(CS5530_rstSys rst);
 void CS5530_setInputShortSpi2(CS5530_inputShort input);
 void CS5530_setVoltageRefSpi2(CS5530_voltageRef voltage);
 void CS5530_setLatchBitsSpi2(CS5530_outputLatchBits latch);
-void CS5530_setSampleFrequecySpi2(CS5530_sampleFrequecies frq);
+void CS5530_setSampleFrequencySpi2(CS5530_sampleFrequecies frq);
 void CS5530_setAdcCodingSpi2(CS5530_adcCoding coding);
 void CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector ocd);
 void endContinuousConversionSpi2();

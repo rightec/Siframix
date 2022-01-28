@@ -32,12 +32,10 @@ stdUartProtocolAbstraction::stdUartProtocolAbstraction(UARTDevice device) :
 	m_numBytesRecieved = 0;
 	m_packetLength = 0;
 	m_stdUartProtocolAbstractionDataAnalyse = NULL;
-	m_receiverState = stdUart_waitDeviceID;	//m_receiverState = stdUart_waitStx;
+	m_receiverState = stdUart_waitDeviceID;
 	m_lastReceivedOpCode = 0;
 	m_numPacketsReceived = 0;
 	m_numPacketsTransmitted = 0;
-	//m_lastRemoteNodeID = 0;
-	//m_localNodeID = 0;
 	m_lastDataReceived = NULL;
 	m_bufferLastDataReceivedDimension = 0;
 	m_receivedOpCode.clear();
@@ -89,7 +87,7 @@ Restores the initial condition.
 */
 void stdUartProtocolAbstraction::restoreIntialCondition()
 {
-	m_receiverState = stdUart_waitDeviceID;	//m_receiverState = stdUart_waitStx;	
+	m_receiverState = stdUart_waitDeviceID;
 	m_TxTimeoutTimer.Stop();
 	m_RxTimeoutTimer.Stop();
 }
@@ -140,7 +138,7 @@ void stdUartProtocolAbstraction::Manager()
 
 bool stdUartProtocolAbstraction::checkTimeOutElapsed()
 {
-	bool error = False;
+	bool error = false;
 	// + ricezioni dati in modalità Listening
 	if (timeoutRxElapsed())
 	{
@@ -158,7 +156,6 @@ bool stdUartProtocolAbstraction::checkTimeOutElapsed()
 	}
 
 	return error;
-	
 }
 
 /**
@@ -175,8 +172,7 @@ void stdUartProtocolAbstraction::setError(int error, bool pushToQueue)
 		if (!m_error.full())
 		{
 			m_error.push_back(m_lastError);
-		}
-		else
+		}else
 		{
 			m_error.pop_front(error);
 			m_error.push_back(m_lastError);
@@ -282,7 +278,7 @@ bool stdUartProtocolAbstraction::addDataToReceiveBuffer(byte *val, int startInde
 	if ((m_lastDataReceived == NULL) || ((startIndex + dim ) >= m_bufferLastDataReceivedDimension) || (startIndex < 0))
 	{
 		setError(stdUart_DataReceivedBufferOverflow, True);
-		return False;
+		return false;
 	}
 	for (i = startIndex; i < startIndex + dim; i++)
 	{
@@ -320,7 +316,7 @@ bool stdUartProtocolAbstraction::popPacketReceived(int &opCode)
 		m_receivedOpCode.pop_front(opCode);
 		return True;
 	}
-	return False;
+	return false;
 }
 
 /**
@@ -345,14 +341,18 @@ Calculates the checksum as sum of bytes.
 @param len length of data
 @return the checksum value
 */
-byte stdUartProtocolAbstraction::calculateChecksum(byte *data, int len)
+byte stdUartProtocolAbstraction::calculateChecksum(byte *data, byte len)
 {
+	word checksumFull = 0;
 	byte checksum = 0;
-	int i;
+	byte i;
+	
 	for(i = 0; i < len; i++)
 	{
-		checksum += data[i];
+		checksumFull += data[i];
 	}
+	checksum = (byte)(checksumFull & 0x00FF);
+	
 	return ~checksum;
 }
 

@@ -1,0 +1,1 @@
+Versione usata presso Elettra in data 04/09/2019

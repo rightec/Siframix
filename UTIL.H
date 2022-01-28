@@ -52,6 +52,6 @@ void IntToHex(int num, char* hex, unsigned int minNumChar);
 int HexToInt(int& num, char* hex, int len);
 int _1on8_to_int(byte m_bcd);
 int windowFilter(short* Val, short *ValToFilter, int numChan, int CurrentIndex, int FilterDim);
-
+void bubble_sort_array(int num_val, dword *array);
 #endif
 

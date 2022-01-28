@@ -18,7 +18,7 @@
 //
 // RingBuffer crea un buffer circolare di caratteri
 //
-const static int BUFFER_SIZE = 600;
+const static int BUFFER_SIZE = 600;		//64;
 
 /**
 RingBuffer creates a characters ring buffer
@@ -30,7 +30,7 @@ class RingBuffer
 		RingBuffer(unsigned size);
 		~RingBuffer();
 
-		void Clear(bool reset = False);
+		void Clear(bool reset = false);
 		void Insert(unsigned char data);
 		bool Equals(const unsigned char *pdata, unsigned depth);
 	private:
@@ -130,22 +130,22 @@ class UartDeviceAbstraction
 		UartDeviceAbstraction(UARTDevice device);
 		virtual ~UartDeviceAbstraction();
 
-		virtual void SetParity(UARTParity parity, bool forcemodify = False);
+		virtual void SetParity(UARTParity parity, bool forcemodify = false);
 		/**
 		@return the parity
 		*/
 		virtual UARTParity GetParity() { return m_Parity; }
-		virtual void SetFrameBits(UARTFrameBits framebits, bool forcemodify = False);
+		virtual void SetFrameBits(UARTFrameBits framebits, bool forcemodify = false);
 		/**
 			@return the frames bits
 		*/
 		virtual UARTFrameBits GetFrameBits() { return m_FrameBits; }
-		virtual void SetStopBits(UARTStopBits stopbits, bool forcemodify = False);
+		virtual void SetStopBits(UARTStopBits stopbits, bool forcemodify = false);
 		/**
 			@return the stop bits
 		*/
 		virtual UARTStopBits GetStopBits() { return m_StopBits; }
-		virtual void SetBaudRate(UARTBaudRate baudrate, bool forcemodify = False);
+		virtual void SetBaudRate(UARTBaudRate baudrate, bool forcemodify = false);
 		/**
 			@return the baud rate
 		*/

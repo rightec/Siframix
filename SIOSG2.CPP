@@ -82,7 +82,7 @@ Initialization of CSI3 seriale interface: this port controls 8-Digit LED Display
 */
 void sio_init_ch3(void)
 {
-	CB3CTL0 = 0x00;			// communication disabled
+	CB3CTL0 = 0x00;			// communication dasabled
 	CB3CTL1 = 0x18 | 0x03;	// Communication type 4; SCK = fsys/4 = 5Mhz
 	CB3CTL2 = 0x08;			// 16bit data
 	CB3CTL0 = 0xE1;			// abilita TX + MSB first + enable clock

@@ -24,284 +24,211 @@
 #include "channels.h"
 #include "adc.h"
 
-// definizioni utili al modulo e al protocollo
-#define _CONV_IN_DECIMI 	10.0	// converto in decimi di grado
-#define _CONV_X_PROTOCOLLO 	5.0	// converto in decimi di grado, con risoluzione +/-0.1g, cioè 0.2g
-#define _OFFSET_SU_ZERO	10000  // sommo 20g per scongiurare il peso mostrato negativo
+// definizioni utli al modulo e al protocollo
+#define _CONV_IN_DECIMI 	10.0	// converto in decimi di grado, con risoluzione +/-0.1g, cioè 0.2g
+#define _OFFSET_SU_ZERO	10000 // sommo 20g per scongiurare il peso mostrato negativo
 
 /**
 * Lunghezza pacchetti trasmessi a modulo M3000.
-* Per la composizione ed i dati contenuti nei pacchetti vedi le funzioni sendSIFRAStart, sendSIFRAStatus, sendSIFRAInfo, sendSIFRADebug e sendAcknowledge.
+* Per la composizione ed i dati contenuti nei pacchetti vedi le funzioni sendSIFRAStart, sendSIFRAStatus, sendSIFRAInfo e sendAcknowledge.
 */
-#define _PKT_START_LENGTH		37
-#define _PKT_STATUS_LENGTH	80
+#define _PKT_START_LENGTH		55
+#define _PKT_STATUS_LENGTH	67
 #define _PKT_INFO_LENGTH		31
-#define _PKT_DEBUG_LENGTH		78
-#define _PKT_DEBUG_VIE_1_3_LENGTH		72
-#define _PKT_DEBUG_VIE_4_5_LENGTH		78
-#define _PKT_DEBUG_START_LENGTH		45
-#define _PKT_DEBUG_RAM_LENGTH		81
 #define _PKT_ACK_LENGTH		3
+
+/**
+* Lunghezza pacchetti con dati di debug trasmessi a modulo M3000.
+* Per la composizione ed i dati contenuti nei pacchetti vedi le funzioni dedicate.
+*/
+#define _PKT_DBG_VIA_LENGTH				35
+#define _PKT_DBG_START_LENGTH			54
+#define _PKT_DBG_STATUS_LENGTH			53
+#define _PKT_DBG_BACKUP_RAM_LENGTH		57
 
 /*
 * I dati utili per gestire le formule sono 34, dai 37 ricevuti si escludono il nodo (M3100), il tipo di pacchetto (START, 0x0B) e la checksum finale.
 */
-#define _PKT_START_DATA_M3100		34
+#define _PKT_START_DATA_M3300		52
+
+#define _PKT_WEIGHT_DATA_M3300	1
+#define _PKT_SCALES_DATA_M3300	2
+
 
 /*
-* Il dato utile per gestire il reset dei pesi massimi è uno solo
-*/
-#define _PKT_RST_MAX_WEIGHT_M3100		1
-
-/*
-* I dati utili per gestire la fase bilance in corso sono due
-*/
-#define _PKT_SCALES_PHASE_LEN_M3100		2
-
-//---------------------------------------------------------------------------------------
-//------------------------------ SIFRAProtocol ---------------------------------------------
-//---------------------------------------------------------------------------------------
-
-enum SIFRA_HwErrors_t
-{
-	SIFRAUart_Hw_NoError 			= 0x00,
-	SIFRAUart_Hw_ReceptionError 	= 0x01,
-	SIFRAUart_Hw_ParityError    		= 0x02,
-	SIFRAUart_Hw_FrameError 		= 0x04, 
-	SIFRAUart_Hw_OverrunError 		= 0x08,
-	SIFRAUart_Hw_NoDevice			= 0x10,
-	SIFRAUart_Hw_ErrorUnknown		= 0x20,
-};
-
-enum
-{
-	SIFRAMsg_noMsg = 0,
-	SIFRAMsg_StopAll,			// il master impone lo stop a tutti i moduli
-	SIFRAMsg_setStart,
-	SIFRAMsg_statusAsked,
-	SIFRAMsg_infoAsked,
-	SIFRAMsg_debugAsked,
-	SIFRAMsg_debugVie_1_3_Asked,
-	SIFRAMsg_debugVie_4_5_Asked,
-	SIFRAMsg_debugStartAsked,
-	SIFRAMsg_debugRamAsked,
-	SIFRAMsg_newLines,
-	SIFRAMsg_maxWeightReset,
-	SIFRAMsg_restartControl,
-	SIFRAMsg_scalesPhase,
-	SIFRAMsg_scalesNotCalib,
-	SIFRAMsg_setZeroCalib,
-	SIFRAMsg_setOffset1,
-	SIFRAMsg_setOffset2,
-	SIFRAMsg_setOffset3,
-	SIFRAMsg_setOffset4,
-	SIFRAMsg_setOffset5,
-	SIFRAMsg_setGain1,
-	SIFRAMsg_setGain2,
-	SIFRAMsg_setGain3,
-	SIFRAMsg_setGain4,
-	SIFRAMsg_setGain5,
-	SIFRAMsg_resetCalib,
-	SIFRAMsg_jumpToLoader,
-	E_SIFRAMsg_loopApplication,
-	            
-	// errori di comunicazione legati all'hardware
-	SIFRAMsg_HwError,
-
-	// errori di comunicazione legati al protocollo
-	SIFRAMsg_timoutRx,
-	SIFRAMsg_timoutTx,
-	SIFRAMsg_opcodeUnknown,
-	SIFRAMsg_protocolStateUnknown,
-	SIFRAMsg_checkSumError,
-	SIFRAMsg_transmitBufferOverflowError,
-	SIFRAMsg_receptionBufferOverflowError,
-	SIFRAMsg_dataReceivedBufferOverflow,
-
-	// errori non identificati
-	SIFRAMsg_unknownError
-};
-
-typedef enum
-{
-	SIFRA_SET_START_M3100 = 0x0B,		// seguito da 24 byte
-	SIFRA_GET_STATUS_M3100 = 0x0C,			// richiesta info stato
-	SIFRA_GET_INFO_M3100 = 0x17,				// richiesta info sistema
-	SIFRA_GET_DEBUG_M3100 = 0x12,
-	SIFRA_NEW_LINES_M3100 = 0x1A,
-	SIFRA_RESET_MAX_WEIGHT = 0x2B,
-	SIFRA_RESTART_CONTROL = 0x30,
-	SIFRA_GET_SCALES_STATE_M3100 = 0x40,
-	SIFRA_GET_CELLS_NOT_CALIB = 0x50,
-	SIFRA_GET_DEBUG_VIE_1_3_M3100 = 0x2C,
-	SIFRA_GET_DEBUG_VIE_4_5_M3100 = 0x2D,
-	SIFRA_GET_DEBUG_START_M3100 = 0x2E,
-	SIFRA_GET_DEBUG_RAM_M3100 = 0x2F,
-
-	SIFRA_SETZERO_CELL1 = 0x01,	// calibr. zero cella 1
-	SIFRA_SETZERO_CELL2 = 0x02,	// calibr. zero cella 2
-	SIFRA_SETZERO_CELL3 = 0x03,	// calibr. zero cella 3
-	SIFRA_SETZERO_CELL4 = 0x04,	// calibr. zero cella 4
-	SIFRA_SETZERO_CELL5 = 0x05,	// calibr. zero cella 5
-	SIFRA_SET_CAL_CELL1 = 0x06,			// calibr. gain cella 1 
-	SIFRA_SET_CAL_CELL2 = 0x07,			// calibr. gain cella 2
-	SIFRA_SET_CAL_CELL3 = 0x08,
-	SIFRA_SET_CAL_CELL4 = 0x09,
-	SIFRA_SET_CAL_CELL5 = 0x0A,
-	SIFRA_RESET_CALIB_PARAMS = 0x1C,	// reset dei valori di calibrazione salvati in EEPROM
-	SIFRA_ZERO_CELLS_M3100 = 0x1B,	// imponi zero alle celle del modulo M3100
-	SIFRA_SET_STOP_ALL = 0x00,			// stop generale
-	SIFRA_M3000_STOP = 0xA0,
-	SIFRA_JUMP_TO_LOADER = 0xA5,		// SALTA in loader per riprogrammazione
-	E_SIFRA_LOOP_CMD		= 0XAB		// entra in un ciclo infinito, usato per aggiornamento firmware di un altro modulo per evitare interferenze sulla rete 485
-	}SIFRACmd_FromPcToBoard;
-
-enum errorStatus_1_t
-{
-	NO_ERRORS 									= 0x0000,	// situaizone di reset
-	ERR_LETTURA_ZERO 							= 0x0001,	// si verifica in calibrazione
-	ERR_LETTURA_2Kg 							= 0x0002,	// si verifica in calibrazione		
-	ERR_RILEV_ARIA 							= 0x0004,	// sollo sulla via abilitata negli stati start di sacca e riempitubi: bloccante in start, solo segnalazione in riempitubi
-	ERR_RILEV_VUOTO 							= 0x0008,	// solo sulla via abilitata negli stati start di sacca e riempitubi, bloccante in entrambi
-	ERR_PESOINSTABILE 							= 0x0010,	// sempre attivo, segnalazione ma bloccante solo sulla via abilitata in start			
-	ERR_NON_CALA	 							= 0x0020,
-	ERR_PESO_MASSIMO							= 0x0040,
-	ERR_CELLA_ROTTA							= 0x0080,
-	ERR_PRODOTTO								= 0x0200,
-	ERR_IMP_TO_FLOW							= 0x0400,	// il valore calcolato di imp_to_flow per quella pompa si discosta troppo dal valore nominale
-	ERR_POMPA_NON_GIRA 						= 0x0800,	// è stato rilevato che la pompa non gira
-	ERR_VAR_PESI								= 0x1000,	// usato per controllo stabilità pesi durante test EMC
-	ERR_VAR_ENCODER							= 0x2000,	// usato per controllo stabilità valori encoder durante test EMC
-	
-	ERR_RST_STOP 								= ERR_CELLA_ROTTA | ERR_PRODOTTO,		// resetto gli errori non critici e che al riavvio se ancora presenti vengono rigenerati
-	ERR_END_FORMULA 							= ERR_CELLA_ROTTA,						// resetto tutti gli errori al termine di una formula esclusi quelli critici
-};
-
-enum errorStatus_2_t
-{
-	E_ERROR_NONE					= 0x0000,
-	ERR_COVER_APERTA				= 0x0001,		// errore sportello copertura rulli aperto
-	ERR_COMUN_INT					= 0x0002,		// errore mancata comunicazione oltre il tempo del watchdog
-	ERR_EEPROM					= 0x0004,
-	ERR_RAM_TAMPONATA			= 0x0008,
-	ERR_SYSTEM					= 0x0010,
-
-	E_ERRORS_RST_STOP			= ERR_COMUN_INT | ERR_EEPROM | ERR_RAM_TAMPONATA,
-	
-	ERR_SYSTEM_NEGATO			= 0xFFEF
-};
-
-enum errorStop_t
-{
-	E_ERR_STOP_NONE						= 0x0000,
-	E_ERR_STOP_HAND_MOVE				= 0x0001,
-	E_ERR_STOP_HAND_MOVE_FAIL			= 0x0002,		// errore mancata comunicazione oltre il tempo del watchdog
-	E_ERR_STOP_WEIGHT_DECREASE			= 0x0004,
-	E_ERR_STOP_EXCESSIVE_DECREASE		= 0x0008,
-	E_ERR_STOP_WEIGHT_INCREASE			= 0x0010,
-	E_ERR_STOP_BAG_CHANGED				= 0x0020,
-	E_ERR_STOP_MAYBE_BAG_CHANGED		= 0x0040
-};
-
-enum error_log_t
-{
-	E_LOG_ERROR_NONE = 0,
-	E_ERR_CALIB_MGR_STATE,
-	E_ERR_PESO_INIT_RT_FASE_2,
-	E_ERR_PESO_INIT_RT_ADD,
-	E_ERR_RIPR_SEQ_BK,
-	E_ERR_RIPR_SEQ_NUM_LINES,
-	ERR_CASE_CODA_SAMPLE_MNGR,
-	ERR_CASE_SAMPLE_MNGR,
-	ERR_CASE_SAVE_BK_DATA,
-	ERR_CASE_READ_BK_DATA,
-	ERR_CASE_SAVE_RESTART_DATA,				// 10
-	ERR_CASE_READ_RESTART_DATA,
-	ERR_CASE_SAVE_ENC_DATA,
-	ERR_CASE_READ_ENC_DATA,
-	ERR_CASE_DECODE_MSG_STATUS,
-	ERR_CASE_PKT_TEST_ERROR,
-	ERR_CASE_READ_ADC_VALUES,
-	ERR_CASE_FACTORY_CALIB_OFFSET_OUT,
-	ERR_CASE_FACTORY_CALIB_OFFSET_LOW,
-	ERR_CASE_CALIB_OFFSET_OUT,
-	ERR_CASE_FACTORY_CALIB_GAIN_OUT,		// 20
-	ERR_CASE_FACTORY_CALIB_GAIN_LOW,
-	ERR_CASE_CALIB_GAIN_OUT,
-	ERR_CASE_CALIB_GAIN_LOW,
-	ERR_CASE_STATE_MGR,
-	ERR_CASE_SACCA_MGR,
-	ERR_CASE_MANUAL_MGR,
-	ERR_CASE_RT_MGR,
-	ERR_CASE_ST_MGR,
-	ERR_CASE_SAMPLE_MGR,
-	ERR_CASE_AIR_MGR,
-	ERR_CASE_SERVICE_MGR,
-	ERR_CASE_TEST_POMPE_MGR,
-	ERR_CASE_TEST_FLUSSO_POMPE_MGR,
-	ERR_CASE_DECODE_START_MSG,
-	ERR_CASE_MSG_RECEIVED,
-	ERR_CASE_OPCODE_UNKNOWN,
-	E_ERR_CASE_RESET_CALIB_FAIL,
-	E_ERR_CASE_CARICA_START,
-	E_ERR_CASE_LINE_ST,
-	E_ERR_CASE_MANUAL_EROG
-};
-
-/*
-* Struttura dati associata ad ogni via.
+* Struttura dati associata ad ogni via del modulo M3300.
 *
-* 26 byte per via (i DecTimer sono stati esclusi ed i float vengono passati con 2 byte e non 4)
+* 22 byte per via escluso il DecTimer.
 *
 */
 struct LINES_STATUS
 {
-	bool abilitazione;
+	bool abilitazione;		// linea abilita: on/off EV
 	bool da_eseguire;
 	bool eseguita;
-	bool firstErogDone;
-	bool rifinituraDone;
-	bool restart_bag;
 	bool stato_led;
 	byte stato_luci;
 	byte fase_luci;
-	int vel;
 	word peso_da_erogare;	// peso obiettivo
+	word capacita;			// capacità attuale
 	word peso_erogato;
 	word peso_gia_erogato;
-	int peso_stop;
-	int variazione_peso_stop;
-	word tara;				// tara sacca su via
+	word peso_iniziale;
+	word peso_finale;
 	float peso_spec ;			// peso specifico passato da tastiera con 3 cifre decimali (valori compresi fra 0,900 e 1,300)
-	float flusso_pompa;		// volume erogato calcolato in funzione dei giri pompa, usato per controllare un eventuale errore prodotto
-	DecTimer timer_led;		// timer che non deve essere mai disattivata, pena il non corretto azionamento dei led della scheda luci
-	DecTimer timer_check_block_pump;
-	DecTimer timer_rampa;
-	DecTimer timerVerificaCalo;
+	DecTimer timer_led;
 };
 typedef struct LINES_STATUS LINES_Status;
 
 /*
-* Struttura dati associata ai comandi di start ricevuti dalla tastiera.
+* Struttura dati associata al comando di start ricevuto.
 *
-* 33 byte
+* 51 byte
 *
 */
 struct STRUCTSTARTCMD
 {
-	word function;			// comando ricevuto
-	byte support;			// vie da abilitare
-	word peso_linea[ NUM_MAX_LINE];	// peso target
-	word tara_linea[ NUM_MAX_LINE];	// tara
-	word peso_spec[ NUM_MAX_LINE];	// peso specifico
+	word function;
+	byte support;
+	word peso_spec[NUM_MAX_LINE];	// peso specifico passato da tastiera intero (valori compresi fra 90 e 130)
+	word peso_linea[NUM_MAX_LINE];
+	word cap_linea[NUM_MAX_LINE];	// tara nel caso del M3100 
 };
 
-struct max_weight_error_rst_t
+/*
+* Struttura dati associata allo stato del modulo M3300.
+*
+* 21 byte.
+*
+*/
+struct STRUCTSTATUSCMD
+{	
+	bool air_block_en;		// attivazione del blocco motore per aria
+	bool m_FillingOnCourse;
+	byte status;
+	byte flagsErrorLine;		// segnalazione errore bloccante rilevato
+	byte tot_enabled_lines;
+	int next_line;
+	/*
+	statusChan è un vettore nel caso del modulo M3300 di 2 word.
+	_ADC1_ e _ADC2_ fanno parte di un enum: _ADC1_ corrisponde a 0 mentre _ADC2_ corrisponde a 1.
+	La prima word (statusChan[_ADC1_]) memorizza nei due byte che la costituiscono i vari errori che possono presentarsi sul  modulo ed elencati nell'enum ERRORSTATUS
+	riportato sotto.
+	La seconda word (statusChan[_ADC2_]) memorizza invece le vie (per l'M3300 sono 8) che hanno preentato gli errori di aria o prodotto.
+	In particolare il primo byte della word più significativa (8 bit più a sinistra) ha settato a 1 le vie che hanno presentato errore prodotto: ad esempio se il primo byte è 01001001
+	l'errore prodotto è stato rilevato sulle vie 8, 11 e 14 del modulo M3300 (le vie vanno da 8 a 15).
+	Il secondo byte invece (8 bit più a destra) ha settato a 1 le vie che hanno presentato errore aria: ad esempio se il primo byte è 00100100 l'errore prodotto è stato rilevato
+	sulle vie 10 e 13.
+	*/
+	byte statusAirSensors;
+	word statusChan[_MAX_LOAD_CHAN_];
+	word SIFRAComPacketsRx;
+	word SIFRAComHwErrors;
+	word SIFRAComProtocolErrors;
+	word SIFRAComUnknownErrors;
+	byte error_stop;
+	short variazione_peso;
+	byte test_pinch_done;
+	byte error_monitor;
+	byte state;
+	byte prevState;
+	byte phase;
+};
+
+/**
+* Struttura contenente gli stati delle varie macchine a stati
+*
+* 9 byte
+*
+*/
+struct structMachineState_t
+{	
+	byte sampleState;					// variabile usata in macchina a stati SampleManager per rilevazione peso instabile
+	byte calibState;					// variabile usata in macchina a stati calibrazione
+	byte saccaState;					// variabile usata in SaccaManager
+	byte rtState;						// variabile usata in RTManager e RisciacquoManager
+	byte stState;						// variabile usata in STManager e ManualManager
+	byte pinchState;					// variabile usata in macchina a stati test pinze
+	byte ledState;					// variabile usata per gestire la macchina a stati associata ai led della scheda luci
+	byte driverState;					// variabile usata per stabilire lo stato di idle pompe da quello di erogazione
+	byte serviceState;					// variabile usata in macchina a stati ServiceManager, TestEMC_Manager e TestPompe_Manager
+	byte nonCalaState;				// variabile usata in macchina a stati algoritmo non cala
+};
+
+/**
+* Struttura usata solamente per rendere disponibili alla protocolSifra variabili della CPU_Manager da inviare alla tastiera per debug
+*
+* 38 byte
+*
+*/
+struct structStatusDebug_t
+{	
+	byte sifraStatus;
+	byte sifraPrevStatus;
+	byte sifraPhase;
+
+	int peso_current_time_int;
+	word peso_current_time_word;
+	word sampleMngr_cycles;
+
+	/*
+	* Variabili da monitorare in SaccaManager
+	*/
+	byte sacca_manager_state;
+	word peso_parziale;
+
+	/*
+	* Variabili da monitorare per test EMC
+	*/
+	word		enc_value;
+	word		enc_value_control;
+	word		enc_movement;
+	word		enc_up_limit;
+	word		enc_low_limit;
+	word		weight;
+	word		init_weight;
+	byte		air_state[NUM_MAX_LINE];
+	byte		cover_pump;
+	byte		error_control;
+};
+
+/*
+* Struttura dati associata al backup di un'erogazione in corso.
+*
+* 49 byte
+*
+*/
+typedef struct
 {
-	byte lines;
+	int nextLine;
+	byte num_vie_da_eseguire;
+	byte vie_da_eseguire;
+	byte vie_eseguite;
+	long peso_stop;
+	bool abilitazione[NUM_MAX_LINE];
+	word peso_erogato[NUM_MAX_LINE];
+	word capacita[NUM_MAX_LINE];
+} BK_struct;
+
+/*
+* Struttura dati salvata in RAM tamponata.
+*
+* 9 byte
+*
+*/
+typedef struct
+{
+	float tolleranza;
+	float param_encoder;
+	byte restart;
+} FP_STRUCT;
+
+struct structWeightCmd_t
+{
+	byte sensibility;
 };
 
-struct restart_control_cmd_t
+struct structRestartFormulaCmd_t
 {
 	byte type_of_formula;
 };
@@ -312,144 +239,243 @@ struct structScalesPhaseCmd_t
 	byte type_of_phase;
 };
 
-struct structScalesNotCalibCmd_t
+enum
 {
-	byte scales_not_calib;
+	SIFRAMsg_noMsg = 0,
+	SIFRAMsg_StopAll,
+	SIFRAMsg_setStart,
+	SIFRAMsg_statusAsked,
+	SIFRAMsg_infoAsked,
+	SIFRAMsg_debugViaAsked,
+	SIFRAMsg_debugStartAsked,
+	SIFRAMsg_debugStatusAsked,
+	SIFRAMsg_debugRamAsked,
+	SIFRAMsg_SetWeightSensibility,
+	SIFRAMsg_restartWeightCoverControl,
+	SIFRAMsg_restartFormula,
+	SIFRAMsg_scalesPhase,
+	SIFRAMsg_scalesNotCalib,
+	SIFRAMsg_setZeroVerification,
+	SIFRAMsg_setZeroCalib,
+	SIFRAMsg_setGain8,
+	SIFRAMsg_setGain15,
+	SIFRAMsg_resetCalib,
+	SIFRAMsg_jumpToLoader,
+	SIFRAMsg_resetApplication,
+	SIFRAMsg_startAcquisition,
+	SIFRAMsg_stopAcquisition,
+
+	/*
+	* Errori legati al protocollo seriale
+	*/
+	SIFRAMsg_timoutRx,
+	SIFRAMsg_timoutTx,
+	SIFRAMsg_opcodeUnknown,
+	SIFRAMsg_stateProtocolUnknown,
+	SIFRAMsg_checkSumError,
+	SIFRAMsg_transmitBufferOverflowError,
+	SIFRAMsg_receptionBufferOverflowError,
+	SIFRAMsg_dataReceivedBufferOverflow,
+
+	/*
+	* Errori legati all'hardware
+	*/
+	SIFRAMsg_HwError,
+
+	/*
+	* Errori sconosciuti
+	*/
+	SIFRAMsg_unknownError
 };
 
-/*
-* Struttura dati associata ad ogni via.
-*
-* 39 byte
-*
-*/
-struct STRUCTSTATUSCMD
+enum SIFRA_HwErrors
 {
-	bool led_aria_en;						// attivazione della segnalazione aria sui led della scheda luci
-	bool air_block_en[ NUM_MAX_LINE];		// attivazione del blocco motore per aria
-	bool fillingOnCourse;				// indicazione rimepimento in corso (motore e allarmi attivi)
-	byte state;
-	byte prevState;
-	byte phase;
-	byte status;							// stato del sistema
-	byte flagsErrorLine;					// segnalazione errore bloccante rilevato
-	word statusChan[_MAX_LOAD_CHAN_];	// variabile usata per registrare la tipologia di errore occorso
-	word errors;							// maschera a 8 bit di errori aggiuntivi generici e non specifici di una via
-	byte log_error;						// variabile usata per monitorare comportamenti anomali o inattesi del firmware
-	byte error_stop[_MAX_LOAD_CHAN_];
-	word commPacketsRx;
-	word commErrorHw;
-	word commErrorProtocol;
-	word commErrorUnknown;
-	bool cover_open;						// segnala lo stato della cover rulli
+	SIFRAUart_Hw_NoError 			= 0x00,
+	SIFRAUart_Hw_ReceptionError 	= 0x01,
+	SIFRAUart_Hw_ParityError    		= 0x02,
+	SIFRAUart_Hw_FrameError 		= 0x04, 
+	SIFRAUart_Hw_OverrunError 		= 0x08,
+	SIFRAUart_Hw_NoDevice			= 0x10,
+	SIFRAUart_Hw_ErrorUnknown		= 0x20,
 };
 
-/*
-* Struttura dati associata a test EMC
-*
-* 75 byte
-*
-*/
-struct STRUCTDEBUGCMD
+enum sifraCmd_t
 {
-	word		peso_init[NUM_MAX_LINE];
-	int		peso_real_time[NUM_MAX_LINE];
-	word		enc_value[NUM_MAX_LINE];
-	word		enc_value_control[NUM_MAX_LINE];
-	word		enc_movement[NUM_MAX_LINE];
-	word		enc_upper_limit[NUM_MAX_LINE];
-	word		enc_lower_limit[NUM_MAX_LINE];
-	byte		air_state[NUM_MAX_LINE];
+	SIFRA_SET_STOP_ALL = 0x00,			// stop generale
+
+	SIFRA_SET_START_M3300 = 0x10,
+	SIFRA_GET_STATUS_M3300 = 0x11,			// richiesta info stato
+	SIFRA_GET_INFO_M3300 = 0x18,				// richiesta info sistema
+	SIFRA_SET_WEIGHT_SENSIBILITY_M3300 = 0x20,		// richiesta settaggio filtro pesi
+	SIFRA_ERROR_RESTART_CONTROL = 0x2B,
+	SIFRA_GET_DEBUG_VIA_M3300	= 0x30,		// richiesta debug struttura via
+	SIFRA_GET_DEBUG_START_M3300	= 0x31,		// richiesta debug struttura start
+	SIFRA_GET_DEBUG_STATUS_M3300	= 0x32,		// richiesta debug struttura status
+	SIFRA_GET_DEBUG_BACKUP_RAM_M3300	= 0x33,		// richiesta debug struttura ram tamponata
+
+	SIFRA_GET_SCALES_STATE_M3300 = 0x40,		// comando ricevuto dalla tastiera per sapere quando sono in verifica bilance o calibrazione
+
+	SIFRA_GET_SCALES_NOT_CALIB_M3300 = 0x50,		// comando ricevuto dalla tastiera per identificare vie scalibrate
+
+	SIFRA_SETZERO_VERIFICATION = 0x1C,	// calibrazione di zero in verifica bilance
+	SIFRA_RESET_CALIB_PARAMS = 0x0C, 		// reset dei valori di calibrazione salvati in EEPROM
+	SIFRA_SETZERO_CELL8_CELL15 = 0x0D,	// calibr. zero cella 6-H20 
+	SIFRA_SET_CAL_CELL8 = 0x0E,			// calibr. gain cella 6
+	SIFRA_SET_CAL_CELL15 = 0x0F,			// calibr. gain cella H20
+	SIFRA_JUMP_TO_LOADER = 0xA5,			// salta in loader per riprogrammazione
+	SIFRA_M3000_STOP		= 0xA0,			// stop ricevuto dalla tastiera
+	SIFRA_RESTART_FORMULA_M3300 = 0x2C	// comando ricevuto alla ripresa di una formula
 };
 
-/*
-* Struttura dati associata a test EMC
-*
-* 7 byte
-*
-*/
-struct machineStatus_t
+enum ERRORSTATUS
 {
-	byte calibState;						// variabile usata per gestire la macchina a stati della calibrazione celle di carico
-	byte rtState;					// variabile usata per gestire le macchine a stati di riempimento linee, svuotamento linee e riempimento manuale
-	byte saccaState;
-	byte manualState;
-	byte driverState;				// variabile usata per gestione led in SIFRALed_Manager
-	byte ledState;					// variabile usata per gestire i diversi lampeggii dei led
-	byte serviceState;					// variabile usata per gestire le macchine a stati di service nel test di service, flusso pompe e flusso
+	NO_ERRORS 							= 0x0000,	// situazione di reset
+	ERR_LETTURA_ZERO 					= 0x0001,	// si verifica in calibrazione
+	ERR_LETTURA_2Kg 					= 0x0002,	// si verifica in calibrazione		
+	ERR_GENERIC 						= 0x0004,	// solo sulla via abilitata negli stati start di sacca e riempitubi: bloccante in start, solo segnalazione in riempitubi
+	ERR_RILEV_VUOTO 					= 0x0008,	// solo sulla via abilitata negli stati start di sacca e riempitubi, bloccante in entrambi
+	ERR_PESOINSTABILE 					= 0x0010,	// sempre attivo, segnalazione ma bloccante solo sulla via abilitata in start			
+	ERR_NON_CALA 						= 0x0020,	// non cala
+	ERR_TESTPINZE_KO					= 0x0040,	// una o più elettrovalvole non chiude bene o il tubo è fuori dalla clamp
+	ERR_POMPA_NON_GIRA 				= 0x0080,	// è stato rilevato che la pompa non gira quanto impostato
+	ERR_PRODOTTO 						= 0x0200,	// mismatch fra volume erogato pesato e volume erogato calcolato come passi encoder dovuto all'errore di prodotto
+	ERR_PESO_MASSIMO					= 0x0400,	// cella sovraccaricata
+	ERR_CELLA_ROTTA_SX				= 0x0800,	// peso letto a zero o fondoscala, ponte rotto o cablaggio compromesso cella sx	
+	ERR_CELLA_ROTTA_DX				= 0x1000,	// peso letto a zero o fondoscala, ponte rotto o cablaggio compromesso cella dx
+	ERR_COVERAPERTA					= 0x2000,	// sportello pompa aperto
+	ERR_FLUSSO							= 0x4000,	// errore per strozzatura del cavo
+	ERR_COMUN_INT						= 0x8000,	// errore mancata comunicazione oltre il tempo del watchdog
+
+	// errori negati o combinazioni di errori
+	ERR_CELLA_ROTTA_SX_NEGATO		= 0xF7FF,	// negazione dell'errore ERR_CELLA_ROTTA_SX
+	ERR_CELLA_ROTTA_DX_NEGATO		= 0xEFFF,	// negazione dell'errore ERR_CELLA_ROTTA_DX
+	ERR_PESO_MASSIMO_NEGATO			= 0xFBFF,	// negazione dell'errore ERR_PESO_MASSIMO
+	ERR_PESOINSTABILE_NEGATO			= 0xFFEF,	// negazione dell'errore ERR_PESOINSTABILE
+	ERR_TESTPINZE_KO_NEGATO			= 0xFFBF,	// negazione dell'errore ERR_TESTPINZE_KO
+	ERR_COVERAPERTA_NEGATO			= 0xDFFF,	// negazione dell'errore ERR_COVERAPERTA
+	ERR_POMPA_MOSSA_A_MANO_NEG	= 0xFEFF,
+	ERR_STOP							= ERR_CELLA_ROTTA_SX | ERR_CELLA_ROTTA_DX | ERR_COMUN_INT | ERR_PRODOTTO | ERR_FLUSSO,
+	ERR_END_FORMULA					= ERR_CELLA_ROTTA_SX | ERR_CELLA_ROTTA_DX | ERR_COMUN_INT
 };
 
-/*
-* Struttura dati per backup
-*
-* 29 byte
-*
-*/
-typedef struct
+enum errorStop_t
 {
-	byte start_cmd;
-	byte vie_da_eseguire;
-	byte vie_eseguite;
-	byte num_lines;
-	bool abilitazione[NUM_MAX_LINE];
-	word peso_erogato[NUM_MAX_LINE];
-	int peso_stop[NUM_MAX_LINE];
-} BK_struct;
+	E_ERR_STOP_NONE						= 0,
+	E_ERR_STOP_PUMP_BY_HAND				= 0x0001,
+	E_ERR_STOP_EXCESSIVE_DECREASE		= 0x0002,
+	E_ERR_STOP_WEIGHT_DECREASE			= 0x0004,
+	E_ERR_STOP_WEIGHT_INCREASE			= 0x0008,
+	E_ERR_STOP_BAG_CHANGED				= 0x0010,
+	E_ERR_STOP_MAYBE_BAG_CHANGED		= 0x0020
+};
 
-/*
-* Struttura dati motori
-*
-* 20 byte (i float vengono spediti come 2 byte)
-*
-*/
-typedef struct {
-	float tolleranza[_DIM_PAR_ENC];
-	float param_encoder[_DIM_PAR_ENC];
-} FP_STRUCT;
-
-/*
-* Struttura dati linea e restart
-*
-* 2 byte
-*
-*/
-typedef struct
+enum errorStatus_2_t
 {
-	byte tipo_linea;
-	byte restart_bk;
-} Restart_t;
-
-/**
-* System status states
-*/
+	E_ERROR_NONE = 0,
+	E_ERROR_ENCODER,
+	E_ERROR_WEIGHT,
+	ERR_EEPROM,
+	ERR_RAM_READ_BK,
+	ERR_RAM_READ_ENC,		// 5
+	ERR_RAM_WRITE_BK,
+	ERR_RAM_WRITE_ENC,
+	ERR_SYSTEM,
+	ERR_MSG_NOT_EXPECTED,
+	ERR_OPCODE_UNKNOWN,		//10
+	ERR_START_MESSAGE,
+	ERR_START_NOT_HANDLED,
+	ERR_ESD_DAMAGE,
+	ERR_RESTORE_DATA,
+	ERR_READ_EEPROM,			// 15
+	ERR_CASE_SACCA_MNGR,
+	ERR_CASE_MANUAL_MNGR,
+	ERR_CASE_RT_MNGR,
+	ERR_CASE_RISCIACQUO_MNGR,
+	ERR_CASE_ST_MNGR,			// 20
+	ERR_CASE_SAMPLE_MNGR,
+	ERR_CASE_AIR_MNGR,
+	ERR_CASE_CALIB_MNGR,
+	ERR_CASE_SERVICE_MNGR,
+	ERR_CASE_EMC_MNGR,		// 25
+	ERR_CASE_POMPE_MNGR,
+	ERR_CASE_LED_MNGR,
+	ERR_CASE_PINCH_TEST_MNGR,
+	ERR_CASE_VOL_CONTROL_RT,
+	ERR_CASE_PESO_INIT_SACCA,	// 30
+	ERR_CASE_PESO_FINALE_SACCA,
+	ERR_CASE_PESO_PARZIALE_SACCA,
+	ERR_CASE_CODA_SAMPLE_MNGR,
+	ERR_MSG_VIA_DEBUG,
+	ERR_CASE_VUOTO,				// 35
+	ERR_CASE_STATO_EROGAZIONE_SACCA,
+	ERR_CASE_STATO_ENCODER_SACCA,
+	ERR_CASE_TEST_DEBUG,
+	ERR_CASE_PESO_FINALE_RT_MNGR,
+	ERR_CASE_PESO_EROGATO_RT_MNGR,	// 40
+	ERR_CASE_PESO_DA_EROGARE_SACCA_MNGR,
+	ERR_CASE_PESO_FINALE_SACCA_MNGR,
+	ERR_CASE_PESO_PARZIALE_MANUAL_MNGR,
+	ERR_CASE_CHIUSURA_MANUAL_MNGR,
+	ERR_CASE_PESO_PARZIALE_RINSE_MNGR,	// 45
+	ERR_CASE_CHIUSURA_RINSE_MNGR,
+	ERR_CASE_TEST_FLOW_PUMP,
+	ERR_CASE_VARIAZIONE_PESO,
+	ERR_CASE_TOT_EN_LINES,
+	ERR_CASE_SET_STABILITY_LEVEL,			// 50
+	ERR_CASE_NON_CALA,
+	ERR_CASE_FACTORY_CALIB_OFFSET_OUT_CELL_8,
+	ERR_CASE_FACTORY_CALIB_OFFSET_OUT_CELL_15,
+	ERR_CASE_FACTORY_CALIB_OFFSET_LOW,
+	ERR_CASE_CALIB_OFFSET_OUT_CELL_8,				// 55
+	ERR_CASE_CALIB_OFFSET_OUT_CELL_15,
+	ERR_CASE_FACTORY_CALIB_GAIN_SX_OUT_CELL_8,
+	ERR_CASE_FACTORY_CALIB_GAIN_SX_OUT_CELL_15,
+	ERR_CASE_CALIB_GAIN_SX_OUT_CELL_8,
+	ERR_CASE_CALIB_GAIN_SX_OUT_CELL_15,				// 60
+	ERR_CASE_FACTORY_CALIB_GAIN_DX_OUT_CELL_8,
+	ERR_CASE_FACTORY_CALIB_GAIN_DX_OUT_CELL_15,
+	ERR_CASE_CALIB_GAIN_DX_OUT_CELL_8,
+	ERR_CASE_CALIB_GAIN_DX_OUT_CELL_15,
+	ERR_CASE_READ_ADC_VALUES,						// 65
+	ERR_CASE_TEST_OPEN_MORE_EV,
+	ERR_RESET_CALIB_DATA_FAIL,
+	ERR_CASE_CALC_PUMP_NOT_MOVE,
+	ERR_CASE_FACTORY_CALIB_DIVIDE_BY_ZERO,
+	ERR_CASE_DOWNLOAD_STATE,
+	ERR_CASE_START_FAILED,
+	ERR_CASE_NUM
+};
 
 enum COMMANDSTATUS
 {
-	STATO_IDLE = 0x01,
-	STATO_ERRORE = 0x02,
-	STATO_CALIBRAZIONE_FABBRICA = 0x04,
-	STATO_STOP = 0x08,
-	STATO_START = 0x10,
-	STATO_FINE_SEQ = 0x20,
-	STATO_ST = 0x40,
-	STATO_CALIBRAZIONE_UTENTE = 0x80			
+	STATO_IDLE = 0x0001,
+	STATO_ERRORE = 0x0002,
+	STATO_CALIBRAZIONE_FABBRICA = 0x0004,
+	STATO_STOP = 0x0008,
+	STATO_START = 0x0010,
+	STATO_FINE_SEQ = 0x0020,
+	STATO_VERIFICA_BILANCE = 0x0040,
+	STATO_CALIBRAZIONE_UTENTE = 0x0080
 };
 
 /**
 Class to manage the serial communication between the board HRC-7000 and the PC.
 
-When a packet is decoded, a message is pushed in the messages' fifo as well as an error occured. 
+When a packet is decode a messages is pushed in the messages' fifo as well as an error occured. 
+The messages have to be popped from the board manager using the propriety AcqHrProtocol::getMsg().
 
 The protocol packets are builded as follow:
-- (A) ID del modulo  - 1 byte
-- (B) OPCODE	  - 1 byte
-- (C) DATA        - x bytes
-- (D) CHECKSUM = (B)+(C) in complemento a 1  - 1 byte (LSB)
+- (A) STX = '\\n'  - byte
+- (B) OPCODE	  - byte	
+- (C) DATA LENGTH - byte 
+- (D) DATA        - DATA LENGTH bytes
+- (E) CHECKSUM = (B)+(C)+(D)  - byte
 
 Data length can be also 0, in this case the next data received will be the checksum.
+Data length is the length of the field data.
 
 The uart communication specifications are the follows:
-- Baud rate: 19200
+- Baud rate: 230400
 - Data bits: 8
 - Stop bits: 1
 - Parity: None
@@ -468,24 +494,23 @@ class SIFRAProtocol: protected stdUartProtocolAbstraction
 		int sendSIFRAStart();
 		int sendSIFRAStatus();
 		int sendSIFRAInfo();
-		int sendSIFRADebug();
-		int sendSIFRADebugVie_1_3();
-		int sendSIFRADebugVie_4_5();
-		int sendSIFRADebugStart();
-		int sendSIFRADebugRam();
-		int SIFRA_decodeStartCmd(byte *cmd_byte_buffer );
-		int SIFRA_decodeResetMaxWeight(byte *cmd_byte_buffer );
-		int SIFRA_decodeRestartControlCmd( byte *cmd_byte_buffer);
+		int sendAcknowledge();
+		int SIFRA_decodeStartCmd( byte *cmd_byte_buffer );
+		int SIFRA_decodeWeightSensibilityCmd( byte *cmd_byte_buffer );
+		int SIFRA_decodeRestartFormulaCmd( byte *cmd_byte_buffer);
 		int SIFRA_decodeScalesPhaseCmd( byte *cmd_byte_buffer);
-		int SIFRA_decodeScalesNotCalibCmd( byte *cmd_byte_buffer);
+		int sendSIFRAViaDebug();
+		bool sendSIFRAStartDebug();
+		bool sendSIFRAStatusDebug();
+		bool sendSIFRARamDebug();
 		
 		/**
 		@return the number of bytes in the transmission buffer.
 		*/
 		int GetNumBytesInTransmissionBuffer(){return stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer();};
-		int sendAcknowledge();
-		long sendSIFRALoadSamples(dword samples, int chan);
-		int sendSIFRALoadSamples(dword *loadsystem);
+		
+		long getLoadChan(){return total_weight;};
+		long sendSIFRALoadSamples(float loadsystem);
 
 		virtual int getMsg();
 
@@ -493,49 +518,32 @@ class SIFRAProtocol: protected stdUartProtocolAbstraction
 		int SIFRA_getStatusCmdDecode();
 		int SIFRA_setStart();
 		int SIFRA_getInfoCmdDecode();
-		int SIFRA_getDebugCmdDecode();
-		int SIFRA_getDebugVie_1_3_CmdDecode();
-		int SIFRA_getDebugVie_4_5_CmdDecode();
+		int SIFRA_getDebugViaCmdDecode();
 		int SIFRA_getDebugStartCmdDecode();
+		int SIFRA_getDebugStatusCmdDecode();
 		int SIFRA_getDebugRamCmdDecode();
-		int SIFRA_setLineToIdentify();
-		int SIFRA_resetMaxWeightError();
-		int SIFRA_restartControl();
+		int SIFRA_setWeightSensibility();
+		int SIFRA_restartWeightCoverControl();
+		int SIFRA_restartFormula();
 		int SIFRA_setScalesPhase();
 		int SIFRA_setScalesNotCalib();
-		int SIFRA_setZeroCell1();
-		int SIFRA_setZeroCell2();
-		int SIFRA_setZeroCell3();
-		int SIFRA_setZeroCell4();
-		int SIFRA_setZeroCell5();
-		int SIFRA_setGainCell1();
-		int SIFRA_setGainCell2();
-		int SIFRA_setGainCell3();
-		int SIFRA_setGainCell4();
-		int SIFRA_setGainCell5();
+		int SIFRA_setZeroVerification();
 		int SIFRA_setResetCalib();
+		int SIFRA_setZeroCell8_Cell15();
+		int SIFRA_setGainCell8();
+		int SIFRA_setGainCell15();	
 		int SIFRA_setJumpToLoader();
-		int SIFRA_setLoopApplication();
-		int SIFRA_getCalLoadCmdDecode();
-		int SIFRA_getCalCell1CmdDecode();
-		int SIFRA_getCalCell2CmdDecode();
-		int SIFRA_getCalCell3CmdDecode();
-		int SIFRA_getCalCell4CmdDecode();
-		int SIFRA_getCalCell5CmdDecode();
-		int SIFRA_zeroLoadCmdDecode();
+		int jumpToLoaderHandler();
+		int resetApplicationHandler();
 
 		byte getLastHwError(){return m_lastHwError;};
 		void rstLastHwError(){m_lastHwError = SIFRAUart_Hw_NoError;};
+		
 		void setLocalNODEID(byte i){ SIFRAProtocol::setLocalNodeID(i);};
 		byte getLocalNODEID(){ return SIFRAProtocol::m_localNodeID;}
-		void setEnabledLine(byte i){m_EnabledLine = i;};
-		byte getEnabledLine(){return m_EnabledLine;};
-		void setNumOfEnabledLines(int i){m_NumOfEnabledLines = i;};
-		int getNumOfEnabledLines(){return m_NumOfEnabledLines;};
-
-		int getLoadChan(byte __chan){return loadchan[__chan];};
 
 		bool m_show_adcvalue;
+		bool m_show_velpompe;		
 		
 	protected:	
 		static bool SIFRADataAnalyse(unsigned short dataS, stdUartProtocolAbstraction *protocol);
@@ -550,13 +558,16 @@ class SIFRAProtocol: protected stdUartProtocolAbstraction
 		
 	private:		
 		CSmallRingBuf<int , 20> m_message;
-		int loadchan[ _MAX_LOAD_CHAN_ ];
+		word loadchan[ _MAX_LOAD_CHAN_ ];
+		long total_weight;
 		byte m_lastRemoteNodeID;
 		byte m_localNodeID;
 		byte last_opCode;
-		byte m_lastHwError;		
-		byte m_EnabledLine;
-		int m_NumOfEnabledLines;
+		byte m_lastHwError;
+
+		word m_numStopPkts;
+		word m_numStartPkts;
+
 };
 
 #endif

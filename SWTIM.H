@@ -144,7 +144,7 @@ public:
 	/**
 	Stops the timer.
 	*/
-	void Stop(void) { running = False; };
+	void Stop(void) { running = false; };
 
 	/**
 	Starts the timer.

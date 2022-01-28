@@ -39,8 +39,7 @@ Current Hardware revision
 /**
 Crystal frequency
 */
-#define CRYSTAL_FREQ	20000000.0
-
+#define CRYSTAL_FREQ	20000000.0				/
 /**
 Sub crystal frequancy
 */
@@ -66,15 +65,14 @@ Sub crystal frequancy
 #define BASEMOD_RTCDRV	1900
 #define BASEMOD_NVRDRV	2000
 #define BASEMOD_DATAFLASH	2100
-//#define BASEMOD_EEPDRV	2100
 
 /**
 Definition for the dynamic memory allocation
 */
 #define ALLOC_ALIGNMENT		4
-#define RTC_DRV 		DRV_M48T35			// definizione rtc da utilizzare
-#define NVR_DRV 		DRV_M48T35			// definizione nvr da utilizzare
-#define EEP_DRV         DRV_FM24C64    		// ram ferromagnetica
+#define	RTC_DRV 		DRV_M48T35			// definizione rtc da utilizzare
+#define	NVR_DRV 		DRV_M48T35			// definizione nvr da utilizzare
+#define EEP_DRV            DRV_FM24C64    		// ram ferromagnetica
 						
 /**
 All 8 pins set as input
@@ -111,57 +109,42 @@ input signals from the CPLD
 #define cpld_pin_Air8 ((volatile struct bitf *)&cpld_reg_in)->bit07
 #define cpld_FW_Vers0 ((volatile struct bitf *)&cpld_reg_in)->bit08
 #define cpld_FW_Vers1 ((volatile struct bitf *)&cpld_reg_in)->bit09
-#define cpld_CoverPumpOpen ((volatile struct bitf *)&cpld_reg_in)->bit10			// lettura stato sportello modulo M3100
 #define cpld_CoverPump ((volatile struct bitf *)&cpld_reg_in)->bit11
 
 /**
 Output signal of the CPLD
 */
 #define cpld_reg_out   *((volatile word *)0x0400010)
-#define cpld_pin_led    ((volatile struct bitf *)&cpld_reg_out)->bit05		// ho 2 led comandati dalla PLD. Il cpld_pin_led corrisponde a DS3 e alla porta 61 della PLD stessa
+#define cpld_pin_led    ((volatile struct bitf *)&cpld_reg_out)->bit05
 #define cpld_pin_BLK1 ((volatile struct bitf *)&cpld_reg_out)->bit00
-#define cpld_pin_BLK2 ((volatile struct bitf *)&cpld_reg_out)->bit01
-#define cpld_pin_BLK3 ((volatile struct bitf *)&cpld_reg_out)->bit02
-#define cpld_pin_BLK4 ((volatile struct bitf *)&cpld_reg_out)->bit03
-#define cpld_pin_BLK5 ((volatile struct bitf *)&cpld_reg_out)->bit04
+
 /**
 Counters of the CPLD for encoders cycles
 */
-#define cpld_counter1 *((word *)0x0400100)
-#define cpld_counter2 *((word *)0x0400102)
-#define cpld_counter3 *((word *)0x0400104)
-#define cpld_counter4 *((word *)0x0400106)
-#define cpld_counter5 *((word *)0x0400108)
+#define cpld_counter1 *(( volatile word *)0x0400100)
 
 /**
-* Indirizzi W/R su memoria sram tamponata, ora inclusa nel real time clock, 32Kb
-* La mappatura è fatta nella PLD. Gli indirizzi utilizzabili sono dal 0x180000 al 0x187FFF
-* Con le definizioni seguenti occupo gli indirizzi dal 0x180000 al 0x180029 compresi.
-* Spostato il salvataggio delle variabili necessarie in strutture, in modo da poter controllare la checksum quando scrivo o leggo le strutture dalla RAM tamponata.
-* Le variabili di seguito pertanto non vengono più usate nel codice, esclusa la reset_4_block
+indirizzi W/R su memoria sram tamponata, ora inclusa nel real time clock, 32Kb
 */
-
-//#define CS_TAMPRAM				*((volatile byte *)0x0180000)
 #define CS_TAMPRAM				(byte *)0x0180000
-#define 	restart_command		*((volatile byte *)0x0180012)
+#define 	restart_command		*((volatile byte *)0x0180014)
 
 /**
-Address for JUMP_TO_LOAD flag (in external non-volatile RAM o FRAM)
+Addres for JUMP_TO_LOAD flag (in external non-volatile RAM o FRAM)
 */
 #define	stay_in_loader_flag0  *(( volatile byte *)0x0180010)
-#define	stay_in_loader_flag1  *(( volatile byte *)0x0180011)
+#define	stay_in_loader_flag1  *(( volatile byte *)0x0180012)
 
 /**
-Address used to set the START STATE, in case of lack of current
+Addres for set the START STATE, in case of lack of currente
 */
-#define start_on_course	*((volatile byte *)0x0180018)
-#define reset_4_block	*((volatile byte *)0x018001A)			// unica variabile utilizzata, per registrare un riavvio in caso di anomalia alle letture degli ADC
+#define start_on_course	*((volatile byte *)0x0180014)
+#define reset_4_block	*((volatile byte *)0x018001A)
 
-/**
-base address for encoder calibration value
-*/
-#define base_address_val_encoder 	0x0180020	// agli indirizzi 0x180020, 0x180022, 0x180024, 0x180026 e 0x180028 memorizzo se sono stati aggiornati i valori imp_to_flow
-#define base_address_line_type		(base_address_val_encoder + 2*NUM_MAX_LINE)	// posizione in cui si scrive il tipo di linea rilevata
+
+#define OFFSET_VAL_ENC	0x20	// posizione in cui si scrivono i valori del rapporto encoder
+#define OFS_POINTS_SET 0x100	// posizione struttura backup in memoria
+
 
 #if (__HARDWARE_REV__ == __HW_REV_0__)
 //-- Buzzer --
@@ -169,7 +152,7 @@ base address for encoder calibration value
 #define ioPinBUZ			_PM32
 
 //-- Led --
-#define PinLED0_LIFE_M	_P10	// Led verde DS1
+#define PinLED0_LIFE_M	_P10	// Led verde 
 #define ioPinLED0_LIFE_M _PM10
 
 //-- pin x debug --
@@ -327,5 +310,33 @@ base address for encoder calibration value
 #endif
 //-------------------------------------------------------
 
+//-- Definizioni per buffer IO mappati nella PLD --
+#define SLEEP_CPLD   0
+#define WAKE_UP_CPLD  1
+
+#define ENABLE_ELECTRO_VALVE  	1
+#define DISABLE_ELECTRO_VALVE	0
+
+//--------------------------------------------------------//
+// Definizione dei tipi
+//--------------------------------------------------------//
+
+//--------------------------------------------------------//
+// Definizione delle classi
+//--------------------------------------------------------//
+
+//--------------------------------------------------------//
+// Definizione delle funzioni
+//--------------------------------------------------------//
+
+//--------------------------------------------------------//
+// Definizione delle variabili
+//--------------------------------------------------------//
+
+//--------------------------------------------------------//
+// Inclusione altri files .....
+//--------------------------------------------------------//
+
 #endif
+
 

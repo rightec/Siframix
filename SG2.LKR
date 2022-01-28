@@ -14,18 +14,17 @@ con 600KB di flash interna al micro, 512KB di ram esterna per il debug,
 MEMORY {		/*la ram esterna (512K) inizia a 0x00100000 e finisce a  0x0017FFFF*/
 				/* la flash memory può contenere dati a partire dall'indirizzo 0x00007000 fino al 0x0007FFFF per il micro 3718  e fino al 0x0009FFFF per il micro 3719 */
 
-        text    		 : ORIGIN = 0x00007000, LENGTH = 0x0003E800	/* 28K-128K codice (100K)	al momento assegnati 256 K (3E800)*/				 
+        text    		 : ORIGIN = 0x00007000, LENGTH = 0x00028000	/* 250K codice */				 
       				     
-        rodata    	 : ORIGIN = 0x00045800, LENGTH = 0x00001FFF  	/* 8K di ro-dati tutto compreso nel prezzo, con questa assegnazione arrivo fino all'indirizzo 477FF */
+        rodata    	 : ORIGIN = 0x0002F000, LENGTH = 0x00001FFF  	/* 8K di ro-dati tutto compreso nel prezzo */
 
         /* message    		 : ORIGIN = 0x00048000, LENGTH = 0x00000FFF */	 /* 4K di messagi tutto compreso nel prezzo   	*/
 
-        data    		 : ORIGIN = 0x03FF5000, LENGTH = 0x00003FFF  	/* 16K di data - in coda ai data andranno i dati .bss la cui dimensione la trovo nel file sg2.MAP. Tale spazio devo aggiungerlo a quello dei data */
-        														/* (3FFF) per stabilire l'indirizzo da cui partirà lo stack */
+        data    		 : ORIGIN = 0x03FF5000, LENGTH = 0x00005FFF  	/* 24K di data - in coda a questo spazio devo considerare che andranno i dati .bss. La loro dimensione la vedo dal file sg2.MAP */
 
-        stack   		 : ORIGIN = 0x03FFDFE0, LENGTH = 0x00001000	 /* 4K di stack */  
+        stack   		 : ORIGIN = 0x03FFDFE0, LENGTH = 0x00001000	 /* 4K di system stack */  
         	
-        xdata  		 : ORIGIN = 0x00110000, LENGTH = 0x0001FFFF 	 /* 128K di xdata in RAM esterna */
+        xdata  		 : ORIGIN = 0x00110000, LENGTH = 0x0001FFFF 	 /* 128K di xdata in RAM esterna*/
         
 }
 

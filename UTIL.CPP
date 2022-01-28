@@ -12,6 +12,8 @@
 
 #define EOS '\0'
 
+#define SWAP(a,b) ({typeof(a) tmp; tmp = a; a = b; b = tmp;})
+
 float my_pow10(short value)
 {
 
@@ -123,8 +125,7 @@ int HexToInt(int& num, char* hex, int len)
 
 /**
 converte un byte in logica un bit a 1 su 8 bit, in un int, cioè p.e. 0x04 (00000100) ritorna 3
-p.e. 0x20 (00100000) ritorna 6. Ritorna la posizione del bit che risulta a 1
-In generale ritorna la prima via abilitata. Se ve ne sono più di una, ritorna solo la prima
+p.e. 0x20 (00100000) ritorna 6
 */
 int _1on8_to_int(byte m_bcd)
 {
@@ -524,4 +525,18 @@ int  pperc(char *s, float base, float scost)
 
 	s[5] = 0;
 	return(5);
+}
+
+// algoritmo di ordinamento array
+void bubble_sort_array(int num_val, dword *array)
+{
+int i;
+int cycle = num_val - 1;
+	while(cycle > 0)
+	{
+		for(i = 0; i < cycle; i++)
+			if(array[i] > array[i+1])
+				SWAP(array[i], array[i+1]);
+		cycle--;
+	}
 }

@@ -1,0 +1,14 @@
+obj
+.hg/
+.hgignore
+*.orig
+DoxyFile
+*.bin
+*.SearchResult
+QtCore4.dll
+QtCored4.dll
+QtGui4.dll
+QtGuid4.dll
+lst/
+src/
+obj/

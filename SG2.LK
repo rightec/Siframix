@@ -7,20 +7,20 @@ OUTPUT_ARCH(v850)
 ENTRY(_start)
 SEARCH_DIR(.);
 
-MEMORY {		/* la ram esterna (512K) inizia a 0x00100000 e finisce a  0x0017FFFF*/
+MEMORY {		/*la ram esterna (512K) inizia a 0x00100000 e finisce a  0x0017FFFF*/
 
         text    		: ORIGIN = 0x00110000, LENGTH = 0x0002FFFF	 	/* 192K di codice in ram */       
         
         rodata    	: ORIGIN = 0x00140000, LENGTH = 0x00004FFF  	/* 20K di rodata */
        
-        data    		: ORIGIN = 0x00145000, LENGTH = 0x0000FFFF  	/* 64K di data - in coda ai data andranno i dati .bss la cui dimensione la trovo nel file sg2.MAP. Tale spazio devo aggiungerlo a quello dei data */
-        														/* (FFFF) per stabilire l'indirizzo da cui partirà lo stack */        															
+        data    		: ORIGIN = 0x00145000, LENGTH = 0x0000FFFF  	/* 20K di data - in coda ai data andranno i dati .bss la cui dimensione la trovo nel file sg2.MAP. Tale spazio devo aggiungerlo a quello dei data */
+        														/* (4FFF) per stabilire l'indirizzo da cui partirà lo stack */        															
         
-        stack   		: ORIGIN = 0x00157000, LENGTH = 0x00001FFF 	/* 8K di system stack */
+        stack   		: ORIGIN = 0x00163000, LENGTH = 0x00001FFF 	/* 4K di system stack */
         
-        xdata  		: ORIGIN = 0x00159000, LENGTH = 0x0000FFFF		/* 64K di xdata */
+        xdata  		: ORIGIN = 0x00165000, LENGTH = 0x00003FFF		/* 8K di xdata */
 
-        xheap	  	: ORIGIN = 0x00169000, LENGTH = 0x00001FFF		/* 8K heap esterna */
+        xheap	  	: ORIGIN = 0x0017F000, LENGTH = 0x00000FFF		/* 4K  di heap esterna */
         	     
 }
 

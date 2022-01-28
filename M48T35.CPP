@@ -278,7 +278,6 @@ register int i;
 
 /* Scrive nella memoria dell'rtc nell'area "user" 
 */
-//static bool drv_writeMem(void *__data_buf, int __count, int __start_addr)
 bool drv_writeMem(void *__data_buf, int __count, int __start_addr)
 {
 register byte *pc;

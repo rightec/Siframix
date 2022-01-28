@@ -31,22 +31,26 @@ From 01.00 to 01.10
 #ifndef __CHANNELS_H__
 #define __CHANNELS_H__
 
+#include "util.h"
 #include "global.h" 
 
-#define DIM_FILT_BUF 		30					//30hz di campionamento, 30 campioni per buffer, il primo dato valido dopo 1sec poi uno ogni 33msec
-#define DIM_FILT_BUF_OUT 	30
-#define DIM_DGT_FILT 		9
-#define DIM_FILT_BUF_STAT 	15					// 2 Hz
-#define DIM_FILT_BUF_DIN 	2					// 15 Hz
-#define DIM_FILT_MAX		30					// frequenza finale di 1Hz
-#define DIM_FILT_MIN		1					// 30 Hz
-#define DIM_FILT_STOP		DIM_FILT_BUF_STAT	// 2 Hz
-
-#define _Fc_2Hz_		1	// media su 15 campioni
-#define _Fc_15Hz_ 	2	// media su 2 campioni
-#define _Fc_1Hz_		3	// media su 30 campioni
-#define _Fc_30Hz_	4	// nessuna media, massima velocità di campionamento
-#define _NO_FILT_	5	// esclusione filtro di media mobile e media fissa
+#ifdef _NEW_FILTERING
+		#define DIM_FILT_BUF 		7		//60hz di campionamento, 10 campioni per buffer, il primo dato valido dopo 166msec poi uno ogni 16msec
+		#define DIM_FILT_BUF_OUT 	12
+		#define DIM_FILT_BUF_STAT 	7					// 7.5Hz / 7 = 1.07 Hz	// media su 7 campioni, settaggio del filtro di media sul peso: 7,5 Hz più media 7 campioni -> circa 1 Hz
+		#define DIM_FILT_BUF_DIN 	1					// 7,5Hz / 1 = 7.5Hz		// nessuna media, campione letto e valutato direttamente -> 7,5 Hz di frequenza di campionamento
+		#define DIM_FILT_MAX		7					// 7.5Hz / 7 = 1.07 Hz
+		#define DIM_FILT_MIN		1					// 7,5Hz / 1 = 7.5Hz
+		#define DIM_FILT_STOP		DIM_FILT_BUF_STAT					// 1,07Hz
+#else
+		#define DIM_FILT_BUF 		20		//100hz di campionamento, 20 campioni per buffer, il primo dato valido dopo 200msec poi uno ogni 20msec
+		#define DIM_FILT_BUF_OUT 	12
+		#define DIM_FILT_BUF_STAT 	25					// 2 Hz
+		#define DIM_FILT_BUF_DIN 	5					// 10hz
+		#define DIM_FILT_MAX		50					// 1Hz
+		#define DIM_FILT_MIN		2					// 25Hz
+		#define DIM_FILT_STOP		DIM_FILT_BUF_STAT					// 2Hz
+#endif
 
 /**
 Acd bits resolution.
@@ -83,16 +87,16 @@ typedef enum
 	_HW_CHAN_BUFFER_OVER_FLOW_,		/**< buffer overflow */
 }HwChanKindOfError;
 
-template <class T>
-class AdcRingBuffer
+enum weight_level_filtration_t
 {
-	public:
-
-	protected:
-
-	private:
-
+	E_FILT_NONE = 0,
+	E_FILT_LOW,
+	E_FILT_MED_1,
+	E_FILT_MED_2,
+	E_FILT_HIGH,
+	E_FILT_NUM
 };
+
 /**
 Generic hardware channel implementation class.
 
@@ -125,10 +129,10 @@ class HwChannel
 			m_offsetToZero = 0;
 			m_gain = 1.0;
 			m_sampleFrq = 60;
-			m_isZeroable = False;
-			m_isEnabled = False;
-			m_FiltEnabled = False;
-			m_isTestenabled = False;
+			m_isZeroable = false;
+			m_isEnabled = false;
+			m_FiltEnabled = false;
+			m_isTestenabled = false;
 			m_adcVoltageReference_mV = 3300.0;
 			m_hwChanError = _HW_CHAN_NO_ERROR_;
 			m_lastAdcSampled = 0;
@@ -188,32 +192,32 @@ class HwChannel
 		/**
 		@return the channel's offset
 		*/
-		word getOffset(){ return m_offset;};//	long getOffset(){ return m_offset;};
-
+		long getOffset(){ return m_offset;};
+		//short getOffset(){ return m_offset;};
 		/**
 		Sets the channel's offset.
 		@param offset channel's offset
 		*/
-		void setOffset(word offset){ m_offset = offset;};		//void setOffset(long offset){ m_offset = offset;};
+		void setOffset(long offset){ m_offset = offset;};
 
 		/**
 		@return the channel's gain
 		*/
-		float getGain(){ return m_gain;};
+		double getGain(){ return m_gain;};
 		/**
 		Sets the channel's 2Kg calibration read value.
 		@param gain channel's gain
 		*/
-		void set2KgValue(word value){ m_2Kgvalue = value;};	//void set2KgValue(dword value){ m_2Kgvalue = value;};
+		void set2KgValue(dword value){ m_2Kgvalue = value;};
 		/**
 		@return the channel's 2Kg calibration read value
 		*/
-		word get2KgValue(){ return m_2Kgvalue;};	//dword get2KgValue(){ return m_2Kgvalue;};
+		dword get2KgValue(){ return m_2Kgvalue;};
 		/**
 		Sets the channel's gain.
 		@param gain channel's gain
 		*/
-		void setGain(float gain){ m_gain = gain;};		
+		void setGain(double gain){ m_gain = gain;};		
 		/**
 		@return channel's bits resolution
 		*/
@@ -241,7 +245,7 @@ class HwChannel
 		@param adc is the last data sampled - physical value.
 		@return always 1.
 		*/
-		int getLastPhyDataSampled(float &data)
+		int getLastPhyDataSampled(double &data)
 		{
 			T tAdc;
 			int i;
@@ -342,7 +346,7 @@ class HwChannel
 		@see getOffset
 		@see zero
 		*/
-		virtual float physicalValue(T adc){return (((long)adc - m_offset - m_offsetToZero)*m_gain);};
+		virtual double physicalValue(T adc){return (((long)adc - m_offset - m_offsetToZero)*m_gain);};
 		
 		/**
 		channel zeroing.
@@ -432,24 +436,24 @@ class HwChannel
 		@return adc resolution according to the bit resolution (i.e. if bit resolution is _8_BITS_RESOLUTION_ this funtion returns 256).
 		@see bitResolution
 		*/
-		float getAdcResolution(){ return m_adcResolution;};
+		double getAdcResolution(){ return m_adcResolution;};
 
 		/**
 		@return the value of the adc voltage reference.
 		*/
-		float getVoltageRefence_mV(){return m_adcVoltageReference_mV;};
+		double getVoltageRefence_mV(){return m_adcVoltageReference_mV;};
 		/**
 		Sets the value of the ad voltage reference
 		@param mV value in mV of the voltage reference.
 		*/
-		void setVoltageRefernce_mV(float mV){ m_adcVoltageReference_mV = mV;};
+		void setVoltageRefernce_mV(double mV){ m_adcVoltageReference_mV = mV;};
 
 		/**
 		Returns the value in mV of the voltage sampled by the ADC.
 		@param adc sampled value - adc value.
 		@return mV sampled.
 		*/
-		float adcTOmV(T adc){return (float) (m_adcVoltageReference_mV / m_adcResolution)*(float) adc;};
+		double adcTOmV(T adc){return (double) (m_adcVoltageReference_mV / m_adcResolution)*(double) adc;};
 
 		/**
 		@return the error occured.
@@ -467,36 +471,36 @@ class HwChannel
 		@see HwChannelType
 		*/
 		void setChannelType(HwChannelType type){ m_chanType = type;};
-		/**
-		set the second filtering level, 
-		num of sample in the mean filter
+		/*
+		void set_rampa( double *m_rampa, int dimrampa)
+		{
+			rampa = m_rampa;
+			dim_rampa = dimrampa;
+		};
 		*/
+		//void set_sommarampa( double m_somma){somma_rampa = m_somma;};
 		int set_filter_value(int m_value)
 		{
 			switch(m_value)
 			{
-				case 1:		//_Fc_2Hz_
-					set_filtro = DIM_FILT_BUF_STAT;	// media su 15 campioni, 1Hz di frequenza finale, stato statico
+				case E_FILT_LOW:
+					set_filtro = DIM_FILT_MIN;		// nessuna media, 7,5 Hz di frequenza finale, stato dinamico
 					break;
-				case 2: 		//_Fc_10Hz_
-					set_filtro = DIM_FILT_BUF_DIN;	// media su 3 campioni, 5Hz di fr finale, stato dinamico
+				case E_FILT_MED_1:
+					set_filtro = DIM_FILT_MIN;		// fase di stop dipo errore, limitiamo un pò la variabilità					
 					break;
-				case 3: 		// _Fc_1Hz_
-					set_filtro = DIM_FILT_MAX;		// massimo filtraggio
+				case E_FILT_MED_2:
+					set_filtro = DIM_FILT_MAX;		// massimo filtraggio, 7,5/7 -> 1.07 Hz
 					break;
-				case 4:		//  _Fc_30Hz_
-					set_filtro = DIM_FILT_MIN;		// nessun flitraggio oltre alla media mobile
-					break;
-				case 5:
-					set_filtro = 0;					// di servizio, serve per disattivare i filtri
+				case E_FILT_HIGH:
+					set_filtro = DIM_FILT_MAX;		// massimo filtraggio, 7,5/7 -> 1.07 Hz
 					break;
 				default:
-					set_filtro = DIM_FILT_BUF_STAT;	// media su 12 campioni, 5Hz di frequenza finale, stato statico
+					set_filtro = DIM_FILT_MAX;
 					break;
 			}	
 			return 1;
 		};
-
 		/**
 		return the actual value of the second filtering leve
 		*/
@@ -507,19 +511,42 @@ class HwChannel
 		
 	protected:
 		
-		word AverageFilter(T& x)	// così dovrebbe uscire un dato filtrato sotto i 5Hz
+		dword AverageFilter(T& x)	// così dovrebbe uscire un dato filtrato sotto i 5Hz
 		{
 			unsigned short i;			
 			dword currADCmin, currADCmax;
 //			dword currADCmin2, currADCmax2;
 			dword value_buff;
+//			word m_value;
 			
 	#ifdef _AVERAGE_MOBILE_FILTER		
 			if(start_vol_av)	 // the buffer is full
-			{
+			{	
 				sum_filt_buf -= med_buffer[ index_buf_av]; 		// sottraggo dalla somma il valore del sample + vecchio
 				med_buffer[ index_buf_av] = x;					// memorizzo il nuovo sample al posto del + vecchio
-				currADCmin = currADCmax = med_buffer[0];
+				/*currADCmin = currADCmin2 = currADCmax = currADCmax2 = med_buffer[0];
+				for (i = 1; i < DIM_FILT_BUF; i++)				// cerco max e min di ogni finestra, compreso il nuovo
+				{	    
+					if( med_buffer[ i ] > currADCmax )
+					{
+						currADCmax2 = currADCmax;
+						currADCmax = med_buffer[ i ];
+					}
+					else if( med_buffer[ i ] > currADCmax2 )
+							currADCmax2 = med_buffer[ i ];
+					if (med_buffer[ i ] < currADCmin)
+					{
+						currADCmin2 = currADCmin;
+						currADCmin = med_buffer[ i ];
+					}
+					else if (med_buffer[ i ] < currADCmin2)
+							currADCmin2 = med_buffer[ i ];				
+				}			 	
+			 	sum_filt_buf += x;								// aggiungo alla somma il valore del nuovo sample 
+			 	value_buff = sum_filt_buf - currADCmax - currADCmin - currADCmax2 - currADCmin2;	// prima sottraggo min e max
+			 	value_buff /= (DIM_FILT_BUF - 4);				// poi divido per il numero di campioni per ottenere la media di questa finestra (0-65535)	
+			 	*/
+			 	currADCmin = currADCmax = med_buffer[0];
 				for (i = 1; i < DIM_FILT_BUF; i++)				// cerco max e min di ogni finestra, compreso il nuovo
 				{	    
 					if( med_buffer[ i ] > currADCmax )
@@ -533,8 +560,8 @@ class HwChannel
 				}			 	
 			 	sum_filt_buf += x;								// aggiungo alla somma il valore del nuovo sample 
 			 	value_buff = sum_filt_buf - currADCmax - currADCmin;	// prima sottraggo min e max
-			 	value_buff /= (DIM_FILT_BUF - 2);				// poi divido per il numero di campioni per ottenere la media di questa finestra (0-65535)	    		    	 
-			    	index_buf_av++; 								// incremento contatone nel buffer		
+			 	value_buff /= (DIM_FILT_BUF - 2);				// poi divido per il numero di campioni per ottenere la media di questa finestra (0-65535)
+			    	index_buf_av ++; 								// incremento contatone nel buffer		
 			    	if (index_buf_av == DIM_FILT_BUF)				// se sono oltre il num max, lo rimetto a 0 (0<= index_buf_av < DIM_FILT_BUF)
 			    		index_buf_av = 0;
 			// CALCOLO MEDIA FISSA
@@ -542,20 +569,21 @@ class HwChannel
 				index_buf_av_out++;							// corrisponde al numero di dati sommati
 				if( index_buf_av_out >= set_filtro)				// se è uguale al valore richiesto di dati in media (freq di uscita)
 				{
-					old_value = value = (med_buffer_out / index_buf_av_out);	//old_value = value = ((value >> 8) & 0x0000FFFF);//  devo estrarre 16 bit
+					old_value = value = (med_buffer_out / index_buf_av_out);
+//					old_value = value = ((value >> 8) & 0x0000FFFF);//  devo estrarre 16 bit
+//					old_value = m_value = (word)((med_buffer_out / index_buf_av_out) & 0x0000FFFF);//  devo estrarre 16 bit
 					med_buffer_out = 0;
 					index_buf_av_out = 0;
 				}
 				else
 					value = old_value;
-
 			} 
 			else 
 			{ 	    	
 				med_buffer[ index_buf_av] = x; 			// memorizzo nel buffer
 				sum_filt_buf += x;		    
 				old_value = value = x;
-				index_buf_av++ ; 					// fill the buffer proceeding on the right
+				index_buf_av ++ ; 					// fill the buffer proceeding on the right
 			    	if(index_buf_av == DIM_FILT_BUF)		// sono arrivato al max 
 			    	{
 			           	start_vol_av = True;   
@@ -566,8 +594,8 @@ class HwChannel
 			} // fine media sul volume
 	#endif
 			
-	#ifdef _FIX_AVERAGE_FILTER
-		if( index_buf_av == DIM_FILT_BUF_OUT)
+	#ifdef _FIX_AVERAGE_FILTER		
+			if( index_buf_av == DIM_FILT_BUF_OUT)
 			{
 				index_buf_av = 0;
 				value_buff = 0;
@@ -603,6 +631,7 @@ class HwChannel
 				//value = 0;
 			}
 	#endif
+//			return m_value;
 			return value;
 		}
 		
@@ -611,15 +640,15 @@ class HwChannel
 	private:
 
 		dword m_sampleFrq;
-		word m_offset;	//long m_offset;
+		long m_offset;
 		long m_offsetToZero;
-		float m_gain;
-		word m_2Kgvalue;	//dword m_2Kgvalue;
-		float m_adcResolution;
-		float m_adcVoltageReference_mV;
+		double m_gain;
+		dword m_2Kgvalue;
+		double m_adcResolution;
+		double m_adcVoltageReference_mV;
 		bool m_isZeroable;
 		bool start_vol_av;
-		float sum_dgt_filt;
+		double sum_dgt_filt;
 		bitResolution m_bitsResolution;
 		CSmallRingBuf <T, capacity> m_fifoAdcData;
 		T m_lastAdcSampled;
@@ -628,16 +657,17 @@ class HwChannel
 		bool m_isTestenabled;
 		HwChanKindOfError m_hwChanError;
 		dword m_errorsOccurence;
-		//unsigned short	  	value;
 		dword value;
 		dword old_value;
-		dword 		*med_buffer;
-		dword med_buffer_out;
+		dword value_buff_med;
+		dword index_buf_av_med;
 		dword previus_value;
+		dword 		*med_buffer;
 		unsigned short	index_buf_av; // indice nel buffer di filtraggio
-		byte 	index_buf_av_out;
+		dword med_buffer_out;
+		dword 	index_buf_av_out;
 		dword        sum_filt_buf; 
-		int set_filtro;
+		word set_filtro;
 		//float	*filt_buffer;
 		//int 		index_filt_dgt;
 		//double *rampa;
@@ -665,10 +695,10 @@ class GenericHwChannel: public HwChannel<T, capacity>
 		{
 			HwChannel<T, capacity>::m_chanType = type;
 			HwChannel<T, capacity>::setSampleFrq(100);
-			HwChannel<T, capacity>::setIsZeroable(False);
+			HwChannel<T, capacity>::setIsZeroable(false);
 			HwChannel<T, capacity>::setOffset(0);
 			HwChannel<T, capacity>::setGain(1);
-			HwChannel<T, capacity>::setEnabled(False);
+			HwChannel<T, capacity>::setEnabled(false);
 		};
 			/**
 			Class descructor.
@@ -701,10 +731,10 @@ class VoltageHwChannel: public HwChannel<T, capacity>
 		{
 			HwChannel<T, capacity>::m_chanType = _HW_CHAN_POWER_VOLTAGE_TYPE_;
 			HwChannel<T, capacity>::setSampleFrq(1);
-			HwChannel<T, capacity>::setIsZeroable(False);
+			HwChannel<T, capacity>::setIsZeroable(false);
 			HwChannel<T, capacity>::setOffset(0);
 			HwChannel<T, capacity>::setGain(1);
-			HwChannel<T, capacity>::setEnabled(False);
+			HwChannel<T, capacity>::setEnabled(false);
 		};
 		/**
 		Class destructor. 
@@ -775,7 +805,7 @@ class HwChanManager
 		@return adc resolution according to the bit resolution (i.e. if bit resolution is _8_BITS_RESOLUTION_ this funtion returns 256).
 		@see bitResolution
 		*/
-		float getAdcResolution(){ return m_adcResolution;};
+		double getAdcResolution(){ return m_adcResolution;};
 
 		/**
 		@return the type of channels - pure virtual function.
@@ -786,7 +816,7 @@ class HwChanManager
 		/**
 		@return the value in mV of the adc voltage reference.
 		*/
-		float getVoltageRefence_mV(){ return m_voltageRefernce_mV;};
+		double getVoltageRefence_mV(){ return m_voltageRefernce_mV;};
 
 		/**
 		@return the number of channels
@@ -815,7 +845,7 @@ class HwChanManager
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
-				return False;
+				return false;
 			}
 			return m_hwChan[i]->getIsZeroable();
 		};
@@ -824,7 +854,8 @@ class HwChanManager
 		@param i channel number
 		@return i-th offset
 		*/
-		word getOffset(int i)	//long getOffset(int i)
+		long getOffset(int i)
+		//short getOffset(int i)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -837,7 +868,7 @@ class HwChanManager
 		@param i channel number
 		@param offset i-th channel offset
 		*/
-		void setOffset(int i, word offset)	//void setOffset(int i, long offset)
+		void setOffset(int i, long offset)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -851,7 +882,7 @@ class HwChanManager
 		@param i channel number
 		@return i-th gain
 		*/
-		float getGain(int i)
+		double getGain(int i)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -865,7 +896,7 @@ class HwChanManager
 		@param i channel number
 		@param offset i-th channel offset
 		*/
-		void setGain(int i, float gain)
+		void setGain(int i, double gain)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -878,7 +909,7 @@ class HwChanManager
 		@param i channel number
 		@param offset i-th channel offset
 		*/
-		void set2KgValue(int i, long value)
+		void set2KgValue(int i, dword value)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -906,7 +937,7 @@ class HwChanManager
 		@param adc sample value - adc value
 		@return i-th channel physical value
 		*/
-		float physicalValue(int i, T adc)
+		double physicalValue(int i, T adc)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -920,13 +951,13 @@ class HwChanManager
 		@param adc sampled value - adc value.
 		@return mV sampled.
 		*/
-		float adcTOmV(int i, T adc)
+		double adcTOmV(int i, T adc)
         {
             if (i < 0 || i >= m_numHwChan)
             {
                 return 0.0;
             }
-            return (float) m_hwChan[i]->adcTOmV(adc);
+            return (double) m_hwChan[i]->adcTOmV(adc);
         };
 
 		/**
@@ -964,7 +995,7 @@ class HwChanManager
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
-				return False;
+				return false;
 			}
 			return m_hwChan[i]->isEnabled();
 		};
@@ -990,7 +1021,7 @@ class HwChanManager
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
-				return False;
+				return false;
 			}
 			return m_hwChan[i]->isAvFilterEnabled();
 		};
@@ -1002,7 +1033,7 @@ class HwChanManager
 		*/
 		void setAverageFilter(int i, bool e)
 		{
-			if (i < 0 || i >= m_numHwChan)
+			if ((i < 0) || (i >= m_numHwChan))
 			{
 				return;
 			}
@@ -1013,7 +1044,7 @@ class HwChanManager
 		Sets the ADC voltage reference
 		@param mV adc voltage reference value in mV 
 		*/
-		void setVoltageRefernce_mV(float mV)
+		void setVoltageRefernce_mV(double mV)
 		{
 			int i;
 			for (i = 0; i < m_numHwChan; i++)
@@ -1104,7 +1135,7 @@ class HwChanManager
 		@param adc is the last data sampled - physical value.
 		@return 1 if i is comprised between 0 and numChan, -1 otherwise
 		*/
-		int getLastPhyDataSampledByChan(int i, float &data)
+		int getLastPhyDataSampledByChan(int i, double &data)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -1121,7 +1152,7 @@ class HwChanManager
 		inline bool popAdcData (T *adc)
 		{
 			int i;
-			bool readValues = False;
+			bool readValues = false;
 			bool bufferEmpty;
 
 			for(i = 0; i < m_numHwChan; i++)
@@ -1171,7 +1202,7 @@ class HwChanManager
 		inline bool popAdcData (T *adc, int num)
 		{
 			int i, k;
-			bool readValues = False;
+			bool readValues = false;
 			int bufferData;
 
 			for(i = 0; i < m_numHwChan; i++)
@@ -1183,7 +1214,7 @@ class HwChanManager
 					asm("ei");
 					if (bufferData < num)
 					{
-						readValues = False;
+						readValues = false;
 						break;
 					}else
 					{
@@ -1255,7 +1286,7 @@ class HwChanManager
 		bool HwChanManagerError(HwChanKindOfError *errorType)
 		{
 			int i;
-			bool retVal = False;
+			bool retVal = false;
 			for (i = 0; i < m_numHwChan; i++)
 			{
 				errorType[i] = m_hwChan[i]->kindOfError();
@@ -1282,7 +1313,7 @@ class HwChanManager
 					return True;
 				}
 			}
-			return False;
+			return false;
 		};
 
 		/**
@@ -1302,7 +1333,7 @@ class HwChanManager
 		/**
 		...
 		*/
-		int set_rampa( int i, float *m_rampa, int dimrampa)
+		int set_rampa( int i, double *m_rampa, int dimrampa)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -1312,7 +1343,7 @@ class HwChanManager
 			return 1;
 		};
 
-		int set_sommarampa( int i, float m_sommarampa)
+		int set_sommarampa( int i, double m_sommarampa)
 		{
 			if (i < 0 || i >= m_numHwChan)
 			{
@@ -1323,9 +1354,11 @@ class HwChanManager
 		};
 
 		int set_filter_value(int i, int m_value)
-		{
-			if(m_value > 6)
-				m_value = 6;
+		{			
+			if(m_value > E_FILT_NUM)
+			{
+				m_value = E_FILT_NUM;
+			}
 			m_hwChan[i]->set_filter_value(m_value);
 			return 1;
 		};
@@ -1344,8 +1377,8 @@ class HwChanManager
 		*/
 		word m_numHwChan;
 		word m_numEnabledHwChan;
-		float m_adcResolution;
-		float m_voltageRefernce_mV;
+		double m_adcResolution;
+		double m_voltageRefernce_mV;
 		
 	private:	
 		dword m_sampleFrq;
@@ -1500,59 +1533,4 @@ extern GenericHwChanManager <dword, _GENERIC_BUFFER_LENGTH_> *genericChan;
 extern VoltageHwChanManager <word,_PWR_VOLTAGE_BUFFER_LENGTH_> *powerVoltageChan;
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

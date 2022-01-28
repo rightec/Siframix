@@ -16,6 +16,32 @@
 #include "sound.h"
 
 /**
+Standard errors. 
+*/
+enum stdUartProtocolErrors
+{
+	stdUart_NoError = 0,
+
+	// errori hardware
+	stdUart_Hw_ReceptionError,				/**< Reception error. Generate from QueueUart*/
+	stdUart_Hw_ParityError,					/**< Parity error. Generate from QueueUart*/
+	stdUart_Hw_FrameError,					/**< Frame error. Generate from QueueUart*/
+	stdUart_Hw_OverrunError,				/**< Overrun error. Generate from QueueUart*/
+	stdUart_Hw_NoDevice,					/**< No device error. Generate from QueueUart*/
+	stdUart_Hw_ErrorUnknown,				/**< Unknown error. Generate from QueueUart*/
+
+	// errori di protocollo
+	stdUart_UnknowOpcode,					/**< Unknown opcode*/
+	stdUart_stateProtocolUnknown,			/**< Protocol state unknown*/
+	stdUart_TimeOutErrorRx,					/**< Timeout RX*/
+	stdUart_TimeOutErrorTx,					/**< Timeout TX*/
+	stdUart_ChecksumError,					/**< checksum error*/
+	stdUart_TransmitBufferOverflowError,		/**< transmit buffer overflow*/
+	stdUart_ReceptionBufferOverflowError,		/**< reception buffer overflow*/
+	stdUart_DataReceivedBufferOverflow,		/**< data received buffer overflow*/
+};
+
+/**
 Receiver states
 */
 enum stdUartRecieverStates
@@ -28,33 +54,7 @@ enum stdUartRecieverStates
 	stdUart_waitDataLength,
 	stdUart_receivingData,
 	stdUart_waitChecksum,
-	stdUart_waitEtx
-};
-
-/**
-Standard errors. 
-*/
-enum
-{
-	stdUart_NoError = 0,
-
-	// hardware errors
-	stdUart_Hw_ReceptionError,				/**< Reception error. Generate from QueueUart*/
-	stdUart_Hw_ParityError,					/**< Parity error. Generate from QueueUart*/
-	stdUart_Hw_FrameError,					/**< Frame error. Generate from QueueUart*/
-	stdUart_Hw_OverrunError,				/**< Overrun error. Generate from QueueUart*/
-	stdUart_Hw_NoDevice,					/**< No device error. Generate from QueueUart*/
-	stdUart_Hw_ErrorUnknown,				/**< Unknown error. Generate from QueueUart*/
-
-	// protocol errors
-	stdUart_UnknownOpcode,					/**< Unknown opcode*/
-	stdUart_protocolStateUnknown,			/**< Protocol state unknown*/
-	stdUart_TimeOutErrorRx,					/**< Timeout RX*/
-	stdUart_TimeOutErrorTx,					/**< Timeout TX*/
-	stdUart_ChecksumError,					/**< checksum error*/ 
-	stdUart_TransmitBufferOverflowError,		/**< transmit buffer overflow*/ 
-	stdUart_ReceptionBufferOverflowError,		/**< reception buffer overflow*/ 
-	stdUart_DataReceivedBufferOverflow		/**< data received buffer overflow*/ 
+	stdUart_waitEtx,
 };
 
 /**
@@ -62,13 +62,14 @@ Class to manage a general uart protocol.
 */
 class stdUartProtocolAbstraction: protected QueueUart
 {
+
 	public:
 		
 		stdUartProtocolAbstraction(UARTDevice device = UART2);
 		~stdUartProtocolAbstraction();
 		
 		virtual void Manager();
-		virtual void setError(int error, bool pushToQueue = False);
+		virtual void setError(int error, bool pushToQueue = false);
 		virtual void rstError();
 		virtual int getLastError();
 		virtual int popError();
@@ -241,7 +242,7 @@ class stdUartProtocolAbstraction: protected QueueUart
 		void setNumDataReceived(int i){ if (i > m_bufferLastDataReceivedDimension) i = m_bufferLastDataReceivedDimension; m_numDataReceived = i;};
 
 		
-		byte calculateChecksum(byte *data, int len);
+		byte calculateChecksum(byte *data, byte len);
 
 		/**
 		Sets th number of packet lost
@@ -360,6 +361,10 @@ class stdUartProtocolAbstraction: protected QueueUart
 		*/
 		CSmallRingBuf <int , 5> m_receivedOpCode;
 			
+		//byte m_lastRemoteNodeID;
+		//byte m_localNodeID;
+		
+		//byte *m_lastDataReceived;
 		int m_bufferLastDataReceivedDimension;
 
 		/**
@@ -387,43 +392,5 @@ class stdUartProtocolAbstraction: protected QueueUart
 		static void stdUartProtocolAbstractionTransmitCallback(UartDeviceAbstraction *pdevice, bool last);
 };
 
-
-
-
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

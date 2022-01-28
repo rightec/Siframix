@@ -10,20 +10,20 @@
 /**
 Application firmware name. Max length 32 bytes
 */
-const char sAppName[]     = "CPU_M3100";
+const char sAppName[]     = "CPU_M3300";
 /**
 Application firmware Revision. Max length 16 bytes
 */
-const char sAppRevision[] = "00.03.46";
+const char sAppRevision[] = "00.04.54";
 /**
 Board's hardware revision.
-*/ 
-const char sHwVersion[] = "01.00.00";
+*/
+const char sHwVersion[] = "01.00.01";
 /**
 Application firmware's revision date.
 */
 const char sAppDate[]     = "06/10/20";
-//const char sAppDate[]     = "21/04/21";
+//const char sAppDate[]     = "10/05/21";
 /**
 sAppName length
 */
@@ -59,11 +59,6 @@ SIFRA_Manager *CpuSifra;
 
 UWORD time_msec;						// timer globalissimo !!
 UWORD time_sec;				    		// timer globalissimo !!
-byte  slave_cmd;
-byte  slave_ind_dat;
-byte  blp_ini;
-byte  blp_tx;
-byte  blp_rx;
 
 //-------------------------------------------------------
 // Variabili locali utili a moduli esterni
@@ -90,15 +85,13 @@ extern ChannelsBackupParam Chan[];
 //-------------------------------------------------------
 
 void FlashLed(void);
-void init_Led();		// utilizzata per il test di accensione dei led della scheda luci
+void counter_manager();
 static void hwsw_init(void);
 static void pin_init(void);
 static void pin_pld_init();
-//static void IrqHandTMP0(int vector);
 static void IrqHandTM0(int vector);
-//void IrqHandIrq(void) __attribute__ ((interrupt));
 static void SetupTimers(void);
-static void HwChannels_init();
+static bool HwChannels_init();
 static void UartProcol_init();
 byte Asciihex_to_num (char *pc);   // Converte carattere asci esadecimale in numero
 void Num_to_Asciihex (word n, char *pc);
@@ -108,25 +101,25 @@ void Num_to_Asciihex (word n, char *pc);
 int	main()
 {
 	hwsw_init();
-	
 	SetupTimers();
 	
-	asm	( "ei" );	// start a tutte le interruzioni
+	asm	( "ei" );					// start a tutte le interruzioni
 	load_startSampling();
-
-	//init_Led();		// da decommentare in caso di test dei led della scheda luci con la LedManager_Test()
 	
 	while( 1 )
 	{
 		FlashLed();
 		pwmManager();
-		CS5530_EntrySpi1();		// lettura ADC 1, 2 e 3		
+		
+		CS5530_EntrySpi1();		// lettura ADC 1 e 2
 		CS5530_EntrySpi2();		// lettura ADC 4 e 5
 
-		CS5530_validDataPresentInADCBufferSpi1();	// importazione nuovi dati validi dalle FIFO celle 1, 2 e 3
-		CS5530_validDataPresentInADCBufferSpi2();	// importazione nuovi dati validi dalle FIFO celle 4 e 5
+		CS5530_validDataPresentInADCBuffer();		// estrazione nuovi campioni
+		CS5530_validDataPresentInADCBufferSpi2();
 		
-		CpuSifra->Manager();		// macchina a stati del sistema: gestione protocollo comunicazione e modalità di funzionamento	
+		EVsManager();
+		
+		CpuSifra->Manager();	
 	}
 }
 
@@ -173,67 +166,60 @@ void hwsw_init(void)
 	asm	( "di" );			// stop	a tutte	le interruzioni
 
 	pin_init();				// init	pins. locali
-	pin_pld_init();			// led pld e segnali di blocco relee
+	pin_pld_init();		// led pld e segnali di blocco relee
 	mem_init();
 	irq_init();
-	i2c_init();             		// init i2c virtuale	
+	i2c_init();             // init i2c virtuale	
 	EE_init();
 	adc_uC_init();
-	pwm_motors_reset();		// azzero i pwm dei motori
-	LedDrivers_init();			// init interface to panel led drivers
-	adc_serial_init();
-	UartProcol_init();
-
+	LedDrivers_init();		// init interface to panel led drivers
+	adc_serial_init();		
+	UartProcol_init();		// new SIfraPorotocol
+	
 	CpuSifra = new SIFRA_Manager(SifraProtocol);
+
+	if(!HwChannels_init())
+	{
+		while(1);
+	}
 	
-	HwChannels_init();
-	
-	CpuSifra->setWeightChan(weightChan);	
+	CpuSifra->setWeightChan(weightChan);	//CpuSifra->setLoadChan(LoadChan);	
 	CpuSifra->setVoltageHwChanManager(powerVoltageChan);
 	
 	CS5530_Spi1Initialization();
 	CS5530_Spi2Initialization();
-}
-
-void init_Led()
-{
-	LedDrivers_sendData(INTENSITY);	// spegne il test
-	LedDrivers_sendData(TEST_LED);		// digits 0, 1, 2, 3, 4 displayed
-	LedDrivers_sendData(SCANLIMIT);		// no decide for digit
-	LedDrivers_sendData(DECODE_MODE);
+	
 }
 
 
 /**
-* Hardware channels initialization - istanzio le classi
+Harware channels initialization - intanzio le classi
 */
-static void HwChannels_init()
+static bool HwChannels_init()
 {
 	byte i;
 	
 	//--- Weight Channels ---
 	weightChan = new GenericHwChanManager <dword, _WEIGHT_BUFFER_LENGTH_> (_MAX_LOAD_CHAN_, _HW_CHAN_VV_TYPE_, _24_BITS_RESOLUTION_, 10);
+				
 	for (i = 0; i < _MAX_LOAD_CHAN_; i++)
 	{
 		weightChan->setEnabled(i, True);
-	#ifdef _NORMALFILTER_
 		weightChan->setAverageFilter(i, True);
-	#else
-		weightChan->setAverageFilter(i, False);		// esclusi i filtri di media mobile e media sui dati di adc
-	#endif
 		weightChan->setGain(i, Chan[i].Weightgain);
 		weightChan->setOffset(i, Chan[i].Weightoffset);
 		weightChan->setChanType(i, _HW_CHAN_VV_TYPE_);
-		weightChan->set_filter_value(i, 1);			// settaggio del filtro di media sul peso: 1*10 --> 66Hz/10 = circa 6,6Hz
+		weightChan->set_filter_value(i, 1);	// settaggio del filtro di media sul peso: 1*10 --> 66Hz/10 = circa 6,6Hz
 	}
-	
 	//--- power Voltage channel ---
 	powerVoltageChan = new VoltageHwChanManager <word, _PWR_VOLTAGE_BUFFER_LENGTH_> (1, _10_BITS_RESOLUTION_, 1);
 	powerVoltageChan->setVoltageRefernce_mV(_INTERNAL_ADC_REF_mV_);
-	powerVoltageChan->setIsZeroable(0, False);
+	powerVoltageChan->setIsZeroable(0, false);
 	powerVoltageChan->setOffset(0, 0);
 	powerVoltageChan->setGain(0, (powerVoltageChan->getVoltageRefence_mV()/powerVoltageChan->getAdcResolution()) * (5.0/3.0));
 	powerVoltageChan->setEnabled(0, True);
+
+	return True;
 
 }
 
@@ -242,7 +228,7 @@ Uart communication protocol initialization
 */
 static void UartProcol_init()
 {
-	SifraProtocol = new SIFRAProtocol();	// inizializza il protocollo, stato iniziale della stduart = stdUart_waitStx
+	SifraProtocol = new SIFRAProtocol();			// inizializza il protocollo, stato iniziale della stduart = stdUart_waitDeviceId
 }
 
 /**
@@ -283,14 +269,22 @@ void pin_init(void)
 	 PinCSadc1 = 1;
 	 ioPinCSadc1 = PDIR_OUTPUT;
 	 
-	 ioPinCMD_EV1 = 1;	// pinout comando EV1
-	 ioPinCMD_EV2 = 1;	// pinout comando EV2
-	 ioPinCMD_EV3 = 1;	// pinout comando EV3
-	 ioPinCMD_EV4 = 1;	// pinout comando EV4
-	 ioPinCMD_EV5 = 1;	// pinout comando EV5
-	 ioPinCMD_EV6 = 1;	// pinout comando EV6
-	 ioPinCMD_EV7 = 1;	// pinout comando EV7
-	 ioPinCMD_EV8 = 1;	// pinout comando EV8
+	 PinCMD_EV1 = 1;
+	 ioPinCMD_EV1 = 0;	// pinout comando EV1
+	 PinCMD_EV2 = 1;
+	 ioPinCMD_EV2 = 0;	// pinout comando EV2
+	 PinCMD_EV3 = 1;
+	 ioPinCMD_EV3 = 0;	// pinout comando EV3
+	 PinCMD_EV4 = 1;
+	 ioPinCMD_EV4 = 0;	// pinout comando EV4
+	 PinCMD_EV5 = 1;
+	 ioPinCMD_EV5 = 0;	// pinout comando EV5
+	 PinCMD_EV6 = 1;
+	 ioPinCMD_EV6 = 0;	// pinout comando EV6
+	 PinCMD_EV7 = 1;
+	 ioPinCMD_EV7 = 0;	// pinout comando EV7
+	 PinCMD_EV8 = 1;
+	 ioPinCMD_EV8 = 0;	// pinout comando EV8
 
 	 PinzaEXT = 0;		// pinza chiusa
 	 ioPinzaEXT = 0;		// output
@@ -305,13 +299,10 @@ void pin_pld_init()
 {
 	cpld_pin_led = 1;
 	cpld_pin_BLK1 = 0;	// relay motore 1 aperto
-	cpld_pin_BLK2 = 0;	// relay motore 2 aperto
-	cpld_pin_BLK3 = 0;	// relay motore 3 aperto
-	cpld_pin_BLK4 = 0;	// relay motore 4 aperto
-	cpld_pin_BLK5 = 0;	// relay motore 5 aperto
 }
+
 /**
-Timer initialization
+* Timer initialization
 */
 void SetupTimers(void)
 {
@@ -387,6 +378,28 @@ void Num_to_Asciihex (word n, char *pc)
 	pc[2] = (n % 10)  + 0x30;
 }
 
+/*
+void counter_manager()
+{
+static long	count;
+
+	count++;
+	passi_motore = cpld_counter1;
+	// 500 imp/giro su rotore motore
+	// il motoriduttore ha riduzione 1:6, cioè 1 giro del rotore ogni 6 giri del motore
+	// -> un giro rotore = 3000imp
+
+	if( count == 1000 )
+	{
+		count = 0;
+		if( cpld_counter1 >= 0x0BB8)	// leggo il contatore 0: se ha raggiunto i 10 conteggi, si resetta e suona il buzzer
+		{
+			cpld_counter1 = 0x0000;
+			goBuzzer(KEY_LIKE);
+		}
+	}
+}
+*/
 /**
 RAM memory test function
 @param ram_start ram start address

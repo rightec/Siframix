@@ -90,7 +90,7 @@ bool RingBuffer::Equals(const unsigned char *pdata, unsigned depth)
 {
 	// + Confronta il dato puntato da pdata con gli ultimi depth elementi del buffer circolare
 
-	bool IsEqual = False;
+	bool IsEqual = false;
 
 	if(m_pRingBuffer)
 	{
@@ -137,7 +137,7 @@ UartDeviceAbstraction::UartDeviceAbstraction(UARTDevice device)
 	// + Abilita l'interrupt di trasmissione con livello di priorità 7
 	
 	m_Device = device;
-	m_DeviceOwner = False;
+	m_DeviceOwner = false;
 	m_LastError = NoErrorUART;
 	m_pTransmitCallback = 0;
 	m_pReceiveCallback = 0;
@@ -861,7 +861,7 @@ QueueUart::QueueUart(UARTDevice device) :
 
 	m_TransmitLockDepth = 0;
 	m_ReceiveLockDepth = 0;
-	m_RunningTransmission = False;
+	m_RunningTransmission = false;
 	rstTransmitBufferOverflow();
 	rstReceptionBufferOverflow();
 	UartDeviceAbstraction::SetTransmitCallBack(&TransmitCallback);
@@ -881,11 +881,10 @@ Start a transmission
 void QueueUart::StartTransmission()
 {
 	unsigned char data;
-	if (!m_TransmissionBuffer.empty() && !m_RunningTransmission)
-	{	
-		asm("di");
+	//if (!m_TransmissionBuffer.empty() && !m_RunningTransmission)
+	if (!m_TransmissionBuffer.empty() && (IsTransmissionBufferEmpty()))
+	{
 		m_TransmissionBuffer.pop_front(data);
-		asm("ei");
 		UartDeviceAbstraction::StartTransmission(data);
 	}
 }
@@ -1028,7 +1027,7 @@ void QueueUart::TransmitCallback(UartDeviceAbstraction *pdevice)
 	else
 	{
 		//PinEnRS485_DE = 0;	// libera la rete per la risposta del modulo giusto
-		pUart->m_RunningTransmission = False;
+		pUart->m_RunningTransmission = false;
 	}
 	if(pUart->m_pTransmitCallback)
 	{
@@ -1101,7 +1100,7 @@ void QueueUart::ClearTransmissionBuffer()
 	// + Svuota la coda di ricezione
 	asm("di");
 	m_TransmissionBuffer.clear();
-	m_RunningTransmission = False;
+	m_RunningTransmission = false;
 	asm("ei");
 }
 
@@ -1115,7 +1114,7 @@ bool QueueUart::ReceiveData(unsigned short &data)
 	// + Se la coda di ricezione non è vuota, estrae un elemento e lo mette in data
 	// + Se la coda di ricezione è vuota, ritorna false
 	
-	bool dataIsReceived = False;
+	bool dataIsReceived = false;
 
 	if(!m_ReceptionBuffer.empty())
 	{
@@ -1139,7 +1138,7 @@ bool QueueUart::ReceiveData(unsigned short *pdata, int &count)
 	// + Se non esistono count elementi nella coda di ricezione, ritorna false
 	// + In ogni caso, count contiene in uscita il numero di elementi estratti dalla coda di ricezione
 
-	bool dataIsReceived = False;
+	bool dataIsReceived = false;
 
 	int counter = count;
 	
@@ -1171,7 +1170,7 @@ bool QueueUart::ReceiveData(unsigned char &data)
 	// + Se la coda di ricezione non è vuota, estrae un elemento e lo mette in data
 	// + Se la coda di ricezione è vuota, ritorna false
 	
-	bool dataIsReceived = False;
+	bool dataIsReceived = false;
 	unsigned short dataShort;
 
 	if(!m_ReceptionBuffer.empty())
@@ -1197,7 +1196,7 @@ bool QueueUart::ReceiveData(unsigned char *pdata, int &count)
 	// + Se non esistono count elementi nella coda di ricezione, ritorna false
 	// + In ogni caso, count contiene in uscita il numero di elementi estratti dalla coda di ricezione
 
-	bool dataIsReceived = False;
+	bool dataIsReceived = false;
 
 	//ReceiveLock();
 	int counter = count;

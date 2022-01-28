@@ -8,6 +8,8 @@
 @rem as.exe -mv850e -gstabs ./src/%1.s -o ./obj/%1.o -a > .\lst\%1.lst
 @rem ---------------------------------------------------------------------
 
-@echo Compilazione su CCR.BAT in cartella M3100_CPU
+@echo Compilazione su CCR.BAT della cartella M3300_CPU
 @cc1plus.exe -g -O1 -mv850 -Wall -mUS-bit-set -mno-prolog-function -fno-exceptions -fno-rtti -fno-enforce-eh-specs -Wreturn-type -mdisable-callt -fshort-enums -freg-struct-return -fshort-double -fverbose-asm -I c:\gcc850\include -iprefix c:\gcc850\include -iwithprefix \g++ -iwithprefix \g++\std -iwithprefix \g++\v850-elf  -undef -o ./src/%1.s  %1.cpp
 @as.exe -mv850 ./src/%1.s -o ./obj/%1.o -ahls > .\lst\%1.lst
+
+

@@ -55,6 +55,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+//#include <math.h>
 #include <fastmath.h>
 
 /** 
@@ -85,19 +86,22 @@ Application firmware start address.
 /** 
 	Application firmware segment checksum address. See file startup.s
 */
-#define APPLICATION_SEGMENT_CHECKSUM_ADDRESS	0x0614	
+#define APPLICATION_SEGMENT_CHECKSUM_ADDRESS	0x0614
+
+/**
+Application type
+*/
+#define APP_TYPE			APP_CPUSIFRA		
 
 //#define __DEBUG__					// debug mode oppure no
-//#define __DEBUG_ADC				// per debuggurae i filtri sull'ADC
-//#define __APP_IN_RAM__				// applicativo caricato in ram
-
-//#define __POWER_SAFE_MODE__		// se utilizzare la modalità a basso consuno			
-//#define __SIMUL__					// simulate mode oppure no
-//#define __SDATA__					// utilizza il segmento sdata oppure no
-//#define   __XTEXT__
-
+//#define _DEBUG_CALIB_VALUES_
+#define _DEBUG_ADC_				// per debuggurae i filtri sull'ADC
 #define _NORMALFILTER_	1	// attivazione del filtraggio digitale (media mobile + media fissa + eliminazione del +/- 1 nel valore visualizzato
 #define _AVERAGE_MOBILE_FILTER
+#define _NEW_FILTERING
+//#define _debug_flussopeso_
+//#define _FIX_AVERAGE_FILTER
+//#define __APP_IN_RAM__				// applicativo caricato in ram
 
 #define True	true			
 #define False	false
@@ -105,30 +109,23 @@ Application firmware start address.
 #define Enable	true			
 #define Disable	false
 
-#define HW_VERSION		001			//0.0.1
+#define HW_VERSION		001 //0.0.1
 
-enum module_name_t
+// tipo di scheda
+#define _M3300_CPU
+
+enum
 {
 	M3100 = 0x01,
 	M3300 = 0x05,
 	M3800 = 0x04,
 	STOP_ALL = 0x03,
-};
-
-enum
-{
-	LINEA_ADULTI = 0x00,
-	LINEA_PEDIAT = 0x01,
-};
-
-enum
-{
-	E_NO_BACKUP = 0x55,
-	E_VALID_BACKUP = 0xAA
+	UNKNOWN = 0XFF
 };
 
 #define ON		1
 #define OFF		0
+#define _RICEVI_PESI_SPECIFICI 
 
 //	MACROS di importazione
 #define LOBYTE(x)             ((byte) ((x) & 0xff))
@@ -161,17 +158,11 @@ enum BoardVoltageMeasures
 // Definizione dei tipi
 //--------------------------------------------------------//
 
-#define _MAX_LOAD_CHAN_	5	// max 5 celle nel m3100
-#define NUM_MAX_LINE		5
-#define _NUM_PUMPS			5
-
-#define _VIA_1_				0
-#define _VIA_2_				1
-#define _VIA_3_				2
-#define _VIA_4_				3
-#define _VIA_5_				4
-
-#define _DIM_PAR_ENC	2		// numero di parametri per il rapporto flusso/peso --> 2 tipi di sacche ADULTO e PEDIATRICO
+#ifdef _M3300_CPU
+	#define _MAX_LOAD_CHAN_		2	// max 2celle nel m3300 con misura differenziale
+	#define NUM_MAX_LINE			8
+	#define _NUM_PUMPS				1
+#endif
 
 #define _NUM_MIN_DATA_in_FIFO			2
 #define _LOAD_BUFFER_LENGTH_  			10
@@ -204,9 +195,6 @@ kind of weight chan
 enum kindOfWeightChan{
 	_ADC1_= 0,
 	_ADC2_,
-	_ADC3_,
-	_ADC4_,
-	_ADC5_,
 	_NUM_OF_WEIGHT_CHAN_
 };
 
@@ -301,7 +289,6 @@ typedef unsigned long   ULONG;
 
 extern UWORD time_msec;
 extern UWORD time_sec;
-
 //--------------------------------------------------------//
 // Definizione delle classi
 //--------------------------------------------------------//
@@ -432,6 +419,7 @@ protected:
 #include "v850sg2.h"						// selezione in base al microbo..
 #include "iodef.h"							// ridefinizione degli I/O in base al target
 #include "irqsg2.h"
+//#include "error.h"
 
 #endif
 

@@ -1,0 +1,33 @@
+FUNZIONALITA'
+comunicazione su rete RS485:
+	- segnalazione stato
+	- segnalazione errori
+	- decodifica messaggi ricevuti
+	- ripetizione comandi ad altri moduli
+salvataggio dello stato attuale:
+	- dati di calibrazione celle
+	- fase di riscaldamento (tempo trascorso)
+	- peso sacca
+	- formula caricata
+	- stato dell'esecuzione
+misura del peso delle sacche:
+	- calibrazione
+	- M3100
+		- misura delle cinque celle contemporaneamente
+		- calcolo del volume mancante da prelevare
+		- segnalazione zero
+		- segnalazione sacca sollevata
+		- segnalazione sacca finita
+	- M32-3300
+		- misura differenziale delle due celle
+		- calcolo del volume mancante da prlevare per ogni linea
+		- segnalazione zero
+		- segnalazione sacca sollevata
+		- segnalazione sacca finita
+algoritmo calcolo volumi e rampe
+	- ricezione formula
+	- calcolo peso
+	- calcolo rampa
+
+
+

@@ -16,21 +16,15 @@
 
 //debug
 int conta = 0;
-my_pwm pwm_mot[_NUM_PUMPS];
+int enable_EVs;
 bool coverState_open = False;
-int stato_pompa[_NUM_PUMPS], pre_stato_pompa[_NUM_PUMPS];
+my_pwm pwm_ev, pwm_mot[_NUM_PUMPS];	// PWM controllo Elettrovalvole TP10 , pin P34
+int stato_pompa[_NUM_PUMPS];
+int pre_stato_pompa[_NUM_PUMPS];
+byte state_EVs, previousstate_EVs;
 DecTimer PWM_timer[_NUM_PUMPS];
-ENCODER_Motor_Status	 MotorStatus[_NUM_PUMPS];
-
-void pwm_motors_reset()
-{
-	int i;
-	
-	for(i = 0; i < NUM_MAX_LINE; i++)
-	{
-		setPwmMotCycle(i, 0);
-	}
-}
+DecTimer EV_timer;
+ENCODER_Motor_Status	 MotorStatus;
 
 /**
 Init of the PWM1 port
@@ -51,130 +45,36 @@ word regVal;
 	_PMC33  = 1;		//manual pag 100
 
 	ioDirMOT1  = 0;
-	DirMOT1 = 0;	// non utilizzato nel M3100
-	
-	pwm_mot[ 0 ].pwmCycle = 0;		// 10% corrisponde a 0,5V di SET_MOTORE (a valle del filtro RC) --> motore fermo pronto a partire
-	pwm_mot[ 0 ].pwmFrq   = 8200;		// freq iniziale del pwm in Hz
- 	pwm_mot[ 0 ].frqBase  = 20e+6/8.0;	// freq del clock disistema (legato al valore settato in TP0CTL0) in Hz
+	DirMOT1 = 1;
 
-	regVal = (pwm_mot[ 0 ].frqBase/((float) pwm_mot[ 0 ].pwmFrq)) - 1;
+	pwm_mot[ 0 ].pwmCycle = 2;		// 10% corrisponde a 0,5V di SET_MOTORE (a valle del filtro RC) --> motore fermo pronto a partire
+	pwm_mot[ 0 ].pwmFrq   = 8200;		// freq iniziale del pwm in Hz
+ 	pwm_mot[ 0 ].frqBase  = 20e+6/8.0;	// freq del clock di sistema (legato al valore settato in TP0CTL0) in Hz
+
+	regVal = (pwm_mot[ 0 ].frqBase/((double) pwm_mot[ 0 ].pwmFrq)) - 1;
 	TP0CCR0 = regVal; // Frequenza pwm --> fpwm =  fc / (TP0CCR0 + 1)
 	regVal = (regVal * pwm_mot[ 0 ].pwmCycle) / 100;
 	TP0CCR1 = regVal;		// pwmCycle * (TO0CCR0 + 1) / 100
 	asm("di");
-	pwm_mot[ 0 ].enable = False;	// disable_PWM(PWM_ElettrValv, pwm_ev);
+	pwm_mot[ 0 ].enable = false;	// disable_PWM(PWM_ElettrValv, pwm_ev);
 	asm("ei");
 
 }
 
 void init_PWM_MOT2()
 {
-word regVal;
-	TP1CTL0 = 0x03;	//-- Counter frequency  --> fc=fxx/8, PWM disable _TP1CE = 0
-	TP1CTL1 = 0x04;	//-- Timer Mode --> PWM output mode, operation with internal clock counter
-	TP1IOC0 = 0x04;	// low level when disable, l'uscita TPM00 è disabilitata
-	//-- Pin setting ---
-	PWM_MOT2 = 0;
-	ioPWM_MOT2 = 0;
-	_PF35 = 0;		// manual pag 103
-	_PFC35  = 1;		//manual pag 102
-	_PMC35  = 1;		//manual pag 100
-
-	pwm_mot[ 1 ].pwmCycle = 0;		// 10% corrisponde a 0,5V di SET_MOTORE (a valle del filtro RC) --> motore fermo pronto a partire
-	pwm_mot[ 1 ].pwmFrq   = 8200;		// freq iniziale del pwm in Hz
- 	pwm_mot[ 1 ].frqBase  = 20e+6/8.0;	// freq del clock disistema (legato al valore settato in TP0CTL0) in Hz
-
-	regVal = (pwm_mot[ 1 ].frqBase/((float) pwm_mot[ 1 ].pwmFrq)) - 1;
-	TP1CCR0 = regVal; // Frequenza pwm
-	regVal = (regVal * pwm_mot[ 1 ].pwmCycle) / 100;
-	TP1CCR1 = regVal;
-	asm("di");
-	pwm_mot[ 1 ].enable = False;
-	asm("ei");
 }
 
 void init_PWM_MOT3()
 {
-word regVal;
-
-	TP2CTL0 = 0x03;	//-- Counter frequency  --> fc=fxx/8, PWM disable _TP1CE = 0
-	TP2CTL1 = 0x04;	//-- Timer Mode --> PWM output mode, operation with internal clock counter
-	TP2IOC0 = 0x04;	// low level when disable, l'uscita TPM00 è disabilitata
-	//-- Pin setting ---
-	PWM_MOT3 = 0;
-	ioPWM_MOT3 = 0;
-	_PF96 = 0;		// manual pag 103
-	_PMC96  = 1;		//manual pag 100
-	_PFC96  = 1;		//manual pag 102
-	_PFCE96 = 1;
-	
-	pwm_mot[ 2 ].pwmCycle = 0;		// 10% corrisponde a 0,5V di SET_MOTORE (a valle del filtro RC) --> motore fermo pronto a partire
-	pwm_mot[ 2 ].pwmFrq   = 8200;		// freq iniziale del pwm in Hz
- 	pwm_mot[ 2 ].frqBase  = 20e+6/8.0;	// freq del clock disistema (legato al valore settato in TP0CTL0) in Hz
-
-	regVal = (pwm_mot[ 2 ].frqBase/((float) pwm_mot[ 2 ].pwmFrq)) - 1;
-	TP2CCR0 = regVal; // Frequenza pwm
-	regVal = (regVal * pwm_mot[ 2 ].pwmCycle) / 100;
-	TP2CCR1 = regVal;
-	asm("di");
-	pwm_mot[ 2 ].enable = False;
-	asm("ei");
 }
 
 void init_PWM_MOT4()
 {
-word regVal;
-
-	TP3CTL0 = 0x03;	//-- Counter frequency  --> fc=fxx/8, PWM disable _TP1CE = 0
-	TP3CTL1 = 0x04;	//-- Timer Mode --> PWM output mode, operation with internal clock counter
-	TP3IOC0 = 0x04;	// low level when disable, l'uscita TPM00 è disabilitata
-	//-- Pin setting ---
-	PWM_MOT4 = 0;
-	ioPWM_MOT4 = 0;
-	_PF94 = 0;		// manual pag 103
-	_PMC94  = 1;		//manual pag 100
-	_PFC94  = 0;		//manual pag 102
-	_PFCE94 = 1;
-
-	pwm_mot[ 3 ].pwmCycle = 0;		// 10% corrisponde a 0,5V di SET_MOTORE (a valle del filtro RC) --> motore fermo pronto a partire
-	pwm_mot[ 3 ].pwmFrq   = 8200;		// freq iniziale del pwm in Hz
- 	pwm_mot[ 3 ].frqBase  = 20e+6/8.0;	// freq del clock disistema (legato al valore settato in TP0CTL0) in Hz
-
-	regVal = (pwm_mot[ 3 ].frqBase/((float) pwm_mot[ 3 ].pwmFrq)) - 1;
-	TP3CCR0 = regVal; // Frequenza pwm
-	regVal = (regVal * pwm_mot[ 3 ].pwmCycle) / 100;
-	TP3CCR1 = regVal;
-	asm("di");
-	pwm_mot[ 3 ].enable = False;
-	asm("ei");
 }
 
 void init_PWM_MOT5()
 {
-word regVal;
-
-	TP4CTL0 = 0x03;	//-- Counter frequency  --> fc=fxx/8, PWM disable _TP1CE = 0
-	TP4CTL1 = 0x04;	//-- Timer Mode --> PWM output mode, operation with internal clock counter
-	TP4IOC0 = 0x04;	// low level when disable, l'uscita TPM00 è disabilitata
-	//-- Pin setting ---
-	PWM_MOT5 = 0;
-	ioPWM_MOT5 = 0;
-	_PF92 = 0;		// manual pag 103
-	_PMC92  = 1;		//manual pag 100
-	_PFC92  = 0;		//manual pag 102
-	_PFCE92 = 1;
-
-	pwm_mot[ 4 ].pwmCycle = 0;		// 10% corrisponde a 0,5V di SET_MOTORE (a valle del filtro RC) --> motore fermo pronto a partire
-	pwm_mot[ 4 ].pwmFrq   = 8200;		// freq iniziale del pwm in Hz
- 	pwm_mot[ 4 ].frqBase  = 20e+6/8.0;	// freq del clock disistema (legato al valore settato in TP0CTL0) in Hz
-
-	regVal = (pwm_mot[ 4 ].frqBase/((float) pwm_mot[ 4 ].pwmFrq)) - 1;
-	TP4CCR0 = regVal; // Frequenza pwm
-	regVal = (regVal * pwm_mot[ 4 ].pwmCycle) / 100;
-	TP4CCR1 = regVal;
-	asm("di");
-	pwm_mot[ 4 ].enable = False;
-	asm("ei");
 }
 
 /**
@@ -183,6 +83,43 @@ This pwm signal controls enabling of the Electromagnetic valves
 */
 void init_PWM_EVuC()
 {
+	word regVal;
+
+	TP1CTL0 = 0x04;	//-- Counter frequency  --> fc=fxx/32
+	TP1CTL1 = 0x04;
+
+	_TP1OE0 = 1;	// enable TOP10
+	_TP1OE1 = 0;	// disable TOP11
+
+	PWM_EV = 0;
+	_PF34 = 0;
+	_PFC34 = 1;
+	_PMC34 = 1;
+	ioPWM_EV = 0;
+
+	pwm_ev.pwmCycle = 10;
+	pwm_ev.pwmFrq   = 8200;
+	pwm_ev.frqBase  = 20e+6/16.0;	// fc = 1.25MHz
+	EV_timer.Stop();
+	regVal = (pwm_ev.frqBase/((double) pwm_ev.pwmFrq)) - 1;		// 151,44
+	TP1CCR0 = regVal; // Frequenza pwm --> fpwm =  fc / (TP0CCR0 + 1)
+	regVal = (regVal * pwm_ev.pwmCycle)  /100;						// 15.1			
+	TP1CCR1 = regVal;		// pwmCycle * (TO0CCR0 + 1) / 100
+	///duty cyle = TP1CCR1 / (TP1CCR0 + 1) = 
+	asm("di");
+	pwm_ev.enable = false;	// disable_PWM(PWM_ElettrValv, pwm_ev);
+	asm("ei");
+}
+
+/**
+set the duty cycle of the pwm, in variable mode
+*/
+void set_PWM_EVuC(byte set)
+{
+	word regVal;
+	regVal = TP1CCR0;
+	regVal = (regVal * (word)set)  /100;						// 15.1			
+	TP1CCR1 = regVal;
 }
 
 /**
@@ -191,69 +128,80 @@ States of the state-machine are set in CPUSIFRA manager module
 */
 void pwmManager()
 {
-	int m_line;
-	
+	byte m_line;
 	// stati POMPA DISABILITATA, ABILITAZIONE, CONTROLLO, ARRESTO
-	for( m_line = 0; m_line < _NUM_PUMPS; m_line++)
-	{
-		switch( stato_pompa[m_line])
-		{
-			case POMPA_DISABILITA:
-				break;
+	m_line = 0;
 
-			case ABILITAZIONE:
-				if(getCoverPumpState())
+	switch( stato_pompa[m_line])
+	{
+		case POMPA_DISABILITA:
+			break;
+
+		case ABILITAZIONE:
+			if(getCoverPumpState())
+			{
+				pre_stato_pompa[m_line] = stato_pompa[m_line];
+				stato_pompa[m_line] = COVER_APERTA;
+			}
+			else	{
+				setStateCoverM3300Pump(True);
+				setBlockRelay(m_line, 1);	//chiudo il relay
+				enable_MOT(m_line);
+				PWM_timer[m_line].Preset(20);
+				stato_pompa[m_line]  = CONTROLLO;
+			}
+			break;
+
+		 case CONTROLLO:
+		 	if(PWM_timer[m_line].Match())
+			{
+			 	if(getCoverPumpState())
 				{
 					pre_stato_pompa[m_line] = stato_pompa[m_line];
 					stato_pompa[m_line] = COVER_APERTA;
 				}
-				else
-				{
-					setBlockRelay(m_line, 1);	//chiudo il relay
-					enable_MOT(m_line);
-					PWM_timer[m_line].Preset(32);
-					stato_pompa[m_line]  = CONTROLLO;
-				}
-				break;
+				PWM_timer[m_line].Preset(20);
+		 	}
+			break;
 
-			 case CONTROLLO:
-			 	if(PWM_timer[m_line].Match())
-				{
-				 	if(getCoverPumpState())
-					{
-						pre_stato_pompa[m_line] = stato_pompa[m_line];
-						stato_pompa[m_line] = COVER_APERTA;
-					}
-					PWM_timer[m_line].Preset(20);
-			 	}
-				break;
+		case ARRESTO:			
+			disable_PWM_MOT(m_line);
+			setBlockRelay(m_line, 0);		// apro il relay
+			stato_pompa[m_line] = POMPA_DISABILITA;
+			break;
 
-			case ARRESTO:
-				setBlockRelay(m_line, 0);		//cpld_pin_BLK1 = 0;	// apro il relay
-				disable_PWM_MOT(m_line);
-				setPwmMotCycle(m_line, 0);
-				stato_pompa[m_line] = POMPA_DISABILITA;
-				break;
-
-			case COVER_APERTA:
-				if(getCoverPumpState())
-				{
-					setBlockRelay(m_line, 0);		// apro il relay
-					setPwmMotCycle(m_line, _PWM_CYCLE_0VEL);
-				}
-				else // se la pompa stava andando la facciamo riprendere
-				{
-					if((pre_stato_pompa[m_line] == ABILITAZIONE) || (pre_stato_pompa[m_line] == CONTROLLO))
-					{
-						stato_pompa[m_line] = ABILITAZIONE;
-					}
-				}
-				break;
+		case COVER_APERTA:
+			if(getCoverPumpState())
+			{
+				setBlockRelay(m_line, 0);		// apro il relay
+				setPwmMotCycle(m_line, _PWM_CYCLE_0VEL);
+				//stato_pompa[m_line] = POMPA_DISABILITA;	
+				setStateCoverM3300Pump(True);
+			}
+			else // se la pompa stava andando la facciamo riprendere
+			{
+				setStateCoverM3300Pump(False);
+				if((pre_stato_pompa[m_line] == ABILITAZIONE) || (pre_stato_pompa[m_line] == CONTROLLO))
+					stato_pompa[m_line] = ABILITAZIONE;
+			}
+			break;
 			
-			default:
-				break;
-		}
+		case INDIETRO:		// valido solo per M3200 e M3300
+			if(getCoverPumpState())
+			{
+				pre_stato_pompa[0] = stato_pompa[0];
+				stato_pompa[0] = COVER_APERTA;
+			}
+			else	{
+				//MotorStatus.On = True;
+				setBlockRelay(0, 1);	//chiudo il relay
+				enable_MOT(0);				
+				DirMOT1 = ~DirMOT1;
+				stato_pompa[0]  = CONTROLLO;
+			}
+			break;
 	}
+
 }
 
 /**
@@ -263,10 +211,44 @@ States of the state-machine are set in CPUSIFRA manager module
 void EVsManager()
 {
 
+	switch(state_EVs)
+	{
+		case DISABLE:
+			break;
+
+		case ENABLE:
+			if(EV_timer.Match())	// infine, quando aperta, abbasso la tensione
+			{
+				EV_timer.Stop();
+				init_PWM_EVuC();
+				enable_PWM_EV();
+				changeEVstatus(OPEN);
+			}
+			break;
+
+		case OPEN:
+			break;
+
+		case CLOSE:
+			disable_PWM_EV();
+			PWM_EV = 0;	// abbasso il pin per togliere la 48V
+			ioPWM_EV = 0;		// stoppare il PWM_EV
+			_PMC34 = 0;	// P34 come IO
+			changeEVstatus(DISABLE);
+			break;
+		default:
+			break;
+	}
 }
 
+//byte SIFRA_Manager::changeSIFRAstatus(byte newStatus)
 byte changeEVstatus(byte newStatus)
 {
+	if(newStatus != state_EVs)
+	{
+		previousstate_EVs = state_EVs;
+		state_EVs = newStatus;
+	}
 	return 0;
 }
 
@@ -275,6 +257,11 @@ enabling of the PWM2 signal for electromagnetic valve
 */
 void enable_PWM_EV()
 {
+	asm("di");
+	pwm_ev.enable = True;
+	pwm_ev.counter = 0;
+	asm("ei");
+	_TP1CE = 1;
 }
 
 /**
@@ -282,6 +269,10 @@ disabling of the PWM2 signal for electromagnetic valve
 */
 void disable_PWM_EV()
 {
+	asm("di");
+	pwm_ev.enable = False;
+	asm("ei");
+	_TP1CE = 0;
 }
 
 /**
@@ -299,18 +290,32 @@ void enable_PWM_MOT(int line)
 			_TP0CE = 1;
 			break;
 		case 1:
-			_TP1CE = 1;
-			break;
 		case 2:
-			_TP2CE = 1;
-			break;
 		case 3:
-			_TP3CE = 1;
-			break;
 		case 4:
-			_TP4CE = 1;
+		default:
 			break;
 	}
+}
+
+/**
+enabling of the PWM1 signal for pump motor
+*/
+void enable_MOT(int i)
+{
+	switch( i )
+	{
+		case 0:
+			init_PWM_MOT1();
+			break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		default:
+			break;
+	}
+	enable_PWM_MOT( i );
 }
 
 /**
@@ -327,16 +332,10 @@ void disable_PWM_MOT(int line)
 			_TP0CE = 0;
 			break;
 		case 1:
-			_TP1CE = 0;
-			break;
 		case 2:
-			_TP2CE = 0;
-			break;
 		case 3:
-			_TP3CE = 0;
-			break;
 		case 4:
-			_TP4CE = 0;
+		default:
 			break;
 	}
 }
@@ -349,10 +348,15 @@ void reg_pump_vel(byte line, byte Command)
 	pwm_mot[line].upper = Command;
 }
 
-/**
-Attivazione/disattivazione reley alimentazione motore:
-e = True --> attivo; e = False --> disattivo
-*/
+bool getCoverPumpState()
+{	// quando lo sportello è aperto il segnale è basso
+	if(cpld_CoverPump == 0)	// aperto
+	{
+		return 1;	// ritorna 0 sportello chiuso
+	}
+	return 0;
+}
+
 void setBlockRelay(int i, int e)
 {
 	switch( i )
@@ -361,41 +365,12 @@ void setBlockRelay(int i, int e)
 			cpld_pin_BLK1 = e;
 			break;
 		case 1:
-			cpld_pin_BLK2 = e;
-			break;
 		case 2:
-			cpld_pin_BLK3 = e;
-			break;
 		case 3:
-			cpld_pin_BLK4 = e;
-			break;
 		case 4:
-			cpld_pin_BLK5 = e;
+		default:
 			break;
 	}
-}
-
-void enable_MOT(int i)
-{
-	switch( i )
-	{
-		case 0:
-			init_PWM_MOT1();
-			break;
-		case 1:
-			init_PWM_MOT2();
-			break;
-		case 2:
-			init_PWM_MOT3();
-			break;
-		case 3:
-			init_PWM_MOT4();
-			break;
-		case 4:
-			init_PWM_MOT5();
-			break;
-	}
-	enable_PWM_MOT( i );
 }
 
 void setRampPump(int i, byte command)
@@ -408,53 +383,14 @@ int getRampPump(int i)
 	return pwm_mot[ i ].upper;
 }
 
-void setSpeedPump(int i, int command)
+void setSpeedPump(int i, byte command)
 {
 	pwm_mot[ i ].pwmCycle = command;
 }
 
 int getSpeedPump(int i)
 {
-int c = 0;
-	c = pwm_mot[ i ].pwmCycle;
-	if(c >= 0)
-	{
-		if(c <= 100)
-		{
-			return c;
-		}
-	}
-	return 0;
-}
-
-void setStatePump(int i, int command)
-{
-	stato_pompa[ i ] = command;
-}
-
-int getStatePump(int i)
-{
-	return stato_pompa[ i ];
-}
-
-void setPwmMotCycleIncrease(int i, int increment)
-{
-
-	if(pwm_mot[ i ].pwmCycle <  _PWM_CYCLE_MAX)
-	{
-		pwm_mot[ i ].pwmCycle += increment;
-		setPwmCycle( i , pwm_mot[ i ].pwmCycle);
-	}
-}
-
-void setPwmMotCycleDecrease(int i, int decrement)
-{
-
-	if(pwm_mot[ i ].pwmCycle >  _PWM_CYCLE_LOW)
-	{
-		pwm_mot[ i ].pwmCycle -= decrement;
-		setPwmCycle( i , pwm_mot[ i ].pwmCycle);
-	}
+	return pwm_mot[ i ].pwmCycle;
 }
 
 void setPwmMotCycle(int i, int value)
@@ -463,51 +399,132 @@ void setPwmMotCycle(int i, int value)
 	setPwmCycle( i , pwm_mot[ i ].pwmCycle);
 }
 
-void setPwmCycle( int pwm, int duty_cycle)
+void setPwmCycle( int pwm, byte duty_cycle)
 {
 int regVal;
 	switch( pwm )
 	{
 		case 0:
 			regVal = TP0CCR0;
-			regVal = (int)((regVal * duty_cycle) / 100);
+			regVal = (regVal * duty_cycle) / 100;
 			TP0CCR1 = regVal;
 			break;
 		case 1:
-			regVal = TP1CCR0;
-			regVal = (int)((regVal * duty_cycle) / 100);
-			TP1CCR1 = regVal;
-			break;
 		case 2:
-			regVal = TP2CCR0;
-			regVal = (int)((regVal * duty_cycle) / 100);
-			TP2CCR1 = regVal;
-			break;
 		case 3:
-			regVal = TP3CCR0;
-			regVal = (int)((regVal * duty_cycle) / 100);
-			TP3CCR1 = regVal;
-			break;
 		case 4:
-			regVal = TP4CCR0;
-			regVal = (int)((regVal * duty_cycle) / 100);
-			TP4CCR1 = regVal;
+		default:
 			break;
 	}
 }
 
-bool getCoverPumpState()
+/**
+Sets state of the cover of the pump in M3300 module
+*/
+void setStateCoverM3300Pump(bool e)
 {
-	if(cpld_CoverPumpOpen)
+	coverState_open = e;
+}
+
+/**
+Gets state of the cover
+*/
+bool getStateCoverM3300Pump()
+{
+	return coverState_open;
+}
+
+/**
+agisce sul basso livello per attivare l'elletrovalvola indicata
+*/
+void OpenLineEV(int i)
+{
+	PWM_EV = 1;	// prima alzo il pin per dare la 48V
+	ioPWM_EV = 0;
+	EV_timer.Preset(_T_OPEN_EV);
+	switch(i)
 	{
-		coverState_open = True;
-		return True;
+		case 0:
+			if( PinCMD_EV1 == 1)	// poi comando l'EV
+				PinCMD_EV1 = 0;
+			break;
+		case 1:
+			if( PinCMD_EV2 == 1)	// poi comando l'EV
+				PinCMD_EV2 = 0;
+			break;
+		case 2:
+			if( PinCMD_EV3 == 1)	// poi comando l'EV
+				PinCMD_EV3 = 0;
+			break;
+		case 3:
+			if( PinCMD_EV4 == 1)	// poi comando l'EV
+				PinCMD_EV4 = 0;
+			break;
+		case 4:
+			if( PinCMD_EV5 == 1)	// poi comando l'EV
+				PinCMD_EV5 = 0;
+			break;
+		case 5:
+			if( PinCMD_EV6 == 1)	// poi comando l'EV
+				PinCMD_EV6 = 0;
+			break;
+		case 6:
+			if( PinCMD_EV7 == 1)	// poi comando l'EV
+				PinCMD_EV7 = 0;
+			break;
+		case 7:
+			if( PinCMD_EV8 == 1)	// poi comando l'EV
+				PinCMD_EV8 = 0;
+			break;
+		default:
+			break;
 	}
-	else
+	changeEVstatus(ENABLE);
+}
+
+/**
+basso livello per la chiusura della elettrovalvola indicata
+*/
+void CloseLineEV(int i)
+{
+	switch(i)
 	{
-		coverState_open= False;
+		case 0:
+			if( PinCMD_EV1 == 0)	// poi disabilito l'EV
+				PinCMD_EV1 = 1;
+			break;
+		case 1:
+			if( PinCMD_EV2 == 0)	// poi disabilito l'EV
+				PinCMD_EV2 = 1;
+			break;
+		case 2:
+			if( PinCMD_EV3 == 0)	// poi disabilito l'EV
+				PinCMD_EV3 = 1;
+			break;
+		case 3:
+			if( PinCMD_EV4 == 0)	// poi disabilito l'EV
+				PinCMD_EV4 = 1;
+			break;
+		case 4:
+			if( PinCMD_EV5 == 0)	// poi disabilito l'EV
+				PinCMD_EV5 = 1;
+			break;
+		case 5:
+			if( PinCMD_EV6 == 0)	// poi disabilito l'EV
+				PinCMD_EV6 = 1;
+			break;
+		case 6:
+			if( PinCMD_EV7 == 0)	// poi disabilito l'EV
+				PinCMD_EV7 = 1;
+			break;
+		case 7:
+			if( PinCMD_EV8 == 0)	// poi disabilito l'EV
+				PinCMD_EV8 = 1;		
+			break;
+		default:
+			break;
 	}
-	
-	return False;
+
+	changeEVstatus(CLOSE);
 }
 

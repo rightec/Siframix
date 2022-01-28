@@ -58,26 +58,28 @@ Address to check if stay in loader mode
 /**
 Addresses for weight channels calibration values
 */
-#define ADDRESS_CHAN_ARE_MEM_CALIB 	16		// nei primi due indirizzi (16 e 17 per il canale 1) vengono salvati il type_of_calibration_offset ed il type_of_calibration_gain
-#define ADDRESS_FACTORY_GAIN       		(ADDRESS_CHAN_ARE_MEM_CALIB + 2)		// 18
-#define ADDRESS_FACTORY_OFFSET     		(ADDRESS_FACTORY_GAIN + sizeof(float))		// 22
-#define ADDRESS_GAIN      				(ADDRESS_FACTORY_OFFSET + sizeof(short))	// 24
-#define ADDRESS_OFFSET    				(ADDRESS_GAIN + sizeof(float))				// 28
-#define ADDRESS_2Kg_READ				(ADDRESS_OFFSET + sizeof(short))			// 30
-#define ADDRESS_CALIB					(ADDRESS_2Kg_READ + sizeof(short))			// 32
-#define BASESTRUCTADDR				17	// numero di byte da scrivere per ogni canale
-/*
-* Canale 1: indirizzi dal 16 al 32
-* Canale 2: indirizzi dal 33 al 49
-* Canale 3: indirizzi dal 50 al 66
-* Canale 4: indirizzi dal 67 al 83
-* Canale 5: indirizzi dal 84 al 100
-*/
+#define ADDRESS_CHAN_ARE_MEM_CALIBRATE 	16										// posizione 16
+#define ADDRESS_FACTORY_GAIN       		(ADDRESS_CHAN_ARE_MEM_CALIBRATE + 2)		// posizione 18
+#define ADDRESS_FACTORY_OFFSET     		(ADDRESS_FACTORY_GAIN + sizeof(float))		// posiz. 22
+#define ADDRESS_GAIN      				(ADDRESS_FACTORY_OFFSET + sizeof(short))	// posiz. 24
+#define ADDRESS_OFFSET    				(ADDRESS_GAIN + sizeof(float))				// posiz. 28
+#define ADDRESS_2Kg_READ				(ADDRESS_OFFSET + sizeof(short))			// posiz. 30
+#define ADDRESS_2KgDx_READ			(ADDRESS_2Kg_READ + sizeof(int))			// posiz. 34
+#define ADDRESS_CALIB					(ADDRESS_2KgDx_READ + sizeof(int))		// posiz. 38
+#define BASESTRUCTADDR				23	// numero di byte da scrivere per ogni canale
 
 /**
 Addresses of string of last calibration date
 */
-#define ADDRESS_DATE_OF_CALIB		(ADDRESS_CHAN_ARE_MEM_CALIB + EEPROM_PAGE_SIZE*6 )		// 112
+#define ADDRESS_DATE_OF_CALIB		(ADDRESS_CHAN_ARE_MEM_CALIBRATE + EEPROM_PAGE_SIZE*5 )
+
+//-- Valori di calibrazione PRS ---
+#define ADDRESS_PRS_ARE_CALIBRATE 112
+#define ADDRESS_PRS_GAIN       114
+#define ADDRESS_PRS_OFFSET     (ADDRESS_PRS_GAIN + sizeof(float))//118
+#define ADDRESS_PRS_FACTGAIN      (ADDRESS_PRS_OFFSET + sizeof(short))//120
+#define ADDRESS_PRS_FACTOFFSET     (ADDRESS_PRS_FACTGAIN + sizeof(float))//122
+
 
 void EE_init();
 

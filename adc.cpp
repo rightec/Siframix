@@ -52,23 +52,24 @@ CSmallRingBuf <short, 20> mV_Power_ADC;
 //CSmallRingBuf <unsigned int, DIM_BYTE_FIFOADC> ADC_serial_fifo;
 CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC1_serial_fifo;//CSmallRingBuf <unsigned int, DIM_BYTE_FIFOADC> ADC1_serial_fifo;
 CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC2_serial_fifo;//CSmallRingBuf <unsigned int, DIM_BYTE_FIFOADC> ADC2_serial_fifo;
-CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC3_serial_fifo;
+//CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC3_serial_fifo;
 CSmallRingBuf <int, DIM_BYTE_FIFO> CS5530_tx_fifo;
 CSmallRingBuf <int, DIM_BYTE_FIFO> CS5530_rx_fifo;
-CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC4_serial_fifo;
+//CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC4_serial_fifo;
 CSmallRingBuf <int, DIM_BYTE_FIFOADC> ADC5_serial_fifo;
 CSmallRingBuf <int, DIM_BYTE_FIFO> CS5530_tx_fifoSpi2;
 CSmallRingBuf <int, DIM_BYTE_FIFO> CS5530_rx_fifoSpi2;
 
 #ifdef __DEBUG_ADC
-int adc1_data[1800];
-int adc2_data[1800];
-int adcfilt_data[1800];
-bool acquisition = False;
-//int contadc1 = 0;
-int contadc2 = 0;
+ extern int adc1_data[];
+extern int adc3_data[];
+//int adc2_data[1800];
+extern int contadc1;
+extern bool acquisition;
 #endif
-int contadc1 = 0;
+int contadc1;
+byte m_data = 0;
+//byte m_type_of_calibration;
 //-------------------------------------------------------
 //Variabili Globali
 //-------------------------------------------------------
@@ -378,7 +379,7 @@ int CS5530_Spi1Initialization()
 	m_numByteReceived = 0;
 	m_numByteToReceived = 0;	
 	m_adcStates = CS5530_initializing;	
-	m_endContinuousConversion = False;	
+	m_endContinuousConversion = false;	
 	m_initializationSequenceState = CS5530_wait_minimun_delay;
 	m_txBufferEmpty = 1;
 	m_spiOrPinMode = 1;
@@ -398,7 +399,7 @@ int CS5530_Spi1Initialization()
 	//m_sampleFrequency = 0;
 	m_confReg_filterRate = 0;
 	m_validDataPresentInADCBuffer = 0;
-	m_num_max_adc_for_channel = 3;
+	m_num_max_adc_for_channel = 2;
 	adc_to_sample = ALL_ADC;	
 	numByteSent = 0;			
 	timerSpi.Stop();
@@ -406,7 +407,8 @@ int CS5530_Spi1Initialization()
 	CS5530_tx_fifo.clear();	
 	ADC1_serial_fifo.clear();
 	ADC2_serial_fifo.clear();
-	ADC3_serial_fifo.clear();
+	//ADC3_serial_fifo.clear();
+	
 	wait_reset_ADC.Preset(25);	// tempo di attesa consigliato per la procedura di reset dell'ADC
 	return 0;
 }
@@ -418,7 +420,7 @@ int CS5530_Spi2Initialization()
 	m_numByteReceivedSpi2 = 0;
 	m_numByteToReceivedSpi2 = 0;
 	m_adcStatesSpi2 = CS5530_initializing;
-	m_endContinuousConversionSpi2 = False;
+	m_endContinuousConversionSpi2 = false;
 	m_initializationSequenceStateSpi2 = CS5530_wait_minimun_delay;
 	m_txBufferEmptySpi2 = 1;
 	m_spiOrPinModeSpi2 = 1;
@@ -442,7 +444,7 @@ int CS5530_Spi2Initialization()
 	timerSpi2.Stop();
 	CS5530_rx_fifoSpi2.clear();
 	CS5530_tx_fifoSpi2.clear();	
-	ADC4_serial_fifo.clear();
+	//ADC4_serial_fifo.clear();
 	ADC5_serial_fifo.clear();
 
 	return 0;
@@ -461,245 +463,229 @@ void CS5530_EntrySpi1()
 	int data;
 	byte param[4];
 	static dword adcVal = 0;
-	static dword regVal = 0;
 
 	// se la fifo non è vuota e il numero di dati ricevuti è inferiore al numero dei dati da ricevere
-	while(!CS5530_rx_fifo.empty())	// se ci sono dati nel buffer di ricezione
+	while(!CS5530_rx_fifo.empty() && (m_numByteReceived < m_numByteToReceived))
 	{
-		asm("di");	
+		asm("di");	//sio_disable_tx_interrupt_ch1();
 		CS5530_rx_fifo.pop_front(data);	// preleva dalla Fifo e mette nella struttura
 		//debug_rx_data = data;	// per vederla in debug
-		asm("ei");
-		if(m_numByteReceived < m_numByteToReceived)	// se è rispettao il sincronismo entra, altrimenti ha svuotato il buffer e si spera che si risincronizzi
-		{
-			switch (m_CommandSent)
-			{										
-				case CS5530_rd_config_register:
-					if (m_numByteReceived > 0)
-					{
-						m_confReg += (dword)(data << ((m_numByteToReceived - m_numByteReceived - 1)*8));
-					}
-					if(m_numByteReceived == (m_numByteToReceived -1))
-					{
-						m_confReg_PowerSave = (byte)((m_confReg >> 31) & 0x01);
-						m_confReg_PowerDown = (byte)((m_confReg >> 30) & 0x01);
-						m_confReg_RstSys = (byte)((m_confReg >> 29) & 0x01);
-						m_confReg_RstValid = (byte)((m_confReg >> 28) & 0x01);
-						m_confReg_InputShort = (byte)((m_confReg >> 27) & 0x01);
-						m_confReg_VoltageRef = (byte)((m_confReg >> 25) & 0x01);
-						m_confReg_LatchBit = (byte)((m_confReg >> 23) & 0x03);
-						m_confReg_filterRate = (byte)((m_confReg >> 19) & 0x01);
-						m_confReg_WordRate = (byte)((m_confReg >> 11) & 0x0F);
-						m_confReg_UniBiPolar = (byte)((m_confReg >> 10) & 0x01);
-						m_confReg_OpenCircuitDetect = (byte)((m_confReg >> 9) & 0x01);					
-						m_confRegStatus = CS5530_confReg_Updated;
-					}
-					break;
-					
-				case CS5530_read_adc_data:		// lettura del dato di adc, 4 cicli per comporre il dato di 32bit
-					if (m_numByteReceived == 0)
-					{
-						adcVal = 0;
-					}else
-					{
-						adcVal += (((dword)data) << ((m_numByteToReceived - m_numByteReceived - 1)*8));			
-					}			
-					break;
-
-				case CS5530_rd_gain_register:		// lettura del registro del gain dell'adc, 4 cicli per comporre il dato di 32bits
-					if (m_numByteReceived == 0)
-					{
-						regVal = 0;
-					}else
-					{
-						regVal += (((dword)data) << ((m_numByteToReceived - m_numByteReceived - 1)*8));			
-					}			
-					break;
-					
-				case CS5530_wr_gain_register:			
-				case CS5530_wr_offset_register:			
-				case CS5530_rd_offset_register:
-				case CS5530_wr_config_register:
-				case CS5530_perform_single_conversion:
-				case CS5530_perform_continuous_conversion:		
-				case CS5530_perform_sys_offset_cal_register:
-				case CS5530_perform_sys_gain_cal_register:	
-				case CS5530_end_continuous_conversion:
-				case CS5530_sendInitSyncSequence:	
-				case CS5530_sync1:
-				case CS5530_sync0:
-				case CS5530_null:	
-					break;
-				
-			}
-			m_numByteReceived++;
-			// se i dati ricevuti sono maggiori o uguali (questo è il caso interessante) di quelli da ricevere
-			if (m_numByteReceived >= m_numByteToReceived)
-			{
-				txBufferEmpty();
-				timerSpi.Stop();
-				m_numByteReceived = 0;
-				if(m_adcStates != CS5530_continuousConversionMode && m_adcStates != CS5530_singleConversionMode)
+		asm("ei");	//sio_enable_tx_interrupt_ch1(0x06);	//asm("ei");
+		
+		switch (m_CommandSent)
+		{										
+			case CS5530_rd_config_register:
+				if (m_numByteReceived > 0)
 				{
-					//CS_ADC2_HIGH();
-					//CS_ADC1_HIGH();
+					m_confReg += (dword)(data << ((m_numByteToReceived - m_numByteReceived - 1)*8));
 				}
-				switch(m_adcStates)
-				{					
-					case CS5530_singleConversionMode:
-						if(m_CommandSent == CS5530_read_adc_data)
-						{
-							m_adcStates = CS5530_commandMode;
-						}
-						m_CommandSent = (byte)CS5530_null;
-						m_TxState = CS5530_TxState_idle;
-						break;
-					case CS5530_pre_continuousConversionMode:
-						CS_ADC2_HIGH();
-						CS_ADC3_HIGH();
-						m_adcStates = CS5530_continuousConversionMode;
-						m_TxState = CS5530_TxState_idle;
-						break;
-					case CS5530_continuousConversionMode:
-						if (m_CommandSent == CS5530_read_adc_data)
-						{	
-							if((adcVal & _MASK_IF_OVERFLOW))	// se c'è over range 
-								adcVal |= 0xFFFFFFFF;	// così avrò un dato a FFFF e posso trattarlo da non valido
-							
-							adcVal = (adcVal >> 8) & _MASK_24BIT_VALID;	// tolgo gli 8 bit LSB che descrivono l'eventuale overrun e i 6 meno significativi del dato
-							switch( adc_to_sample )	// qui la variabile è già incrementata di 
-							{
-								case ADC_A:
-									ADC1_serial_fifo.push_back(adcVal);
-									break;
-								case ADC_B:
-									ADC2_serial_fifo.push_back(adcVal);
-									break;
-								case ADC_C:
-									ADC3_serial_fifo.push_back(adcVal);
-									break;
-								case ALL_ADC:
-									break;
-							}
-							if( adc_to_sample < m_num_max_adc_for_channel)
-								adc_to_sample++;
-							else	
-							{
-								adc_to_sample = 1;
-								m_validDataPresentInADCBuffer = 1; // dati valide in tutte le fifo
-							}
-						}
-						if(m_CommandSent == CS5530_end_continuous_conversion)
-						{
-							m_adcStates = CS5530_commandMode;
-						}
-						m_CommandSent = (byte)CS5530_null;
-						m_TxState = CS5530_TxState_idle;
-						if(m_endContinuousConversion)
-						{
-							CS5530_sendCmd(CS5530_end_continuous_conversion, param);
-							adc_to_sample = ALL_ADC;	// messaggio per tutti gli ADC, devo abbassare tutti i CS
-							m_endContinuousConversion = False;
-						}
-						break;
-					case CS5530_initializing:
-						switch (m_initializationSequenceState)
-						{							
-							case CS5530_waitTowriteSync1andSync0:
-								numByteSent = 0;
-								m_initializationSequenceState = CS5530_setRstBit;
-								break;
-								
-							case CS5530_waitTosetRstBit:
-								m_initializationSequenceState = CS5530_wait8clk;
-								break;
-								
-							case CS5530_waitWait8Clk:
-								m_initializationSequenceState = CS5530_rstRstBit;
-								break;
-															
-							case CS5530_waitToRstRstBit:
-								m_initializationSequenceState = CS5530_readConfRegFirstTime;
-								break;
-								
-							case CS5530_waitToReadConfRegFirstTime:
-		//	****** non torna il m_confReg = forse gli scrivo una word invece che un byte
-								if((m_confReg_RstValid == (byte)CS5530_rstCycle) && (m_confReg == (((dword)m_confReg_RstValid) << 28)))
-								{
-									m_initializationSequenceState = CS5530_writeConfRef;
-								}else
-								{
-									m_initializationSequenceState = CS5530_writingSync1AndSync0;
-								}
-								break;							
-								
-							case CS5530_waitToWriteConfRef:
-								m_initializationSequenceState = CS5530_readConfRegSecondTime;
-								break;
-							case CS5530_waitToWriteGainRef:
-
-								break;
-
-							case CS5530_setRstBit:	
-							case CS5530_wait8clk:
-							case CS5530_rstRstBit:
-							case CS5530_readConfRegFirstTime:
-							case CS5530_writeConfRef:
-							case CS5530_readConfRegSecondTime:
-							case CS5530_writingSync1AndSync0:
-								break;
-								
-							case CS5530_waitToReadConfSecondTime:
-								if (m_confReg != m_lastConfRegWrote)
-								{
-									m_initializationSequenceState = CS5530_writeConfRef;
-								}else
-								{
-									//m_initializationSequenceState = CS5530_writingSync1AndSync0;
-									//m_adcStates = CS5530_commandMode;
-									m_initializationSequenceState = CS5530_writeConfRef;
-									m_adcStates = CS5530_writeGainRegister;	// vado nella sequenza automatica di scrittura giadagno adc
-								}
-								break;
-								
-						}
-						m_CommandSent = (byte)CS5530_null;
-						m_TxState = CS5530_TxState_idle;
-						break;
+				if(m_numByteReceived == (m_numByteToReceived -1))
+				{
+					m_confReg_PowerSave = (byte)((m_confReg >> 31) & 0x01);
+					m_confReg_PowerDown = (byte)((m_confReg >> 30) & 0x01);
+					m_confReg_RstSys = (byte)((m_confReg >> 29) & 0x01);
+					m_confReg_RstValid = (byte)((m_confReg >> 28) & 0x01);
+					m_confReg_InputShort = (byte)((m_confReg >> 27) & 0x01);
+					m_confReg_VoltageRef = (byte)((m_confReg >> 25) & 0x01);
+					m_confReg_LatchBit = (byte)((m_confReg >> 23) & 0x03);
+					m_confReg_filterRate = (byte)((m_confReg >> 19) & 0x01);
+					m_confReg_WordRate = (byte)((m_confReg >> 11) & 0x0F);
+					m_confReg_UniBiPolar = (byte)((m_confReg >> 10) & 0x01);
+					m_confReg_OpenCircuitDetect = (byte)((m_confReg >> 9) & 0x01);
+					
+					m_confRegStatus = CS5530_confReg_Updated;
+				}
+				break;
+				
+			case CS5530_read_adc_data:
+				if (m_numByteReceived == 0)
+				{
+					adcVal = 0;
+				}else
+				{
+					adcVal += (((dword)data) << ((m_numByteToReceived - m_numByteReceived - 1)*8));			
+				}			
+				break;
+				
+			case CS5530_wr_gain_register:			
+			case CS5530_wr_offset_register:
+			case CS5530_rd_gain_register:
+			case CS5530_rd_offset_register:
+			case CS5530_wr_config_register:
+			case CS5530_perform_single_conversion:
+			case CS5530_perform_continuous_conversion:		
+			case CS5530_perform_sys_offset_cal_register:
+			case CS5530_perform_sys_gain_cal_register:	
+			case CS5530_end_continuous_conversion:
+			case CS5530_sendInitSyncSequence:	
+			case CS5530_sync1:
+			case CS5530_sync0:
+			case CS5530_null:	
+				break;
+			
+		}
+		m_numByteReceived++;
+		// se i dati ricevuti sono maggiori o uguali (questo è il caso interessante) di quelli da ricevere
+		if (m_numByteReceived >= m_numByteToReceived)
+		{
+			txBufferEmpty();
+			timerSpi.Stop();
+			m_numByteReceived = 0;
+			if(m_adcStates != CS5530_continuousConversionMode && m_adcStates != CS5530_singleConversionMode)
+			{
+				//CS_ADC2_HIGH();
+				//CS_ADC1_HIGH();
+			}
+			switch(m_adcStates)
+			{		
+				case CS5530_singleConversionMode:
+					if(m_CommandSent == CS5530_read_adc_data)
+					{
+						m_adcStates = CS5530_commandMode;
+					}
+					m_CommandSent = (byte)CS5530_null;
+					m_TxState = CS5530_TxState_idle;
+					break;
+				case CS5530_pre_continuousConversionMode:
+					CS_ADC2_HIGH();
+					CS_ADC3_HIGH();
+					m_adcStates = CS5530_continuousConversionMode;
+					m_TxState = CS5530_TxState_idle;
+					break;
+				case CS5530_continuousConversionMode:
+					if (m_CommandSent == CS5530_read_adc_data)
+					{	
+						if((adcVal & _MASK_IF_OVERFLOW))	// se c'è over range 
+							adcVal |= 0xFFFFFFFF;	// così avrò un dato a FFFF e posso trattarlo da non valido
 						
-					case CS5530_writeGainRegister:		// qui si gestisce la scrittura del registro di GAIN
-						switch (m_initializationSequenceState)
+						adcVal = (adcVal >> 8) & _MASK_24BIT_VALID;	// tolgo gli 8 bit LSB che descrivono l'eventuale overrun e i 6 meno significativi del dato
+						switch( adc_to_sample )	// qui la variabile è già incrementata di 
 						{
-							case CS5530_writeConfRef:
+							case ADC_A:
+								ADC1_serial_fifo.push_back(adcVal);
 								break;
-							case CS5530_waitToWriteGainRef:
+							case ADC_B:
+								//ADC2_serial_fifo.push_back(adcVal);
+								break;
+							case ADC_C:
+							case ALL_ADC:
+								break;
+						}
+						if( adc_to_sample < m_num_max_adc_for_channel)
+							adc_to_sample++;
+						else	
+						{
+							adc_to_sample = 1;
+							m_validDataPresentInADCBuffer = 1; // dati valide in tutte le fifo
+						}
+					}
+					if(m_CommandSent == CS5530_end_continuous_conversion)
+					{
+						m_adcStates = CS5530_commandMode;
+					}
+					m_CommandSent = (byte)CS5530_null;
+					m_TxState = CS5530_TxState_idle;
+					if(m_endContinuousConversion)
+					{
+						CS5530_sendCmd(CS5530_end_continuous_conversion, param);
+						adc_to_sample = ALL_ADC;	// messaggio per tutti gli ADC, devo abbassare tutti i CS
+						m_endContinuousConversion = false;
+					}
+					break;
+				case CS5530_initializing:
+					switch (m_initializationSequenceState)
+					{							
+						case CS5530_waitTowriteSync1andSync0:
+							numByteSent = 0;
+							m_initializationSequenceState = CS5530_setRstBit;
+							break;
+							
+						case CS5530_waitTosetRstBit:
+							m_initializationSequenceState = CS5530_wait8clk;
+							break;
+							
+						case CS5530_waitWait8Clk:
+							m_initializationSequenceState = CS5530_rstRstBit;
+							break;
+														
+						case CS5530_waitToRstRstBit:
+							m_initializationSequenceState = CS5530_readConfRegFirstTime;
+							break;
+							
+						case CS5530_waitToReadConfRegFirstTime:
+	//	****** non torna il m_confReg = forse gli scrivo una word invece che un byte
+							if((m_confReg_RstValid == (byte)CS5530_rstCycle) && (m_confReg == (((dword)m_confReg_RstValid) << 28)))
+							{
+								m_initializationSequenceState = CS5530_writeConfRef;
+							}else
+							{
 								m_initializationSequenceState = CS5530_writingSync1AndSync0;
-								m_adcStates = CS5530_commandMode;
-								break;
-						}	
-					case CS5530_commandMode:		// non c'è nulla da ricevere per cui non fa niente
-					default:
-						m_CommandSent = (byte)CS5530_null;
-						m_TxState = CS5530_TxState_idle;
-						break;
-				}
+							}
+							break;							
+							
+						case CS5530_waitToWriteConfRef:
+							m_initializationSequenceState = CS5530_readConfRegSecondTime;
+							break;
+
+						case CS5530_setRstBit:	
+						case CS5530_wait8clk:
+						case CS5530_rstRstBit:
+						case CS5530_readConfRegFirstTime:
+						case CS5530_writeConfRef:
+						case CS5530_readConfRegSecondTime:
+						case CS5530_writingSync1AndSync0:
+							break;
+							
+						case CS5530_waitToReadConfSecondTime:
+							if (m_confReg != m_lastConfRegWrote)
+							{
+								m_initializationSequenceState = CS5530_writeConfRef;
+							}else
+							{
+								//m_initializationSequenceState = CS5530_writingSync1AndSync0;
+								//m_adcStates = CS5530_commandMode;
+								m_initializationSequenceState = CS5530_writeConfRef;
+								m_adcStates = CS5530_writeGainRegister;	// vado nella sequenza automatica di scrittura giadagno adc;
+							}
+							break;
+							
+					}
+					m_CommandSent = (byte)CS5530_null;
+					m_TxState = CS5530_TxState_idle;
+					break;
+					
+				case CS5530_writeGainRegister:		// qui si gestisce la scrittura del registro di GAIN
+					switch (m_initializationSequenceState)
+					{
+						case CS5530_writeConfRef:
+							break;
+						case CS5530_waitToWriteGainRef:
+							m_initializationSequenceState = CS5530_writingSync1AndSync0;
+							m_adcStates = CS5530_commandMode;
+							break;
+					}	
+				case CS5530_commandMode:		// non c'è nulla da ricevere per cui non fa niente	
+				default:
+					m_CommandSent = (byte)CS5530_null;
+					m_TxState = CS5530_TxState_idle;
+					break;
 			}
 		}
 	}
 	
 	//-----------------------------------------------------
-	//qui ci entra ora solo nella fase iniziale di configurazione
+	//-----------------------------------------------------
 	if( (m_adcStates != CS5530_continuousConversionMode) & (m_adcStates != CS5530_pre_continuousConversionMode)) // se siamo in conitnuous si fa tutto nell'interrupt
 	{
 		if (timerSpi.Match())
 		{
-			if(!CS5530_tx_fifo.empty() )	//byte_fifo_empty(&CS5530_tx_fifo))
+			if(!CS5530_tx_fifo.empty() )					//byte_fifo_empty(&CS5530_tx_fifo))
 			{
-				timerSpi.Preset(_TIME_);			
-				sio_disable_tx_interrupt_ch1();	//CB1TIC = 0x47;	// imposta irq off di_SPI();
-				CS5530_tx_fifo.pop_front(data);	//byte_fifo_pop_front(&CS5530_tx_fifo, &data);
-				sio_enable_tx_interrupt_ch1(0x07);	//asm("ei");//CB1TIC = 0x07;	// imposta irq on con priorità 7 
-				CB1TX = data; // Load Tx buffer
+				timerSpi.Preset(_TIME_);
+				CB1TIC = 0x47;							// imposta irq off di_SPI();
+				CS5530_tx_fifo.pop_front(data);			//byte_fifo_pop_front(&CS5530_tx_fifo, &data);
+				CB1TIC = 0x07;							// imposta irq on con priorità 7 	//ei_SPI();
+				CB1TX = data; 							// Load Tx buffer
 			}
 		}
 	}
@@ -712,6 +698,7 @@ void CS5530_EntrySpi1()
 			{
 				m_startContinuousConversion = 0;
 				CS5530_sendCmd(CS5530_perform_continuous_conversion, NULL);
+				//CS5530_rx_fifo.clear();
 			}
 			else
 				m_startContinuousConversion = 1;
@@ -732,21 +719,16 @@ void CS5530_EntrySpi1()
 							CS_ADC1_LOW();
 							CS_ADC2_HIGH();
 							CS_ADC3_HIGH();
-							
 							m_spiOrPinMode = 0;
 							setPINSPI1mode();	// Configure P97 as an input
 							break;
 						case ADC_B:
+							CS_ADC2_LOW();
 							CS_ADC1_HIGH();
-							CS_ADC2_LOW();							
 							CS_ADC3_HIGH();
 							CS5530_sendCmd(CS5530_read_adc_data, NULL);
 							break;
-						case ADC_C:							
-							CS_ADC1_HIGH();
-							CS_ADC2_HIGH();
-							CS_ADC3_LOW();
-							CS5530_sendCmd(CS5530_read_adc_data, NULL);
+						case ADC_C:
 							break;
 						case ALL_ADC:
 							break;
@@ -760,11 +742,9 @@ void CS5530_EntrySpi1()
 						m_spiOrPinMode = 1;	// riotnro in modalità SPI per convertire e leggere: 40cicli di clock
 						setSPI1mode();	// Re-Configure P97 as SDI of SPI1						
 						CS5530_sendCmd(CS5530_read_adc_data, NULL);
-					}					
-					else
-					{
-						contadc1++;
 					}
+					else
+						contadc1++;
 				}
 			}
 			break;
@@ -773,10 +753,7 @@ void CS5530_EntrySpi1()
 			{
 				case CS5530_wait_minimun_delay:
 					if(wait_reset_ADC.Match())
-					{
 						m_initializationSequenceState = CS5530_writingSync1AndSync0;
-					}
-					break;
 				case CS5530_writingSync1AndSync0:
 					CS5530_sendCmd(CS5530_sendInitSyncSequence, NULL);
 					m_initializationSequenceState = CS5530_waitTowriteSync1andSync0;
@@ -826,7 +803,11 @@ void CS5530_EntrySpi1()
 					CS5530_setInputShort(CS5530_normalInput);
 					CS5530_setVoltageRef(CS5530_higherThan_2_5V);
 					CS5530_setLatchBits(CS5530_latchBits_LL);
-					CS5530_setSampleFrequecy(CS5530_sf_30_Hz);
+#ifdef _NEW_FILTERING
+					CS5530_setSampleFrequecy(CS5530_sf_7_5_Hz);
+#else
+					CS5530_setSampleFrequecy(CS5530_sf_50_Hz);
+#endif				
 					CS5530_setAdcCoding(CS5530_unipolar);
 					CS5530_setOpenCircuitDetector(CS5530_openCircuitDetector_NOT_ACTIVE);
 					
@@ -848,12 +829,13 @@ void CS5530_EntrySpi1()
 					
 			}
 			break;
+
 		case CS5530_writeGainRegister:		// qui si gestisce la scrittura del registro di GAIN
 			switch (m_initializationSequenceState)
 			{
 				case CS5530_writeConfRef:
-					// scrivo il registro di gain in modo che il valore del gain sia 2.000
-					CS5530_setIntGainADConv(CS5530_doublegain, param);		//CS5530_setIntGainADConv(CS5530_gain, param);					
+					//CS5530_setIntGainADConv(CS5530_doublegain, param);	//
+					CS5530_setIntGainADConv(CS5530_gain, param); // 6Kg
 					CS5530_sendCmd(CS5530_wr_gain_register, param);
 					m_initializationSequenceState = CS5530_waitToWriteGainRef;
 					break;
@@ -941,6 +923,7 @@ int CS5530_sendCmd(CS5530_command cmd, byte *param)
 			m_confReg += ((dword)m_confReg_WordRate << 11);
 			m_confReg += ((dword)m_confReg_UniBiPolar << 10);
 			m_confReg += ((dword)m_confReg_OpenCircuitDetect << 9);
+			m_confReg &= MASK_CONFIG_REG;		// mi assicuro di avere a 0 i bit che devono essere a "0"
 			sio_disable_tx_interrupt_ch1();	//asm("di");
 			CS5530_tx_fifo.push_back(m_CommandSent);	//byte_fifo_push_back(&CS5530_tx_fifo, m_CommandSent);
 			CS5530_tx_fifo.push_back(((byte*)(&m_confReg))[3]);	//byte_fifo_push_back(&CS5530_tx_fifo, ((byte*)(&m_confReg))[3]);
@@ -1000,7 +983,6 @@ int CS5530_sendCmd(CS5530_command cmd, byte *param)
 			{
 				CS5530_tx_fifo.push_back((byte)CS5530_null);
 			}
-			CS5530_tx_fifo.push_back((byte)CS5530_null);
 			sio_enable_tx_interrupt_ch1(0x06);
 			m_numByteToReceived  = 5;
 			break;
@@ -1031,7 +1013,7 @@ int CS5530_sendCmd(CS5530_command cmd, byte *param)
 			CS5530_tx_fifo.push_back(param[2]);	
 			CS5530_tx_fifo.push_back(param[1]);	
 			CS5530_tx_fifo.push_back(param[0]);
-			sio_enable_tx_interrupt_ch1(0x06);
+			sio_enable_tx_interrupt_ch1(0x06); // ei_SPI();
 			m_numByteToReceived = 5;
 			break;
 			
@@ -1128,7 +1110,7 @@ void CS5530_EntrySpi2()
 				//CS_ADC1_HIGH();
 			}
 			switch(m_adcStatesSpi2)
-			{				
+			{
 				case CS5530_singleConversionMode:
 					if(m_CommandSentSpi2 == CS5530_read_adc_data)
 					{
@@ -1146,13 +1128,14 @@ void CS5530_EntrySpi2()
 				case CS5530_continuousConversionMode:
 					if (m_CommandSentSpi2 == CS5530_read_adc_data)
 					{	
-						if((adcVal & 0x00000004))	// se c'è over range
+						if((adcVal & _MASK_IF_OVERFLOW))	// se c'è over range 
 							adcVal |= 0xFFFFFFFF;	// così avrò un dato a FFFF e posso trattarlo da non valido
-						adcVal = (adcVal >> 8) & 0x00FFFFFF;	// tolgo gli 8 bit LSB che descrivono l'eventuale overrun
+						
+						adcVal = (adcVal >> 8) & _MASK_24BIT_VALID;	// tolgo gli 8 bit LSB che descrivono l'eventuale overrun e i 6 meno significativi del dato
 						switch( adc_to_sampleSpi2 )	// qui la variabile è già incrementata di 
 						{
 							case ADC_A:
-								ADC4_serial_fifo.push_back(adcVal);
+								//ADC4_serial_fifo.push_back(adcVal);
 								break;
 							case ADC_B:
 								ADC5_serial_fifo.push_back(adcVal);
@@ -1180,7 +1163,7 @@ void CS5530_EntrySpi2()
 					{
 						CS5530_sendCmdSpi2(CS5530_end_continuous_conversion, param);
 						adc_to_sampleSpi2 = ALL_ADC;	// messaggio per tutti gli ADC, devo abbassare tutti i CS
-						m_endContinuousConversionSpi2 = False;
+						m_endContinuousConversionSpi2 = false;
 					}
 					break;
 				case CS5530_initializing:
@@ -1243,9 +1226,8 @@ void CS5530_EntrySpi2()
 					}
 					m_CommandSentSpi2 = (byte)CS5530_null;
 					m_TxStateSpi2 = CS5530_TxState_idle;
-
 					break;
-				
+					
 				case CS5530_writeGainRegister:		// qui si gestisce la scrittura del registro di GAIN
 					switch (m_initializationSequenceStateSpi2)
 					{
@@ -1260,7 +1242,7 @@ void CS5530_EntrySpi2()
 					m_TxStateSpi2 = CS5530_TxState_idle;
 					break;
 					
-				case CS5530_commandMode:
+				case CS5530_commandMode:	
 				default:
 					m_CommandSentSpi2 = (byte)CS5530_null;
 					m_TxStateSpi2 = CS5530_TxState_idle;
@@ -1278,9 +1260,9 @@ void CS5530_EntrySpi2()
 			if(!CS5530_tx_fifoSpi2.empty() )	
 			{
 				timerSpi2.Preset(_TIME_);
-				sio_disable_tx_interrupt_ch2();	//CB2TIC = 0x47;
+				CB2TIC = 0x47;
 				CS5530_tx_fifoSpi2.pop_front(data);
-				sio_enable_tx_interrupt_ch2(0x07);	//CB2TIC = 0x07;	
+				CB2TIC = 0x07;	
 				CB2TX = data; // Load Tx buffer
 			}
 		}
@@ -1351,7 +1333,7 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitTowriteSync1andSync0;
 					break;
 					
-				case CS5530_waitTowriteSync1andSync0:
+				case CS5530_waitTowriteSync1andSync0:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
 					break;
 						
 				case CS5530_setRstBit:
@@ -1360,7 +1342,7 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitTosetRstBit;
 					break;
 					
-				case CS5530_waitTosetRstBit:
+				case CS5530_waitTosetRstBit:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
 					break;
 					
 				case CS5530_wait8clk:
@@ -1368,7 +1350,7 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitWait8Clk;
 					break;
 					
-				case CS5530_waitWait8Clk:
+				case CS5530_waitWait8Clk:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
 					break;
 					
 				case CS5530_rstRstBit:
@@ -1377,7 +1359,7 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitToRstRstBit;
 					break;
 					
-				case CS5530_waitToRstRstBit:
+				case CS5530_waitToRstRstBit:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
 					break;
 					
 				case CS5530_readConfRegFirstTime:
@@ -1385,7 +1367,7 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitToReadConfRegFirstTime;
 					break;
 					
-				case CS5530_waitToReadConfRegFirstTime:				
+				case CS5530_waitToReadConfRegFirstTime:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra			
 					break;
 					
 				case CS5530_writeConfRef:
@@ -1395,7 +1377,11 @@ void CS5530_EntrySpi2()
 					CS5530_setInputShortSpi2(CS5530_normalInput);
 					CS5530_setVoltageRefSpi2(CS5530_higherThan_2_5V);
 					CS5530_setLatchBitsSpi2(CS5530_latchBits_LL);
-					CS5530_setSampleFrequecySpi2(CS5530_sf_30_Hz);
+#ifdef _NEW_FILTERING
+					CS5530_setSampleFrequencySpi2(CS5530_sf_7_5_Hz);
+#else
+					CS5530_setSampleFrequencySpi2(CS5530_sf_50_Hz);
+#endif
 					CS5530_setAdcCodingSpi2(CS5530_unipolar);
 					CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector_NOT_ACTIVE);
 					
@@ -1404,7 +1390,7 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitToWriteConfRef;
 					break;
 					
-				case CS5530_waitToWriteConfRef:
+				case CS5530_waitToWriteConfRef:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
 					break;
 					
 				case CS5530_readConfRegSecondTime:
@@ -1412,22 +1398,21 @@ void CS5530_EntrySpi2()
 					m_initializationSequenceStateSpi2 = CS5530_waitToReadConfSecondTime;
 					break;
 					
-				case CS5530_waitToReadConfSecondTime:
-					break;
-					
+				case CS5530_waitToReadConfSecondTime:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
+					break;				
 			}
 			break;
-			
+
 		case CS5530_writeGainRegister:		// qui si gestisce la scrittura del registro di GAIN
 			switch (m_initializationSequenceStateSpi2)
 			{
 				case CS5530_writeConfRef:
-					// scrivo il registro di gain in modo che il valore del gain sia 2.000
-					CS5530_setIntGainADConv(CS5530_doublegain, param);   //CS5530_setIntGainADConv(CS5530_gain, param);					
+					//CS5530_setIntGainADConv(CS5530_doublegain, param); //
+					CS5530_setIntGainADConv(CS5530_gain, param);		// cella da 6Kg
 					CS5530_sendCmdSpi2(CS5530_wr_gain_register, param);
 					m_initializationSequenceStateSpi2 = CS5530_waitToWriteGainRef;
 					break;
-				case CS5530_waitToWriteGainRef:
+				case CS5530_waitToWriteGainRef:	// qui non fa nulla, questo stato serve nella state machine della ricezione, più sopra
 					break;
 			}				
 			break;
@@ -1511,6 +1496,7 @@ int CS5530_sendCmdSpi2(CS5530_command cmd, byte *param)
 			m_confRegSpi2 += ((dword)m_confRegSpi2_WordRate << 11);
 			m_confRegSpi2 += ((dword)m_confRegSpi2_UniBiPolar << 10);
 			m_confRegSpi2 += ((dword)m_confRegSpi2_OpenCircuitDetect << 9);
+			m_confRegSpi2 &= MASK_CONFIG_REG;		// mi assicuro di avere a 0 i bit che devono essere a "0"
 			sio_disable_tx_interrupt_ch2();	//asm("di");
 			CS5530_tx_fifoSpi2.push_back(m_CommandSentSpi2);	
 			CS5530_tx_fifoSpi2.push_back(((byte*)(&m_confRegSpi2))[3]);	
@@ -1619,53 +1605,47 @@ int CS5530_sendCmdSpi2(CS5530_command cmd, byte *param)
 if flag data valid is set, reset flag and gets a sample in adcs fifo if they aren't empty
 Samples are reduced to 16bit, erasing 8 LSB and then sent to mobile average filter
 */
-bool CS5530_validDataPresentInADCBufferSpi1()
+bool CS5530_validDataPresentInADCBuffer()
 {
-int m_adcVal1 = 0,  m_adcVal2 = 0, m_adcVal3 = 0;
 
-	if (m_validDataPresentInADCBuffer == 1)
+if (m_validDataPresentInADCBuffer == 1)
+{
+	CS5530_rstValidDataPresentInADCBuffer();
+	if(!ADC1_serial_fifo.empty())
 	{
-		CS5530_rstValidDataPresentInADCBuffer();
-		if(!ADC1_serial_fifo.empty())
+		int m_adcVal1 = 0;
+		ADC1_serial_fifo.pop_front(m_adcVal1);  // prelevo il dato di 24bit
+	#ifdef __DEBUG_ADC
+		if(acquisition == True)
 		{
-			ADC1_serial_fifo.pop_front(m_adcVal1);  // prelevo il dato di 24bit
-			#ifdef __DEBUG_ADC
-			if(acquisition == True)
+			adc1_data[contadc1] = (m_adcVal1>>8) & 0x0000FFFF;
+			if(contadc1 == 1800)
 			{
-				adc1_data[contadc1++] = ((m_adcVal1>>8) & 0x0000FFFF);
-				if(contadc1 == 1800)
-				{
-					contadc1 = 0;
-					contadc2 = 0;
-					acquisition = False;
-				}
+				contadc1 = 0;
+				acquisition = False;
 			}
-			#endif
-			#ifdef _NORMALFILTER_
-				m_adcVal1 = (word)((m_adcVal1>>8) & 0x0000FFFF);
-			#endif
-			weightChan->pushFiltAdcDataToChan(_ADC1_, m_adcVal1);
+			else
+				contadc1++;
 		}
-		if(!ADC2_serial_fifo.empty())
-		{
-			ADC2_serial_fifo.pop_front(m_adcVal2);  // prelevo il dato di 24bit
-			#ifdef _NORMALFILTER_
-				m_adcVal2 = (word)((m_adcVal2>>8) & 0x0000FFFF);
-			#endif
-			weightChan->pushFiltAdcDataToChan(_ADC2_, m_adcVal2);
-		}
-		if(!ADC3_serial_fifo.empty())
-		{
-			ADC3_serial_fifo.pop_front(m_adcVal3);  // prelevo il dato di 24bit
-			#ifdef _NORMALFILTER_
-				m_adcVal3 = (word)((m_adcVal3>>8) & 0x0000FFFF);
-			#endif
-			weightChan->pushFiltAdcDataToChan(_ADC3_, m_adcVal3);
-		}
-		return True;
-	}
+	#endif
 
-	return False;
+		m_adcVal1 = (m_adcVal1>>8) & 0x0000FFFF;
+		weightChan->pushFiltAdcDataToChan(_ADC1_, m_adcVal1);
+	}
+	/*if(!ADC2_serial_fifo.empty())
+	{
+		int  m_adcVal2 = 0;
+		ADC2_serial_fifo.pop_front(m_adcVal2);  // prelevo il dato di 24bit
+		//m_adcVal2 = ((m_adcVal2 >> 2) & 0x0000FFFF);// mi tengo solo i 16 + significativi
+		#ifndef _NORMALFILTER_
+			m_adcVal2 = (word)((m_adcVal2>>8) & 0x0000FFFF);
+		#endif
+		weightChan->pushFiltAdcDataToChan(_ADC2_, m_adcVal2);
+	}*/
+	return True;
+}
+
+return false;
 }
 
 void CS5530_rstValidDataPresentInADCBuffer()
@@ -1685,21 +1665,24 @@ bool CS5530_checkBlockComunication(int match_count)
 {
 	if(CS5530_getCounterWaitingData() > match_count)	// comunicaz bloccata, adc da resettare
 	{
+		//CS5530_setWatchdogAdcTimer(10000);
 		return True;
 	}
-
+	/*if(watchdog_adc_timer.Match())	// è passato troppo tempo con _P97 alto, la comunicazione è interrotta
+	{
+		watchdog_adc_timer.Stop();
+		//contadc1 = 0;
+		return True;
+	}*/
 	return False;
-	
 }
 
 bool CS5530_checkBlockCells(dword *loadsystem)
 {
 	for(int i = 0; i < NUM_MAX_LINE;i++)
 	{
-		if((word)loadsystem[i] == MAX_VALUE_16_BIT)
-		{
+		if((word)loadsystem[i] == 65535)
 			return True;
-		}
 	}
 	
 	return False;
@@ -1719,6 +1702,7 @@ bool CS5530_getWatchdogAdcTimer()
 	}
 	return False;
 }
+
 
 void CS5530_resetAdcComunication()
 {
@@ -1914,7 +1898,7 @@ void CS5530_setLatchBitsSpi2(CS5530_outputLatchBits latch)
 	m_confRegStatusSpi2 = CS5530_confReg_notUpdated;
 }
 
-void CS5530_setSampleFrequecySpi2(CS5530_sampleFrequecies frq)
+void CS5530_setSampleFrequencySpi2(CS5530_sampleFrequecies frq)
 {
 	//m_sampleFrequency  = (byte)frq;
 	switch(frq)
@@ -2035,29 +2019,20 @@ void CS5530_setIntGainADConv(int valgain, byte* valreg)
 	valreg[3] = (valgain & 0xFF000000) >> 24;
 }
 
-
 /**
 if flag data valid is set, reset flag and gets a sample in adcs fifo if they aren't empty
 Samples are reduced to 16bit, erasing 8 LSB and then sent to mobile average filter
 */
 bool CS5530_validDataPresentInADCBufferSpi2()
 {
-int m_adcVal1 = 0,  m_adcVal2 = 0;
+//int m_adcVal1 = 0,  
+int m_adcVal2 = 0;
 
 	if (m_validDataPresentInADCBufferSpi2 == 1)
 	{
 		CS5530_rstValidDataPresentInADCBufferSpi2();
-		if(!ADC4_serial_fifo.empty())
-		{
-			ADC4_serial_fifo.pop_front(m_adcVal1);  // prelevo il dato di 24bit
-			#ifdef _NORMALFILTER_
-				m_adcVal1 = (word)((m_adcVal1>>8) & 0x0000FFFF);
-			#endif
-			weightChan->pushFiltAdcDataToChan(_ADC4_, m_adcVal1);
-		}
 		if(!ADC5_serial_fifo.empty())
-		{
-			
+		{		
 			ADC5_serial_fifo.pop_front(m_adcVal2);
 			/*
 			#ifdef __DEBUG_ADC
@@ -2072,15 +2047,15 @@ int m_adcVal1 = 0,  m_adcVal2 = 0;
 			}
 			#endif
 			*/
-			#ifdef _NORMALFILTER_
-				m_adcVal2 = (word)((m_adcVal2>>8) & 0x0000FFFF);
-			#endif
-			weightChan->pushFiltAdcDataToChan(_ADC5_, m_adcVal2);
+			m_adcVal2 = (m_adcVal2>>8) & 0x0000FFFF;
+			//m_adcVal2 = (m_adcVal2>>9) & 0x0000FFFF;
+			// attenzione questa diventa la seconda cella nel sistema m3300 per cui al posto di _ADC5_ ci metto _ADC2_
+			weightChan->pushFiltAdcDataToChan(_ADC2_, m_adcVal2);
 		}
 		return True;
 	}
 
-	return False;
+	return false;
 }
 
 void CS5530_rstValidDataPresentInADCBufferSpi2()
@@ -2272,9 +2247,8 @@ static void IrqHandTMQ0(int vector)
 }
 
 /**
-* Restores from EEPROM the weight channels parameters, as gain & offset, of every channel in system.
-* This function is called at every machine start. If factory calibration has never been done, it sets default values which aren't saved in eeprom.
-* Return 0 if read in eeprom fails.
+* Restores from EEPROM the weight channels parameters, like gain & offset, of every channel in system
+* This function is called at every machine start. If factory calibration has never been done, it sets default values which aren't saved in EEPROM
 */
 byte get_adc_param()
 {
@@ -2282,17 +2256,17 @@ byte get_adc_param()
 	word i;
 	byte *b;
 	byte result;
-
+	
 	// legge dalla eeprom i dati di calibrazione
 	for( numchan = 0; numchan < _MAX_LOAD_CHAN_; numchan++)
 	{
 		for( i = 0; i < sizeof(ChannelsBackupParam); i++)
 		{
 			b = (byte *)&Chan[numchan] + i;
-			*b = 0x00;						// azzero il contenuto di Chan[numchan]
+			*b = 0x00;
 		}
 	}
-
+	
 	result = get_factory_adc_param();
 
 	return result;
@@ -2300,8 +2274,8 @@ byte get_adc_param()
 }
 
 /**
-* Restores from EEPROM the weight channels parameters of every channel in system.
-* This function is called at the system inizializzation.
+* Restores from EEPROM the weight channels parameters, of every channel in system, to recall calibration parameters saved.
+* This function is called at system inizializzation.
 */
 byte get_factory_adc_param()
 {
@@ -2313,11 +2287,11 @@ byte get_factory_adc_param()
 	// legge dalla eeprom i dati di calibrazione
 	for( numchan = 0; numchan < _MAX_LOAD_CHAN_; numchan++)
 	{
-		if(EE_random_byte_read((ADDRESS_CHAN_ARE_MEM_CALIB + numchan*BASESTRUCTADDR), &data))	// leggo il dato di calibrazione dell'offset
+		if(EE_random_byte_read((ADDRESS_CHAN_ARE_MEM_CALIBRATE + numchan*BASESTRUCTADDR), &data))	// leggo il dato di calibrazione dell'offset
 		{
 			if (data == CHAN_CALIB_CHECK_FACTORY_VAL)	// calibrazione con memorizzazione fatta almeno una volta
 			{
-				if(EE_random_byte_read((ADDRESS_CHAN_ARE_MEM_CALIB +1 + numchan*BASESTRUCTADDR), &data)) // leggo il dato di calibrazione del guadagno
+				if(EE_random_byte_read((ADDRESS_CHAN_ARE_MEM_CALIBRATE +1 + numchan*BASESTRUCTADDR), &data)) // leggo il dato di calibrazione del guadagno
 				{
 					if (data == CHAN_CALIB_CHECK_FACTORY_VAL)	// calibrazione con memorizzazione fatta almeno una volta
 					{
@@ -2325,24 +2299,13 @@ byte get_factory_adc_param()
 						Chan[numchan].WeightFactoryOffset = EE_read_word(ADDRESS_FACTORY_OFFSET+ numchan*BASESTRUCTADDR);
 						Chan[numchan].Weightgain = EE_read_float(ADDRESS_GAIN + numchan*BASESTRUCTADDR);
 						Chan[numchan].Weightoffset = EE_read_word(ADDRESS_OFFSET + numchan*BASESTRUCTADDR);
-						Chan[numchan].AdcOf2Kg = EE_read_word(ADDRESS_2Kg_READ + numchan*BASESTRUCTADDR);
-						if(EE_random_byte_read((ADDRESS_CALIB + numchan*BASESTRUCTADDR), &data))
-						{
-							if(data > 0)
-							{
-								Chan[numchan].AreCalibrate = True;
-							}
-							else
-							{
-								Chan[numchan].AreCalibrate = False;
-							}
-						}
+						Chan[numchan].AdcTo2Kg = EE_read_int(ADDRESS_2Kg_READ + numchan*BASESTRUCTADDR);
+						Chan[numchan].AdcTo2Kg_dx = EE_read_int(ADDRESS_2KgDx_READ + numchan*BASESTRUCTADDR);
 						count_calib++;
 					}
 					else		// calibrazione con memorizzazione mai eseguita
 					{
 						resetAdcValues(numchan);
-						backup_calib_state(numchan, (byte)Chan[numchan].AreCalibrate);
 						result = E_READ_NO_BK_FACTORY;
 					}
 				}
@@ -2350,7 +2313,6 @@ byte get_factory_adc_param()
 			else		// calibrazione con memorizzazione mai eseguita
 			{
 				resetAdcValues(numchan);
-				backup_calib_state(numchan, (byte)Chan[numchan].AreCalibrate);
 				result = E_READ_NO_BK_FACTORY;
 			}
 		}
@@ -2379,126 +2341,120 @@ byte get_factory_adc_param()
 /**
 * Saves in EEPROM calibration values after a calibration made by user. 
 * Position in EEPROM is determinated using numchan parameter.
-* Returns 0 if eeprom write operation returns error
+* Returns False if eeprom write operation returns error.
 */
-int backup_adc_param(byte numchan)
-{
-	byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;
-	
-	if(!EE_write(&Chan[numchan].Weightgain, sizeof(float), (ADDRESS_GAIN + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	if(!EE_write(&Chan[numchan].Weightoffset, sizeof(short), (ADDRESS_OFFSET + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	if(!EE_write(&Chan[numchan].AdcOf2Kg, (9*sizeof(char)), (ADDRESS_2Kg_READ + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	if(!EE_write(&type_of_calibration, 1, (ADDRESS_CHAN_ARE_MEM_CALIB + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	
-	return 1;
-	
-}
-
-/**
-* Saves in EEPROM gain value after a calibration made by user. 
-* Position in EEPROM is determinated using numchan parameter.
-* Returns 0 if eeprom write operation returns error
-*/
-int backup_new_gain_value(byte numchan, float NewGain)
+bool backup_new_gain_value(byte numchan, float NewGain)
 {
 	if(!EE_write(&NewGain, sizeof(float), (ADDRESS_GAIN + numchan*BASESTRUCTADDR)))
 	{
-		return 0;
+		return False;
 	}
 	
-	return 1;
+	return True;
 	
 }
 
 /**
-* Save in EEPROM zero values after new routine. 
+* Saves in EEPROM zero values after a calibration made by user.
 * Position in EEPROM is determinated using numchan parameter.
-* Returns 0 if eeprom write operation returns error
+* Returns False if eeprom write operation returns error.
 */
-int backup_new_offset_value(byte numchan, word NewOffset)
+bool backup_new_offset_value(byte numchan, word NewOffset)
 {
 	if(!EE_write(&NewOffset, sizeof(short), (ADDRESS_OFFSET + numchan*BASESTRUCTADDR)))
 	{
-		return 0;
+		return False;
 	}
 
-	return 1;
-	
+	return True;
 }
 
 /**
-* Saves in EEPROM offset values after a factory calibration. 
-* Position in EEPROM is determinated using numchan parameter.
-* Returns 0 if eeprom write operation returns error
+* Saves in EEPROM offset calibration values (ADC values) after factory calibration. 
+* Address in EEPROM is determinated using numchan parameter.
+* Returns False if eeprom write operation returns error.
 */
-int backup_factory_offset_value(byte numchan, word FactoryOffset)
+bool backup_factory_offset_value(byte numchan, word FactoryOffset)
 {
-	byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;	// offset calibration value wrote
+	byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;
 	
-	if(!EE_write(&FactoryOffset, sizeof(word), (ADDRESS_FACTORY_OFFSET + numchan*BASESTRUCTADDR)))
+	if(!EE_write(&FactoryOffset, sizeof(short), (ADDRESS_FACTORY_OFFSET + numchan*BASESTRUCTADDR)))
 	{
-		return 0;
+		return False;
 	}
 	// lo stesso valore è scritto anche come OFFSET USER
-	if(!EE_write(&FactoryOffset, sizeof(word), (ADDRESS_OFFSET + numchan*BASESTRUCTADDR)))
+	if(!EE_write(&FactoryOffset, sizeof(short), (ADDRESS_OFFSET + numchan*BASESTRUCTADDR)))
 	{
-		return 0;
+		return False;
 	}
-	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIB + numchan*BASESTRUCTADDR), type_of_calibration))
+	
+	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIBRATE + numchan*BASESTRUCTADDR), type_of_calibration))
 	{
 		return 0;	// ricorda che questo assume due valori a seconda che sia stata eseguita la sola calibrazione di fabbrica oppure anche quella user.
 	}
-	
-	return 1;
+
+	return True;
 	
 }
 
 /**
-* Saves in EEPROM gain values after a factory calibration. 
+* Saves in EEPROM gain calibration values after factory calibration. 
 * Address in EEPROM is determinated using numchan parameter.
-* Returns 0 if eeprom write operation returns error
+* Returns False if eeprom write operation returns error.
 */
-int backup_factory_gain_param(byte numchan, float FactoryGain, word adc2Kg)
+bool backup_factory_gain_param(byte numchan, float FactoryGain, int adc2Kg, int adc2Kgdx)
 {
-	byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;	// gain calibration value wrote
+	byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;
 	
 	if(!EE_write(&FactoryGain, sizeof(float), (ADDRESS_FACTORY_GAIN + numchan*BASESTRUCTADDR)))
 	{
-		return 0;
+		return False;
 	}
 	if(!EE_write(&FactoryGain, sizeof(float), (ADDRESS_GAIN + numchan*BASESTRUCTADDR))) // se factory, aggiorno anche il valore user
 	{
-		return 0;
+		return False;
 	}
-	if(!EE_write(&adc2Kg, sizeof(word), (ADDRESS_2Kg_READ + numchan*BASESTRUCTADDR)))
+	if(!EE_write(&adc2Kg, sizeof(int), (ADDRESS_2Kg_READ + numchan*BASESTRUCTADDR)))
 	{
-		return 0;
+		return False;
 	}
-	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIB + 1 + numchan*BASESTRUCTADDR), type_of_calibration))
+	if(!EE_write(&adc2Kgdx, sizeof(int), (ADDRESS_2KgDx_READ + numchan*BASESTRUCTADDR)))
 	{
-		return 0;	// ricorda che questo assume due valori a seconda che sia stata eseguita la sola calibrazione di fabbrica oppure anche quella user.
+		return False;
+	}
+	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIBRATE + 1 + numchan*BASESTRUCTADDR), type_of_calibration))
+	{
+		return False;
 	}
 	
-	return 1;
+	return True;
 	
 }
 
 /**
-* Save in EEPROM calib state of __numchan. 
-* Position in EEPROM is determinated using __numchan parameter.
-* Returns False if eeprom write operation returns error
+* Saves in EEPROM gain calibration values after factory calibration. 
+* Address in EEPROM is determinated using numchan parameter.
+* Returns False if eeprom write operation returns error.
+*/
+bool reset_backup_factory_values(byte numchan, byte areCalib)
+{	
+	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIBRATE + numchan*BASESTRUCTADDR), areCalib))
+	{
+		return False;
+	}
+	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIBRATE + 1 + numchan*BASESTRUCTADDR), areCalib))
+	{
+		return False;
+	}
+	
+	return True;
+	
+}
+
+/**
+* Saves in EEPROM calib state of load cell.
+* Position in EEPROM is determinated using numchan parameter.
+* Returns False if eeprom write operation returns error.
 */
 bool backup_calib_state(byte __numchan, byte __calib)
 {
@@ -2508,58 +2464,6 @@ bool backup_calib_state(byte __numchan, byte __calib)
 	}
 
 	return True;
-	
-}
-
-/**
-* Resets calibration parameters saved.. 
-* Address in EEPROM is determinated using numchan parameter.
-* Returns False if eeprom write operation returns error.
-*/
-bool reset_backup_factory_values(byte numchan, byte areCalib)
-{
-	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIB + numchan*BASESTRUCTADDR), areCalib))
-	{
-		return False;	// ricorda che questo assume due valori a seconda che sia stata eseguita la sola calibrazione di fabbrica oppure anche quella user.
-	}
-	if(!EE_byte_write((ADDRESS_CHAN_ARE_MEM_CALIB + 1 + numchan*BASESTRUCTADDR), areCalib))
-	{
-		return False;
-	}
-	
-	return True;
-	
-}
-
-
-/**
-* Saves in EEPROM calibration values after factory calibration. 
-* Address in EEPROM is determinated using numchan parameter.
-* Returns 0 if eeprom write operation returns error
-*/
-int backup_factory_adc_param(byte numchan)
-{
-	byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;
-	
-	if(!EE_write(&Chan[numchan].WeightFactoryGain, sizeof(float), (ADDRESS_FACTORY_GAIN + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	if(!EE_write(&Chan[numchan].WeightFactoryOffset, sizeof(short), (ADDRESS_FACTORY_OFFSET + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	if(!EE_write(&Chan[numchan].AdcOf2Kg, sizeof(short), (ADDRESS_2Kg_READ + numchan*BASESTRUCTADDR)))
-	{
-		return 0;
-	}
-	if(!EE_write(&type_of_calibration, 1, (ADDRESS_CHAN_ARE_MEM_CALIB + numchan*BASESTRUCTADDR)))
-	{
-		return 0;	// ricorda che questo assume due valori a seconda che sia stata eseguita la sola calibrazione di fabbrica oppure anche quella user.
-	}
-	
-	return 1;
-	
 }
 
 /**
@@ -2568,12 +2472,8 @@ int backup_factory_adc_param(byte numchan)
 int backup_date_adc_param(char *s)
 {
 	if(!EE_write(s, sizeof(short), (ADDRESS_DATE_OF_CALIB)))
-	{
 		return 0;
-	}
-	
 	return 1;
-	
 }
 
 /**
@@ -2609,7 +2509,6 @@ bool controlAdcValuesRead()
 		{
 			value_return = False;
 			resetAdcValues(numchan);
-			backup_calib_state(numchan, (byte)Chan[numchan].AreCalibrate);
 		}
 	}
 
@@ -2627,137 +2526,15 @@ void resetAdcValues(byte __line)
 	Chan[__line].WeightFactoryOffset = WEIGHT_DEFAULT_OFFSET;
 	Chan[__line].Weightgain = WEIGHT_DEFAULT_GAIN;
 	Chan[__line].Weightoffset = WEIGHT_DEFAULT_OFFSET;
-	Chan[__line].AdcOf2Kg = 0;
-	Chan[__line].AreCalibrate = False;
-}
-
-/*
-word FIR_filter(int x)
-{
-word value = 0;
-
-short int cn;
-static byte index_buf_fir = 0;
-float sum_dgt_filt = 0;
-word value2 = 0;
-
-	if(start_load_fir)	 // the buffer is full
+	if(__line == _ADC1_)
 	{
-		med_buffer_adc3[0] = x;
-		sum_dgt_filt = 0;
-	  	for( cn = (DIM_DGT_FILT-1); cn >= 0; cn--)	// da DIM_DGT_FILT-1 a 0
-		{
-	       	 sum_dgt_filt = sum_dgt_filt + ( rampa[cn] * med_buffer_adc3[ cn]);
-	       	 
-	      		 if( cn < (DIM_DGT_FILT-1) )				//elimino dalla FIFO il dato + vecchio
-	              	med_buffer_adc3[ cn + 1 ] = med_buffer_adc3[ cn ];
-		}	
-		value2 = (word)(sum_dgt_filt / somma_rampa); 
-		value = (((int)( sum_dgt_filt / somma_rampa )) >> 2) & 0x0000FFFF;
-	} 
-	else 
-	{ 	    	
-		med_buffer_adc3[ DIM_DGT_FILT - index_buf_fir ] = x; 			// memorizzo nel buffer	    
-		value = 0;
-		index_buf_fir ++ ; 					// fill the buffer proceeding on the right
-	    	if(index_buf_fir == DIM_DGT_FILT)		// sono arrivato al max 
-	    	{
-	           	start_load_fir = True;   
-	           	index_buf_fir = 0;
-	    	}   
-	} 
-	return value;
+		Chan[__line].AdcTo2Kg = WEIGHT_DEFAULT_2Kg_LOAD;
+		Chan[__line].AdcTo2Kg_dx = -WEIGHT_DEFAULT_2Kg_NO_LOAD;
+	}
+	else
+	{
+		Chan[__line].AdcTo2Kg = -WEIGHT_DEFAULT_2Kg_NO_LOAD;
+		Chan[__line].AdcTo2Kg_dx = WEIGHT_DEFAULT_2Kg_LOAD;
+	}
 }
 
-word average_filter(int x)
-{
-short int cn;
-static byte index_buf_fir = 0;
-static unsigned int sum_filt_buf = 0;
-word value = 0;
-unsigned int int_value = 0;
-unsigned int currADCmin, currADCmax;
-static bool start_load_fir = False;
-	
-	if(start_load_fir)	 // the buffer is full
-	{
-		currADCmin = MAX_ADC;
-	    	currADCmax = 0;
-		for (cn = 0; cn < DIM_AVE_FILT; cn++)
-		{	    
-			if( med_buffer_adc3[ cn ] > currADCmax )
-				currADCmax = med_buffer_adc3[ cn ];
-			if (med_buffer_adc3[ cn ] < currADCmin)
-				currADCmin = med_buffer_adc3[ cn ];				
-		}
-		sum_filt_buf -= med_buffer_adc3[ DIM_AVE_FILT - 1]; // subtract the old value
-	  	for( cn = (DIM_AVE_FILT-2); cn >= 0; cn--)	// da DIM_DGT_FILT-1 a 0
-		{	       	 
-	              med_buffer_adc3[ cn + 1 ] = med_buffer_adc3[ cn ];
-		}
-		med_buffer_adc3[0] = x;
-		sum_filt_buf += x;
-		int_value = (sum_filt_buf - currADCmax - currADCmin) / (DIM_AVE_FILT - 2);	// -2 perchè non considero minimo e massimo
-		value = (int_value >> 2) & 0x0000FFFF;
-	} 
-	else 
-	{ 	    	
-		med_buffer_adc3[ DIM_AVE_FILT - index_buf_fir - 1 ] = x; 			// memorizzo nel buffer	 
-		sum_filt_buf += x;
-		value = 0;
-		index_buf_fir ++ ; 					// fill the buffer proceeding on the right
-	    	if(index_buf_fir == DIM_AVE_FILT)		// sono arrivato al max 
-	    	{
-	           	start_load_fir = True;   
-	           	index_buf_fir = 0;
-	    	}   
-	} 
-	return value;
-}
-
-word average_filter_adc1(int x)
-{
-short int cn;
-static byte index_buf_fir = 0;
-static unsigned int sum_filt_buf = 0;
-word value = 0;
-unsigned int int_value = 0;
-unsigned int currADCmin, currADCmax;
-static bool start_load_fir = False;
-	
-	if(start_load_fir)	 // the buffer is full
-	{
-		currADCmin = MAX_ADC;
-	    	currADCmax = 0;
-		for (cn = 0; cn < DIM_AVE_FILT; cn++)
-		{	    
-			if( med_buffer_adc1[ cn ] > currADCmax )
-				currADCmax = med_buffer_adc1[ cn ];
-			if (med_buffer_adc1[ cn ] < currADCmin)
-				currADCmin = med_buffer_adc1[ cn ];				
-		}
-		sum_filt_buf -= med_buffer_adc1[ DIM_AVE_FILT - 1]; // subtract the old value
-	  	for( cn = (DIM_AVE_FILT-2); cn >= 0; cn--)	// da DIM_DGT_FILT-1 a 0
-		{	       	 
-	              med_buffer_adc1[ cn + 1 ] = med_buffer_adc1[ cn ];
-		}
-		med_buffer_adc1[0] = x;
-		sum_filt_buf += x;
-		int_value = (sum_filt_buf - currADCmax - currADCmin) / (DIM_AVE_FILT - 2);	// -2 perchè non considero minimo e massimo
-		value = (int_value >> 2) & 0x0000FFFF;
-	} 
-	else 
-	{ 	    	
-		med_buffer_adc1[ DIM_AVE_FILT - index_buf_fir - 1 ] = x; 			// memorizzo nel buffer	 
-		sum_filt_buf += x;
-		value = 0;
-		index_buf_fir ++ ; 					// fill the buffer proceeding on the right
-	    	if(index_buf_fir == DIM_AVE_FILT)		// sono arrivato al max 
-	    	{
-	           	start_load_fir = True;   
-	           	index_buf_fir = 0;
-	    	}   
-	} 
-	return value;
-}
-*/

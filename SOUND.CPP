@@ -59,7 +59,7 @@ void buzzer_init(void)
 	_TP0CE = 0; // TMP0 disable
 	
 	// Il timer viene inizializzato nel main insieme agli altri timer
-	BUZZERdata.isPlaying = False;
+	BUZZERdata.isPlaying = false;
 	BUZZERdata.pwmCycle = 50;
 	BUZZERdata.pwmFrq   = 8200;
 	BUZZERdata.sound   = NO_SOUND;
@@ -120,7 +120,7 @@ void buzzerManager(void)
 			if (BUZZERdata.buzTimer.Match())
 			{
 				buzzer_stop();	 	
-				BUZZERdata.isPlaying = True;
+				BUZZERdata.isPlaying = true;
 				BUZZERdata.sound = ALARM_LIKE;
 				BUZZERdata.alarmTimer.Preset(800);
 			}
@@ -143,7 +143,7 @@ stops the buzzer
 */
 void buzzer_stop()
 {
-	BUZZERdata.isPlaying = False;
+	BUZZERdata.isPlaying = false;
 	BUZZERdata.sound = NO_SOUND;
 	BUZZERdata.alarmTimer.Stop();
 	BUZZERdata.buzTimer.Stop();

@@ -42,11 +42,11 @@ bool EE_byte_write(byte address, byte data)
 	
 	i2c_start();
 	if (!i2c_putc(EEPROM_ADDRESS_nWR))
-		rw_ok = False;
+		rw_ok = false;
 	if (!i2c_putc(address))
-		rw_ok = False;
+		rw_ok = false;
 	if (!i2c_putc(data))
-		rw_ok = False;
+		rw_ok = false;
 
 	
 	i2c_stop();
@@ -64,9 +64,9 @@ bool EE_page_write(byte address, byte *data, byte num_data)
 	int i;
 	
 	if (num_data > EEPROM_PAGE_SIZE) // non posso scrivere più di una pagina
-		return False;
+		return false;
 	if (((address & (EEPROM_PAGE_SIZE-1)) +  num_data) > EEPROM_PAGE_SIZE) // se sforo la pagina riscivo ciclicamente
-		return False;
+		return false;
 	
 	for (i = 0; i < 5; i++) 
 		i2c_delay();
@@ -74,14 +74,14 @@ bool EE_page_write(byte address, byte *data, byte num_data)
 	i2c_start();
 	
 	if (!i2c_putc(EEPROM_ADDRESS_nWR))
-		rw_ok = False;
+		rw_ok = false;
 	if (!i2c_putc(address))
-		rw_ok = False;
+		rw_ok = false;
 	
 	for (i = 0; i < num_data; i++)
 	{
 		if (!i2c_putc(data[i]))
-			rw_ok = False;
+			rw_ok = false;
 	}
 	
 	i2c_stop();
@@ -105,7 +105,7 @@ bool EE_read_current_address(byte *address )
 	i2c_start();
 
 	if (!i2c_putc(EEPROM_ADDRESS_RD))
-		rw_ok = False;
+		rw_ok = false;
 
 	*address = i2c_getc();
 	i2c_ack(1);
@@ -132,14 +132,14 @@ bool EE_random_byte_read(byte address, byte *data)
 	i2c_start();
 	
 	if (!i2c_putc(EEPROM_ADDRESS_nWR))
-		rw_ok = False;
+		rw_ok = false;
 	if (!i2c_putc(address))
-		rw_ok = False;
+		rw_ok = false;
 
 	i2c_start();
 	
 	if (!i2c_putc(EEPROM_ADDRESS_RD))
-		rw_ok = False;
+		rw_ok = false;
 
 	*data = i2c_getc();
 	i2c_ack(1);
@@ -166,7 +166,7 @@ bool EE_sequential_current_read(byte *data, byte num_data_to_read)
 	
 	i2c_start();
 	if (!i2c_putc(EEPROM_ADDRESS_RD))
-		rw_ok = False;
+		rw_ok = false;
 
 	for (i=0; i< num_data_to_read -1; i++)
 	{
@@ -197,14 +197,14 @@ bool EE_sequential_random_read(byte address, byte *data, byte num_data_to_read)
 	i2c_start();
 	
 	if (!i2c_putc(EEPROM_ADDRESS_nWR))
-		rw_ok = False;
+		rw_ok = false;
 	if (!i2c_putc(address))
-		rw_ok = False;
+		rw_ok = false;
 
 	i2c_start();
 
 	if (!i2c_putc(EEPROM_ADDRESS_RD))
-		rw_ok = False;
+		rw_ok = false;
 		
 	for (i=0; i< num_data_to_read -1; i++)
 	{
@@ -223,7 +223,6 @@ bool EE_sequential_random_read(byte address, byte *data, byte num_data_to_read)
 
 /**
 Writes bytes to the EEPROM
-EEPROM dimension is 1 Kbit (128 bytes, 64 word).
 
 @param data pointer to the wite buffer
 @param num_data number of byte to write
@@ -365,6 +364,8 @@ float EE_read_float(byte address)
 	byte num_odd_byte_to_read_1 ;
 	byte num_odd_byte_to_read_2;
 
+
+	memset((void*)&data[0],0,sizeof(float));
 	
 	num_odd_byte_to_read_1 = EEPROM_PAGE_SIZE - (address % EEPROM_PAGE_SIZE);
 	if (num_odd_byte_to_read_1 >sizeof(float))
@@ -388,58 +389,4 @@ float EE_read_float(byte address)
 	
 	return *((float*)data);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

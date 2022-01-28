@@ -126,19 +126,24 @@ bool nvr_writeUserMem(void *__data_buf, int __count, int __start_addr)
 // legge i parametri dalla memoria dell'eep
 bool nvr_readParam(void *__param_buf, int __count, int __start_addr, bool *__chkOk)
 {
-bool chkMatch;
-bool readOk;
-bool writeOk;
-word chkBlock;
-word chkBlock2;
+	bool chkMatch;
+	bool readOk;
+	bool writeOk;
+	word chkBlock;
+	word chkBlock2;
 
 	*__chkOk = False;					// reset flag...
 
 	if( __start_addr > NVR_LAST_PAR1ADDR || __start_addr + __count > NVR_LAST_PAR1ADDR )	// rapido check
 	{
-		nvrError = NVR_ERR_PARADDR;		// indirizzi sbagliati, o abbiamo sforato
+		nvrError = NVR_ERR_PARADDR;
+		
+#ifdef __DEBUG__
+		error_trace("NVRDRV", "nvr_readParam", nvrError);		// aspetta che lo vengano a prendere
+#endif
 		return(False);
 	}
+	
 										// verifica sul primo blocco
 	chkBlock = nvr_chkRead(__start_addr + NVR_FIRST_PAR1ADDR, (2*__count));	// ricorda che scriviamo solo in indirizzi pari quindi impegnamo il doppio
 	chkMatch = nvr_chkVerify(__start_addr + NVR_FIRST_PAR1ADDR, __count, chkBlock);
@@ -168,14 +173,26 @@ word chkBlock2;
 		if( readOk == False || writeOk == False )
 		{
 			nvrError = NVR_ERR_DEV_IO;
-		}			
+
+#ifdef __DEBUG__
+			error_trace("NVRDRV", "nvr_readParam", nvrError);		// aspetta che lo vengano a prendere
+#endif
+		}
+		
+			
 		return( readOk );
 	}
 	else
 	{
 		nvrError = NVR_ERR_CHKPAR1;
+
+#ifdef __DEBUG__
+			error_trace("NVRDRV", "nvr_readParam", nvrError);		// aspetta che lo vengano a prendere
+#endif
 	}
-											// verifica sul secondo blocco
+	
+
+										// verifica sul secondo blocco
 	chkBlock = nvr_chkRead(__start_addr + NVR_FIRST_PAR2ADDR, __count);
 	chkMatch = nvr_chkVerify(__start_addr + NVR_FIRST_PAR2ADDR, __count, chkBlock);
 	
@@ -187,25 +204,33 @@ word chkBlock2;
 		readOk = drv_readMem(__param_buf, __count, __start_addr + NVR_FIRST_PAR2ADDR);			// legge sommando l'offset dell'area "parametri 2"
 		writeOk = True;
 		
-		if( readOk )					// se legge ok !!
+		if(readOk)					// se legge ok !!
 		{
 			writeOk = drv_writeMem(__param_buf, __count, __start_addr + NVR_FIRST_PAR1ADDR);	// scrive sommando l'offset dell'area "parametri 1"
 			writeOk &= nvr_chkWrite(__start_addr + NVR_FIRST_PAR1ADDR, __count, &chkBlock);		// ricopia pure il chk
 		}
 
-		if( readOk == False || writeOk == False )
+		if(readOk == False || writeOk == False)
 		{
 			nvrError = NVR_ERR_DEV_IO;
+
+#ifdef __DEBUG__
+			error_trace("NVRDRV", "nvr_readParam", nvrError);		// aspetta che lo vengano a prendere
+#endif
 		}
 
-		return( readOk );
+		return readOk;
 	}
 
 	nvrError = NVR_ERR_CHKPAR2;
 
+#ifdef __DEBUG__
+	error_trace("NVRDRV", "nvr_readParam", nvrError);				// aspetta che lo vengano a prendere
+#endif
+
 	*__chkOk = False;
 
-	return( False );					// non è andata proprio bene bene ....
+	return False;					// non è andata proprio bene bene ....
 }
 
 // scrive i parametri nella memoria dell'eep
@@ -226,7 +251,7 @@ bool writeOk = True;
 		return(False);
 	}
 		
-	chkBlock = nvr_chkCalcBuf(__param_buf, __count); // calcola il chk della struttra da scrivere, non accede in mem		
+	chkBlock = nvr_chkCalcBuf(__param_buf, __count); // calcola il chk della struttra da scriver, non accede in mem		
 
 	writeOk &= drv_writeMem(__param_buf, __count, __start_addr + NVR_FIRST_PAR1ADDR);	// scrive sommando l'offset dell'area "parametri 1"
 	writeOk &= nvr_chkWrite(__start_addr + NVR_FIRST_PAR1ADDR, (2*__count), &chkBlock);		// aggiorna il chk
