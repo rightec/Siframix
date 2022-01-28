@@ -1,0 +1,4 @@
+set remotebaud 115200
+target remote /dev/ttyS3
+load sg2.out
+set $pc=start

@@ -1,0 +1,2039 @@
+Archive member included because of file (symbol)
+
+c:\gcc850\lib\libc.a(lib_a-atoi.o)
+                              obj/util.o (_atoi)
+c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+                              obj/util.o (_memcpy)
+c:\gcc850\lib\libc.a(lib_a-memset.o)
+                              obj/NVRDRV.o (_memset)
+c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+                              obj/util.o (_sprintf)
+c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+                              obj/STRCLASS.o (_strcmp)
+c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+                              obj/STRCLASS.o (_strcpy)
+c:\gcc850\lib\libc.a(lib_a-strlen.o)
+                              obj/STRCLASS.o (_strlen)
+c:\gcc850\lib\libc.a(lib_a-strtol.o)
+                              c:\gcc850\lib\libc.a(lib_a-atoi.o) (__strtol_r)
+c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+                              c:\gcc850\lib\libc.a(lib_a-sprintf.o) (__svfprintf_r)
+c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+                              c:\gcc850\lib\libc.a(lib_a-strtol.o) (___ctype_ptr__)
+c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (__dtoa_r)
+c:\gcc850\lib\libc.a(lib_a-freer.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (__free_r)
+c:\gcc850\lib\libc.a(lib_a-impure.o)
+                              c:\gcc850\lib\libc.a(lib_a-sprintf.o) (__impure_ptr)
+c:\gcc850\lib\libc.a(lib_a-locale.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (__localeconv_r)
+c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (__malloc_r)
+c:\gcc850\lib\libc.a(lib_a-memchr.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (_memchr)
+c:\gcc850\lib\libc.a(lib_a-memmove.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (_memmove)
+c:\gcc850\lib\libc.a(lib_a-mlock.o)
+                              c:\gcc850\lib\libc.a(lib_a-freer.o) (___malloc_lock)
+c:\gcc850\lib\libc.a(lib_a-mprec.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (__Bfree)
+c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (__realloc_r)
+c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (___isinfd)
+c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (___isnand)
+c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+                              c:\gcc850\lib\libc.a(lib_a-freer.o) (__sbrk_r)
+c:\gcc850\lib\libc.a(lib_a-stat.o)
+                              c:\gcc850\lib\libc.a(lib_a-sbrkr.o) (_errno)
+c:\gcc850\lib\libc.a(lib_a-trap.o)
+                              c:\gcc850\lib\libc.a(lib_a-stat.o) (___trap0)
+c:\gcc850\lib\libc.a(lib_a-callocr.o)
+                              c:\gcc850\lib\libc.a(lib_a-mprec.o) (__calloc_r)
+c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+                              c:\gcc850\lib\libc.a(lib_a-sbrkr.o) (__sbrk)
+c:\gcc850\lib\libc.a(lib_a-write.o)
+                              c:\gcc850\lib\libc.a(lib_a-sbrk.o) (__write)
+c:\gcc850\lib\libc.a(lib_a-abort.o)
+                              c:\gcc850\lib\libc.a(lib_a-sbrk.o) (_abort)
+c:\gcc850\lib\libc.a(lib_a-signal.o)
+                              c:\gcc850\lib\libc.a(lib_a-abort.o) (_raise)
+c:\gcc850\lib\libc.a(lib_a-signalr.o)
+                              c:\gcc850\lib\libc.a(lib_a-signal.o) (__getpid_r)
+c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+                              c:\gcc850\lib\libc.a(lib_a-abort.o) (__exit)
+c:\gcc850\lib\libc.a(lib_a-getpid.o)
+                              c:\gcc850\lib\libc.a(lib_a-signalr.o) (__getpid)
+c:\gcc850\lib\libc.a(lib_a-kill.o)
+                              c:\gcc850\lib\libc.a(lib_a-signalr.o) (__kill)
+c:\gcc850\lib\libgcc.a(_mulsi3.o)
+                              obj/util.o (___mulsi3)
+c:\gcc850\lib\libgcc.a(_divsi3.o)
+                              obj/util.o (___divsi3)
+c:\gcc850\lib\libgcc.a(_udivsi3.o)
+                              obj/main.o (___udivsi3)
+c:\gcc850\lib\libgcc.a(_modsi3.o)
+                              obj/util.o (___modsi3)
+c:\gcc850\lib\libgcc.a(_umodsi3.o)
+                              obj/main.o (___umodsi3)
+c:\gcc850\lib\libgcc.a(_save_20c.o)
+                              c:\gcc850\lib\libc.a(lib_a-mallocr.o) (__save_r20_r31)
+c:\gcc850\lib\libgcc.a(_save_23c.o)
+                              c:\gcc850\lib\libc.a(lib_a-mprec.o) (__save_r23_r31)
+c:\gcc850\lib\libgcc.a(_save_25c.o)
+                              c:\gcc850\lib\libc.a(lib_a-freer.o) (__save_r25_r31)
+c:\gcc850\lib\libgcc.a(_save_26c.o)
+                              c:\gcc850\lib\libc.a(lib_a-mprec.o) (__save_r26_r31)
+c:\gcc850\lib\libgcc.a(_save_27c.o)
+                              c:\gcc850\lib\libc.a(lib_a-mprec.o) (__save_r27_r31)
+c:\gcc850\lib\libgcc.a(_save_28c.o)
+                              c:\gcc850\lib\libc.a(lib_a-freer.o) (__save_r28_r31)
+c:\gcc850\lib\libgcc.a(_save_29c.o)
+                              c:\gcc850\lib\libc.a(lib_a-signal.o) (__save_r29_r31)
+c:\gcc850\lib\libgcc.a(_save_31c.o)
+                              c:\gcc850\lib\libc.a(lib_a-atoi.o) (__save_r31)
+c:\gcc850\lib\libgcc.a(_save_varargs.o)
+                              c:\gcc850\lib\libc.a(lib_a-sprintf.o) (__save_r6_r9)
+c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+                              obj/SOUND.o (___fixunssfsi)
+c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+                              obj/SOUND.o (___subsf3)
+c:\gcc850\lib\libgcc.a(_mul_sf.o)
+                              obj/main.o (___mulsf3)
+c:\gcc850\lib\libgcc.a(_div_sf.o)
+                              obj/main.o (___divsf3)
+c:\gcc850\lib\libgcc.a(_ne_sf.o)
+                              obj/util.o (___nesf2)
+c:\gcc850\lib\libgcc.a(_gt_sf.o)
+                              obj/ADC.o (___gtsf2)
+c:\gcc850\lib\libgcc.a(_ge_sf.o)
+                              obj/CPUSIFRA_MANAGER.o (___gesf2)
+c:\gcc850\lib\libgcc.a(_lt_sf.o)
+                              obj/CPUSIFRA_MANAGER.o (___ltsf2)
+c:\gcc850\lib\libgcc.a(_le_sf.o)
+                              obj/ADC.o (___lesf2)
+c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+                              obj/main.o (___floatsisf)
+c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+                              obj/PROTOCOLSIFRA.o (___fixsfsi)
+c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_sf.o) (___thenan_sf)
+c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+                              obj/SWTIM.o (___floatunsisf)
+c:\gcc850\lib\libgcc.a(_addsub_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___subdf3)
+c:\gcc850\lib\libgcc.a(_mul_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___muldf3)
+c:\gcc850\lib\libgcc.a(_div_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___divdf3)
+c:\gcc850\lib\libgcc.a(_eq_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (___eqdf2)
+c:\gcc850\lib\libgcc.a(_ne_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (___nedf2)
+c:\gcc850\lib\libgcc.a(_gt_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___gtdf2)
+c:\gcc850\lib\libgcc.a(_ge_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___gedf2)
+c:\gcc850\lib\libgcc.a(_lt_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-svfprintf.o) (___ltdf2)
+c:\gcc850\lib\libgcc.a(_si_to_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___floatsidf)
+c:\gcc850\lib\libgcc.a(_df_to_si.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___fixdfsi)
+c:\gcc850\lib\libgcc.a(_thenan_df.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_df.o) (___thenan_df)
+c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+                              c:\gcc850\lib\libc.a(lib_a-dtoa.o) (___floatunsidf)
+c:\gcc850\lib\libgcc.a(_ucmpdi2.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_df.o) (___ucmpdi2)
+c:\gcc850\lib\libgcc.a(_muldi3.o)
+                              c:\gcc850\lib\libgcc.a(_mul_sf.o) (___muldi3)
+c:\gcc850\lib\libgcc.a(_clzsi2.o)
+                              c:\gcc850\lib\libgcc.a(_si_to_sf.o) (___clzsi2)
+c:\gcc850\lib\libgcc.a(_pack_sf.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_sf.o) (___pack_f)
+c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_sf.o) (___unpack_f)
+c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+                              c:\gcc850\lib\libgcc.a(_ne_sf.o) (___fpcmp_parts_f)
+c:\gcc850\lib\libgcc.a(_pack_df.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_df.o) (___pack_d)
+c:\gcc850\lib\libgcc.a(_unpack_df.o)
+                              c:\gcc850\lib\libgcc.a(_addsub_df.o) (___unpack_d)
+c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+                              c:\gcc850\lib\libgcc.a(_eq_df.o) (___fpcmp_parts_d)
+c:\gcc850\lib\libgcc.a(_clz.o)
+                              c:\gcc850\lib\libgcc.a(_clzsi2.o) (___clz_tab)
+
+Allocating common symbols
+Common symbol       size              file
+
+_errno              0x4               c:\gcc850\lib\libc.a(lib_a-stat.o)
+
+Discarded input sections
+
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction9GetParityEv
+                0x00000000        0x0 obj/PROTOCOLSTDUART.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction12GetFrameBitsEv
+                0x00000000        0x0 obj/PROTOCOLSTDUART.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction11GetStopBitsEv
+                0x00000000        0x0 obj/PROTOCOLSTDUART.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction11GetBaudRateEv
+                0x00000000        0x0 obj/PROTOCOLSTDUART.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction12GetLastErrorEv
+                0x00000000        0x0 obj/PROTOCOLSTDUART.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction8SetErrorEi
+                0x00000000        0x0 obj/PROTOCOLSTDUART.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction9GetParityEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction12GetFrameBitsEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction11GetStopBitsEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction11GetBaudRateEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction12GetLastErrorEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction8SetErrorEi
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction23ClearTransmissionBufferEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction7TurnOffEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction6TurnOnEv
+                0x00000000        0x0 obj/PROTOCOLSIFRA.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00007000         0x0003e800
+rodata           0x00045800         0x00001fff
+data             0x03ff5000         0x00003fff
+stack            0x03ffdfe0         0x00001000
+xdata            0x00110000         0x0001ffff
+*default*        0x00000000         0xffffffff
+ramcode          0x00000000         0xffffffff
+tdata            0x00000000         0xffffffff
+rosdata          0x00000000         0xffffffff
+sdata            0x00000000         0xffffffff
+disk             0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD obj/startup.o
+
+.init
+ *(.init)
+
+.plt
+ *(.plt)
+
+.text           0x00007000    0x2019a
+                0x00007000                __stext = .
+                0x00007000                __ctbp = .
+ *(.call_table_data)
+                0x00007000                . = ALIGN (0x10)
+ *(.text)
+ .text          0x00007000      0x7f4 obj/startup.o
+                0x00007720                __return_interrupt
+                0x000077e8                _cpu_initial
+                0x00007000                _irqJump
+                0x00007790                __restore_all_interrupt
+                0x00007738                __save_all_interrupt
+                0x00007700                __save_interrupt
+ .text          0x000077f4       0x8c obj/crt0.o
+                0x000077f4                _start
+ .text          0x00007880       0x60 obj/crt1.o
+                0x00007880                ___main
+ .text          0x000078e0      0xb3c obj/main.o
+                0x000078e0                FlashLed()
+                0x00007ac6                init_Led()
+                0x000079e0                Asciihex_to_num(char*)
+                0x00007a0e                Num_to_Asciihex(unsigned short, char*)
+                0x00007b18                _main
+ .text          0x0000841c      0xad8 obj/IRQSG2.o
+                0x00008bac                _irq_INTCB1R
+                0x0000841c                _irq_init
+                0x00008a86                _irq_INTTP4CC1
+                0x00008ada                _irq_INTTP5CC0
+                0x0000867c                _irq_INTP2
+                0x000086cc                _irq_INTP4
+                0x000089de                _irq_INTTP3CC0
+                0x000088e2                _irq_INTTP1CC0
+                0x0000888e                _irq_INTTP0CC1
+                0x0000853c                _irq_RESET
+                0x00008810                _irq_INTTQ0CC3
+                0x000084b6                _irq_resetVect
+                0x00008654                _irq_INTP1
+                0x00008e4c                _irq_INTDMA3
+                0x000085dc                _irq_ILGOP_TRAPDB
+                0x00008c2a                _irq_INTCB2T
+                0x00008eca                _irq_INTWT
+                0x00008b58                _irq_INTCB0R_INTIIC1
+                0x00008e22                _irq_INTDMA2
+                0x00008864                _irq_INTTP0CC0
+                0x00008960                _irq_INTTP2CC0
+                0x00008a5c                _irq_INTTP4CC0
+                0x00008604                _irq_INTLVI
+                0x00008ab0                _irq_INTTP5OV
+                0x000089b4                _irq_INTTP3OV
+                0x00008dce                _irq_INTDMA0
+                0x00008da4                _irq_INTAD
+                0x00008b04                _irq_INTTP5CC1
+                0x0000871c                _irq_INTP6
+                0x000086a4                _irq_INTP3
+                0x00008564                _irq_NMI
+                0x00008b82                _irq_INTCB0T
+                0x0000876c                _irq_INTTQ0OV
+                0x0000890c                _irq_INTTP1CC1
+                0x00008c7e                _irq_INTCB3T
+                0x00008d7a                _irq_INTUA2T
+                0x00008c00                _irq_INTCB2R
+                0x0000845e                _irq_setVect
+                0x00008e76                _irq_INTKR
+                0x00008b2e                _irq_INTTM0EQ0
+                0x0000862c                _irq_INTP0
+                0x000087bc                _irq_INTTQ0CC1
+                0x00008bd6                _irq_INTCB1T
+                0x000084ee                _irq_chkErrors
+                0x00008d50                _irq_INTUA2R_INTIIC0
+                0x0000898a                _irq_INTTP2CC1
+                0x00008c54                _irq_INTCB3R
+                0x00008ca8                _irq_INTUA0R_INTCB4R
+                0x000086f4                _irq_INTP5
+                0x00008a08                _irq_INTTP3CC1
+                0x00008744                _irq_INTP7
+                0x0000858c                _irq_TRAP0
+                0x00008ea0                _irq_INTWTI
+                0x000088b8                _irq_INTTP1OV
+                0x00008a32                _irq_INTTP4OV
+                0x000085b4                _irq_TRAP1
+                0x00008d26                _irq_INTUA1T
+                0x00008cd2                _irq_INTUA0T_INTCB4T
+                0x000087e6                _irq_INTTQ0CC2
+                0x00008936                _irq_INTTP2OV
+                0x00008cfc                _irq_INTUA1R_INTIIC2
+                0x0000883a                _irq_INTTP0OV
+                0x00008df8                _irq_INTDMA1
+                0x00008794                _irq_INTTQ0CC0
+ .text          0x00008ef4      0x282 obj/ALLOC.o
+                0x00008ef4                _mem_init
+                0x00008fa2                _mem_alloc
+                0x00008f64                _mem_count
+                0x00008f7e                _mem_left
+                0x000090a2                _mem_free
+ .text          0x00009176       0xa0 obj/NEW.o
+                0x00009198                operator delete(void*)
+                0x000091ba                operator new[](unsigned int)
+                0x000091e8                operator new(unsigned int)
+                0x00009176                operator delete[](void*)
+ .text          0x00009216      0x3e4 obj/STRCLASS.o
+                0x000094d8                String::String(char const*)
+                0x00009216                String::String()
+                0x00009238                String::String()
+                0x0000925a                String::operator=(char const*)
+                0x00009302                String::init(char*)
+                0x000093a2                String::String(String const&)
+                0x0000954a                String::operator=(String const&)
+                0x00009404                String::String(String const&)
+                0x00009466                String::String(char const*)
+ .text          0x000095fa      0x10c obj/SWTIM.o
+                0x000095fa                Timer::Timer()
+                0x00009604                Timer::Timer()
+                0x00009664                IncTimer::getMsec()
+                0x0000960e                IncTimer::getTime()
+                0x0000969c                DecTimer::Match()
+ .text          0x00009706      0x744 obj/util.o
+                0x00009726                strset(char*, int)
+                0x0000973e                HexToInt(int&, char*, int)
+                0x00009964                skipWhites(unsigned char*)
+                0x00009a58                addstr(char*, char const*)
+                0x000099fe                fsumstr(char*, char*, int, int, int)
+                0x000098e2                ltrim(char*)
+                0x000098de                matherr(exception*)
+                0x00009ca8                cdaten(char*)
+                0x00009d4c                IntToHex(int, char*, unsigned int)
+                0x000099d4                sumstr(char*, char*, int, int)
+                0x00009c4e                cdate(char*)
+                0x00009c00                chgext(char*, char*)
+                0x0000992a                rtrim(char*)
+                0x00009846                _1on8_to_int(unsigned char)
+                0x00009868                windowFilter(short*, short*, int, int, int)
+                0x00009992                packWhites(unsigned char*)
+                0x00009a88                fmtReal(long, int, int)
+                0x00009706                my_pow10(short)
+                0x00009b80                pperc(char*, float, float)
+ .text          0x00009e4a      0x420 obj/I2C_SW.o
+                0x0000a1d6                _i2c_ack
+                0x00009fa0                _i2c_putc
+                0x00009e5a                _i2c_start
+                0x00009ed8                _i2c_stop
+                0x0000a11e                _i2c_getc
+                0x00009e4a                _i2c_delay
+                0x00009f52                _i2c_init
+ .text          0x0000a26a      0x862 obj/I2Ceeprom.o
+                0x0000a3ac                EE_write(void*, unsigned char, unsigned char)
+                0x0000a64c                EE_sequential_random_read(unsigned char, unsigned char*, unsigned char)
+                0x0000a26a                EE_init()
+                0x0000aa58                EE_read_current_address(unsigned char*)
+                0x0000a9aa                EE_random_byte_read(unsigned char, unsigned char*)
+                0x0000a864                EE_read_word(unsigned char)
+                0x0000a8fa                EE_sequential_current_read(unsigned char*, unsigned char)
+                0x0000a7ce                EE_read_int(unsigned char)
+                0x0000a560                EE_byte_write(unsigned char, unsigned char)
+                0x0000a738                EE_read_float(unsigned char)
+ .text          0x0000aacc      0x664 obj/sioSG2.o
+                0x0000ad28                _sio_getc_ch1
+                0x0000abf0                _sio_disable_rx_interrupt_ch1
+                0x0000ac40                _sio_disable_tx_interrupt_ch1
+                0x0000abd2                _sio_enable_rx_interrupt_ch2
+                0x0000adbc                _sio_clocksel_ch2
+                0x0000ac22                _sio_enable_tx_interrupt_ch2
+                0x0000af74                _sio_fill_ch3
+                0x0000ac18                _sio_enable_tx_interrupt_ch1
+                0x0000ab10                _sio_init_ch1
+                0x0000ac36                _sio_disable_tx_interrupt_ch0
+                0x0000b0dc                _sio_getw_ch3
+                0x0000af1a                _sio_xfr_ch3
+                0x0000abe6                _sio_disable_rx_interrupt_ch0
+                0x0000ae3e                _sio_xfr_ch2
+                0x0000aee0                _sio_getc_ch3
+                0x0000aca6                _sio_getc_ch0
+                0x0000acf6                _sio_putc_ch1
+                0x0000ac04                _sio_disable_rx_interrupt_ch3
+                0x0000abdc                _sio_enable_rx_interrupt_ch3
+                0x0000abbe                _sio_enable_rx_interrupt_ch0
+                0x0000ac54                _sio_disable_tx_interrupt_ch3
+                0x0000ae04                _sio_getc_ch2
+                0x0000ac4a                _sio_disable_tx_interrupt_ch2
+                0x0000aed4                _sio_busy_ch3
+                0x0000ac2c                _sio_enable_tx_interrupt_ch3
+                0x0000ac74                _sio_putc_ch0
+                0x0000adf8                _sio_busy_ch2
+                0x0000b032                _sio_read_ch3
+                0x0000ace0                _sio_clocksel_ch1
+                0x0000ac5e                _sio_clocksel_ch0
+                0x0000afd0                _sio_write_ch3
+                0x0000ad1c                _sio_busy_ch1
+                0x0000b096                _sio_putw_ch3
+                0x0000aeae                _sio_putc_ch3
+                0x0000ab12                _sio_init_ch2
+                0x0000ac9a                _sio_busy_ch0
+                0x0000abc8                _sio_enable_rx_interrupt_ch1
+                0x0000aacc                _sio_init_ch0
+                0x0000ac0e                _sio_enable_tx_interrupt_ch0
+                0x0000abfa                _sio_disable_rx_interrupt_ch2
+                0x0000ae98                _sio_clocksel_ch3
+                0x0000ad62                _sio_xfr_ch1
+                0x0000ab14                _sio_init_ch3
+                0x0000add2                _sio_putc_ch2
+ .text          0x0000b130      0x3e2 obj/SOUND.o
+                0x0000b25e                _goBuzzer
+                0x0000b16e                _shutBuzzer
+                0x0000b15a                _buzzer_isPlaying
+                0x0000b130                buzzer_stop()
+                0x0000b1f6                buzzer_start()
+                0x0000b2cc                _buzzer_init
+                0x0000b460                _buzzerManager
+                0x0000b184                setPWM(unsigned short, unsigned char)
+                0x0000b164                _buzzerSound
+ .text          0x0000b512     0x51be obj/ADC.o
+                0x0000b9ec                CS5530_rstValidDataPresentInADCBuffer()
+                0x0000dbe4                CS5530_sendCmd(CS5530_command, unsigned char*)
+                0x0000c030                setSPI1mode()
+                0x0000c01a                txBufferEmptySpi2()
+                0x0000bcf4                CS5530_setAdcCoding(CS5530_adcCoding)
+                0x0000c3f8                resetAdcValues(unsigned char)
+                0x0000db52                txBufferNotEmpty()
+                0x0000c5ba                backup_factory_adc_param(unsigned char)
+                0x0000bfd2                startContinuousConversionSpi2()
+                0x0000c848                backup_new_gain_value(unsigned char, float)
+                0x0000b6fc                CS5530_Spi1Initialization()
+                0x0000b672                load_startSampling()
+                0x0000ff5a                CS5530_resetAdcComunication()
+                0x0000c6c0                controlAdcValuesRead()
+                0x0000c9b0                backup_factory_gain_param(unsigned char, float, unsigned short)
+                0x0000c596                backup_date_adc_param(char*)
+                0x0000bd54                CS5530_setRstSysSpi2(CS5530_rstSys)
+                0x0000bfb4                CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector)
+                0x0000bfde                CS5530_setIntGainADConv(int, unsigned char*)
+                0x0000c686                backup_calib_state(unsigned char, unsigned char)
+                0x0000cd94                CS5530_sendCmdSpi2(CS5530_command, unsigned char*)
+                0x0000ea1e                CS5530_getWatchdogAdcTimer()
+                0x0001039a                CS5530_validDataPresentInADCBufferSpi2()
+                0x0000bab8                CS5530_setInputShort(CS5530_inputShort)
+                0x0000c010                txBufferIsEmpty()
+                0x0000bd30                CS5530_setPowerSafeModeSpi2(CS5530_powerSaveMode)
+                0x0000bd06                CS5530_setOpenCircuitDetector(CS5530_openCircuitDetector)
+                0x0000bd8a                CS5530_setLatchBitsSpi2(CS5530_outputLatchBits)
+                0x0000baa6                CS5530_setRstSys(CS5530_rstSys)
+                0x0000ba30                CS5530_checkBlockCells(unsigned long*)
+                0x0000caca                get_factory_adc_param()
+                0x0000c026                txBufferIsEmptySpi2()
+                0x0000cd02                txBufferNotEmptySpi2()
+                0x0000bd9c                CS5530_setSampleFrequecySpi2(CS5530_sampleFrequecies)
+                0x0000ca52                backup_factory_offset_value(unsigned char, unsigned short)
+                0x0000c950                reset_backup_factory_values(unsigned char, unsigned char)
+                0x0000baee                CS5530_setSampleFrequecy(CS5530_sampleFrequecies)
+                0x0000bd24                startContinuousConversion()
+                0x0000f3b2                CS5530_EntrySpi1()
+                0x0000badc                CS5530_setLatchBits(CS5530_outputLatchBits)
+                0x0000baca                CS5530_setVoltageRef(CS5530_voltageRef)
+                0x0000b9f6                CS5530_setCounterWaitingData()
+                0x0000b680                load_stopSampling()
+                0x0000bffa                CS5530_rstValidDataPresentInADCBufferSpi2()
+                0x0000fdb8                adc_serial_init()
+                0x0000bd66                CS5530_setInputShortSpi2(CS5530_inputShort)
+                0x0000bd42                CS5530_setPowerDownModeSpi2(CS5530_powerDownMode)
+                0x0000db76                SPI_StartTx()
+                0x0000ba00                CS5530_getCounterWaitingData()
+                0x0000bd18                endContinuousConversion()
+                0x0000c004                txBufferEmpty()
+                0x0000cd26                SPI2_StartTx()
+                0x0000ba82                CS5530_setPowerSafeMode(CS5530_powerSaveMode)
+                0x0000ea3c                CS5530_EntrySpi2()
+                0x0000c0a8                setPINSPI1mode()
+                0x0000bfc6                endContinuousConversionSpi2()
+                0x0001000e                CS5530_validDataPresentInADCBufferSpi1()
+                0x0000c0d0                setSPI2mode()
+                0x0000ccba                get_adc_param()
+                0x0000bfa2                CS5530_setAdcCodingSpi2(CS5530_adcCoding)
+                0x0000c80e                backup_new_offset_value(unsigned char, unsigned short)
+                0x0000b89c                CS5530_Spi2Initialization()
+                0x0000c882                backup_adc_param(unsigned char)
+                0x0000ff8c                adc_uC_init()
+                0x0000b512                samplePower()
+                0x0000ba0a                CS5530_checkBlockComunication(int)
+                0x0000ba5c                CS5530_setWatchdogAdcTimer(unsigned long)
+                0x0000c160                setPINSPI2mode()
+                0x0000bd78                CS5530_setVoltageRefSpi2(CS5530_voltageRef)
+                0x0000ba94                CS5530_setPowerDownMode(CS5530_powerDownMode)
+ .text          0x000106d0      0xc3c obj/PWM.o
+                0x00011028                setPwmMotCycleIncrease(int, int)
+                0x0001107a                getCoverPumpState()
+                0x00010d84                enable_MOT(int)
+                0x00010e36                getSpeedPump(int)
+                0x000110c6                pwmManager()
+                0x00010cac                reg_pump_vel(unsigned char, unsigned char)
+                0x00010e82                setPwmCycle(int, int)
+                0x00010e70                getStatePump(int)
+                0x00010b58                enable_PWM_MOT(int)
+                0x00010e1e                setSpeedPump(int, int)
+                0x00010a68                init_PWM_MOT5()
+                0x000107c4                init_PWM_MOT2()
+                0x00010b4e                EVsManager()
+                0x00010982                init_PWM_MOT4()
+                0x00010e02                getRampPump(int)
+                0x00010cc8                setBlockRelay(int, int)
+                0x00010fda                setPwmMotCycleDecrease(int, int)
+                0x00010dea                setRampPump(int, unsigned char)
+                0x00010e5e                setStatePump(int, int)
+                0x00010b54                enable_PWM_EV()
+                0x0001089c                init_PWM_MOT3()
+                0x00010c0a                disable_PWM_MOT(int)
+                0x00010b50                changeEVstatus(unsigned char)
+                0x00010b56                disable_PWM_EV()
+                0x00010f66                setPwmMotCycle(int, int)
+                0x000106d0                init_PWM_MOT1()
+                0x00010f94                pwm_motors_reset()
+                0x00010b4c                init_PWM_EVuC()
+ .text          0x0001130c     0x1640 obj/QUEUEUART.o
+                0x000128e8                RingBuffer::RingBuffer(unsigned int)
+                0x00011ddc                QueueUart::GetNumBytesInTransmissionBuffer()
+                0x000115a4                UartDeviceAbstraction::SetTransmissionBuffer(unsigned char)
+                0x00011b20                UartDeviceAbstraction::TransmitData(unsigned char)
+                0x000120e8                QueueUart::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
+                0x000123e4                UartDeviceAbstraction::SelectUart1()
+                0x00011b98                UartDeviceAbstraction::ReceiveData()
+                0x00011418                UartDeviceAbstraction::TurnOn()
+                0x0001221e                QueueUart::TransmitData(unsigned char const*)
+                0x000116b6                UartDeviceAbstraction::IrqHandUA2T(int)
+                0x00011376                RingBuffer::Equals(unsigned char const*, unsigned int)
+                0x00011c80                QueueUart::TransmitLock()
+                0x00011ebc                QueueUart::SetTransmitCallBack(void (*)(UartDeviceAbstraction*, bool))
+                0x00011582                UartDeviceAbstraction::IsTransmissionBufferEmpty()
+                0x000124e0                UartDeviceAbstraction::SelectUart0()
+                0x00011ade                UartDeviceAbstraction::StartTransmission()
+                0x00012028                QueueUart::ReceiveData(unsigned char&)
+                0x00011c22                QueueUart::StartTransmission()
+                0x000128ca                RingBuffer::~RingBuffer()
+                0x00011ac2                UartDeviceAbstraction::TransmitLock()
+                0x00011fb4                QueueUart::ReceiveData(unsigned short*, int&)
+                0x000125c8                UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x00011d74                QueueUart::TransmitData(unsigned char const*, int)
+                0x000116e4                UartDeviceAbstraction::IrqHandUA0R(int)
+                0x000120f4                QueueUart::GetNumBytesInReceptionBuffer()
+                0x00012824                QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice)
+                0x000113bc                UartDeviceAbstraction::Init()
+                0x000120ee                QueueUart::GetReceptionBufferSize()
+                0x00012268                UartDeviceAbstraction::~UartDeviceAbstraction()
+                0x000115d6                UartDeviceAbstraction::GetReceptionError()
+                0x00011ad0                UartDeviceAbstraction::TransmitUnlock()
+                0x00011dd6                QueueUart::GetTransmissionBufferSize()
+                0x00011954                UartDeviceAbstraction::SetBaudRate(UartDeviceAbstraction::UARTBaudRate, bool)
+                0x00011b8a                UartDeviceAbstraction::ReceiveUnlock()
+                0x0001151e                UartDeviceAbstraction::~UartDeviceAbstraction()
+                0x000114ba                UartDeviceAbstraction::~UartDeviceAbstraction()
+                0x00011efc                QueueUart::ReceiveUnlock()
+                0x00011b06                UartDeviceAbstraction::StartTransmission(unsigned char)
+                0x0001165a                UartDeviceAbstraction::IrqHandUA0T(int)
+                0x00011f2c                QueueUart::ClearReceptionBuffer()
+                0x000128ac                RingBuffer::~RingBuffer()
+                0x00011cfe                QueueUart::TransmitData(unsigned char)
+                0x00011ec2                QueueUart::ReceiveLock()
+                0x00011e34                QueueUart::TransmitCallback(UartDeviceAbstraction*)
+                0x00011c00                QueueUart::~QueueUart()
+                0x0001177c                UartDeviceAbstraction::IrqHandUA2R(int)
+                0x000117c8                UartDeviceAbstraction::SetParity(UartDeviceAbstraction::UARTParity, bool)
+                0x00011b7c                UartDeviceAbstraction::ReceiveLock()
+                0x00011b70                UartDeviceAbstraction::ClearError()
+                0x00011cce                QueueUart::TransmitUnlock()
+                0x000126b2                UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x000115ba                UartDeviceAbstraction::GetReceptionBuffer()
+                0x00012074                QueueUart::ReceiveData(unsigned char*, int&)
+                0x0001187c                UartDeviceAbstraction::SetFrameBits(UartDeviceAbstraction::UARTFrameBits, bool)
+                0x0001130c                RingBuffer::Clear(bool)
+                0x00011dea                QueueUart::GetFreeBytesInTransmissionBuffer()
+                0x00012102                QueueUart::GetFreeBytesInReceptionBuffer()
+                0x0001218a                QueueUart::ReceiveCallback(UartDeviceAbstraction*, unsigned int)
+                0x00011f4a                QueueUart::ClearTransmissionBuffer()
+                0x00011730                UartDeviceAbstraction::IrqHandUA1R(int)
+                0x000118e8                UartDeviceAbstraction::SetStopBits(UartDeviceAbstraction::UARTStopBits, bool)
+                0x00011f6c                QueueUart::ReceiveData(unsigned short&)
+                0x00011688                UartDeviceAbstraction::IrqHandUA1T(int)
+                0x00012304                UartDeviceAbstraction::SelectUart2()
+                0x00011bd8                UartDeviceAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
+                0x0001291a                RingBuffer::RingBuffer(unsigned int)
+                0x00011344                RingBuffer::Insert(unsigned char)
+                0x00011470                UartDeviceAbstraction::TurnOff()
+                0x000122d2                QueueUart::~QueueUart()
+                0x00011bde                QueueUart::~QueueUart()
+                0x00011b76                UartDeviceAbstraction::SetTransmitCallBack(void (*)(UartDeviceAbstraction*))
+                0x0001214c                QueueUart::resetFifo()
+                0x0001279c                QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice)
+ .text          0x0001294c      0x74c obj/PROTOCOLSTDUART.o
+                0x00012aac                stdUartProtocolAbstraction::addDataToReceiveBuffer(unsigned char*, int, int)
+                0x00012efc                stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x00012eb8                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
+                0x00012c3e                stdUartProtocolAbstraction::calculateChecksum(unsigned char*, int)
+                0x00012d34                stdUartProtocolAbstraction::checkTimeOutElapsed()
+                0x00012eda                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
+                0x00012952                stdUartProtocolAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
+                0x00012c62                stdUartProtocolAbstraction::SendCommand(unsigned char*, int, int)
+                0x00012e86                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
+                0x00012a48                stdUartProtocolAbstraction::rstError()
+                0x00012fca                stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x00012be2                stdUartProtocolAbstraction::popPacketReceived(int&)
+                0x0001295a                stdUartProtocolAbstraction::restoreIntialCondition()
+                0x0001294c                stdUartProtocolAbstraction::SetDataAnalyseCallBack(bool (*)(unsigned short, stdUartProtocolAbstraction*))
+                0x00012aa4                stdUartProtocolAbstraction::IsTransmissionAvailable()
+                0x0001296a                stdUartProtocolAbstraction::setError(int, bool)
+                0x00012a62                stdUartProtocolAbstraction::getLastError()
+                0x00012db6                stdUartProtocolAbstraction::Manager()
+                0x00012cf4                stdUartProtocolAbstraction::setLastDataReceivedBuffer(int)
+                0x00012958                stdUartProtocolAbstraction::stdUartProtocolAbstractionReceiveCallback(UartDeviceAbstraction*, unsigned int)
+                0x00012aa8                stdUartProtocolAbstraction::IsReceptionAvailable()
+                0x00012c22                stdUartProtocolAbstraction::getNewPacketReceived()
+                0x00012b0a                stdUartProtocolAbstraction::setReceivedOpCode(int)
+                0x00012a68                stdUartProtocolAbstraction::popError()
+                0x00012c28                stdUartProtocolAbstraction::rstNewPacketReceived()
+ .text          0x00013098     0x238c obj/PROTOCOLSIFRA.o
+                0x00013990                SIFRAProtocol::getMsg()
+                0x00013a6c                SIFRAProtocol::sendSIFRADebugRam()
+                0x000133cc                SIFRAProtocol::SIFRA_getStatusCmdDecode()
+                0x000135ee                SIFRAProtocol::SIFRA_setGainCell3()
+                0x000132e8                SIFRAProtocol::SIFRA_getDebugCmdDecode()
+                0x0001343e                SIFRAProtocol::SIFRA_restartControl()
+                0x000132c2                SIFRAProtocol::SIFRA_getInfoCmdDecode()
+                0x000134fe                SIFRAProtocol::SIFRA_setZeroCell2()
+                0x00015390                SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
+                0x000138e2                SIFRAProtocol::checksum(unsigned char, unsigned char, unsigned char)
+                0x00013182                SIFRAProtocol::SIFRA_decodeScalesPhaseCmd(unsigned char*)
+                0x00014086                SIFRAProtocol::sendSIFRADebugVie_1_3()
+                0x00013716                SIFRAProtocol::getLastRemoteNodeID()
+                0x00013c7e                SIFRAProtocol::sendSIFRADebugStart()
+                0x00013334                SIFRAProtocol::SIFRA_getDebugVie_4_5_CmdDecode()
+                0x0001363e                SIFRAProtocol::SIFRA_setGainCell5()
+                0x00013666                SIFRAProtocol::SIFRA_setResetCalib()
+                0x00013576                SIFRAProtocol::SIFRA_setZeroCell5()
+                0x00013098                SIFRAProtocol::SIFRA_decodeStartCmd(unsigned char*)
+                0x0001348a                SIFRAProtocol::SIFRA_setScalesNotCalib()
+                0x00013172                SIFRAProtocol::SIFRA_decodeRestartControlCmd(unsigned char*)
+                0x0001359e                SIFRAProtocol::SIFRA_setGainCell1()
+                0x00013db2                SIFRAProtocol::sendSIFRADebugVie_4_5()
+                0x000148e4                SIFRAProtocol::Manager()
+                0x0001391c                SIFRAProtocol::sendMsg(int)
+                0x0001371c                SIFRAProtocol::checkOpCode(unsigned char, int, int&)
+                0x000133f2                SIFRAProtocol::SIFRA_setLineToIdentify()
+                0x000131ae                SIFRAProtocol::sendSIFRALoadSamples(unsigned long, int)
+                0x00014522                SIFRAProtocol::sendSIFRAStatus()
+                0x000135c6                SIFRAProtocol::SIFRA_setGainCell2()
+                0x0001330e                SIFRAProtocol::SIFRA_getDebugVie_1_3_CmdDecode()
+                0x00014eee                SIFRAProtocol::SIFRADataAnalyse(unsigned short, stdUartProtocolAbstraction*)
+                0x0001368e                SIFRAProtocol::SIFRA_setJumpToLoader()
+                0x00013418                SIFRAProtocol::SIFRA_resetMaxWeightError()
+                0x000134d6                SIFRAProtocol::SIFRA_setZeroCell1()
+                0x0001335a                SIFRAProtocol::SIFRA_getDebugStartCmdDecode()
+                0x00013380                SIFRAProtocol::SIFRA_getDebugRamCmdDecode()
+                0x00013710                SIFRAProtocol::setLastRemoteNodeID(unsigned char)
+                0x000152fc                SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
+                0x0001370a                SIFRAProtocol::getLocalNodeID()
+                0x000147ce                SIFRAProtocol::sendSIFRAStart()
+                0x00013162                SIFRAProtocol::SIFRA_decodeResetMaxWeight(unsigned char*)
+                0x000152ca                SIFRAProtocol::~SIFRAProtocol()
+                0x00013526                SIFRAProtocol::SIFRA_setZeroCell3()
+                0x00013a0a                SIFRAProtocol::sendAcknowledge()
+                0x0001329e                SIFRAProtocol::sendSIFRALoadSamples(unsigned long*)
+                0x000134b0                SIFRAProtocol::SIFRA_setStart()
+                0x00015286                SIFRAProtocol::~SIFRAProtocol()
+                0x000136de                SIFRAProtocol::SIFRA_zeroLoadCmdDecode()
+                0x000152a8                SIFRAProtocol::~SIFRAProtocol()
+                0x000136b6                SIFRAProtocol::SIFRA_setLoopApplication()
+                0x00013464                SIFRAProtocol::SIFRA_setScalesPhase()
+                0x0001319e                SIFRAProtocol::SIFRA_decodeScalesNotCalibCmd(unsigned char*)
+                0x00013616                SIFRAProtocol::SIFRA_setGainCell4()
+                0x00013704                SIFRAProtocol::setLocalNodeID(unsigned char)
+                0x000143b0                SIFRAProtocol::sendSIFRAInfo()
+                0x0001427e                SIFRAProtocol::sendSIFRADebug()
+                0x000133a6                SIFRAProtocol::SIFRA_set_Stop_All()
+                0x0001354e                SIFRAProtocol::SIFRA_setZeroCell4()
+ .text          0x00015424     0x9956 obj/CPUSIFRA_MANAGER.o
+                0x000160f2                SIFRA_Manager::calc_flusso_pompa(int)
+                0x000156ea                SIFRA_Manager::SIFRAMsg_startAcquisitionHandler()
+                0x00018a30                SIFRA_Manager::SIFRARampe_Manager(int, bool)
+                0x00015428                SIFRA_Manager::SIFRABreak_Manager()
+                0x000166d2                SIFRA_Manager::EncoderPumpsControl(unsigned char)
+                0x00018050                SIFRA_Manager::Verifica_encoder_motori()
+                0x00015cd6                SIFRA_Manager::Aggiorna_pesi_erogati()
+                0x00018e06                SIFRA_Manager::Backup_Param_Restart(Restart_t*)
+                0x00015c72                SIFRA_Manager::Find_Num_of_Enabled_Lines(unsigned char)
+                0x00015926                SIFRA_Manager::Verifica_linea_montata(int, int)
+                0x00019f4e                SIFRA_Manager::SIFRASacca_Manager()
+                0x0001858a                SIFRA_Manager::SIFRAService_Manager()
+                0x00015c2e                SIFRA_Manager::calcolo_margine_tara(int, unsigned short)
+                0x00015908                SIFRA_Manager::SifraStopTimers()
+                0x000167ea                SIFRA_Manager::SIFRA_resetStatusErrorStop()
+                0x00015b16                SIFRA_Manager::default_struttura_restart()
+                0x0001aff2                SIFRA_Manager::readZeroInThisLine(int)
+                0x0001591a                SIFRA_Manager::setErrorEEpromReading()
+                0x0001871c                SIFRA_Manager::SIFRAST_Manager(int)
+                0x00018cf0                SIFRA_Manager::Read_Param_Backup()
+                0x00016f30                SIFRA_Manager::SIFRAFlow_manager()
+                0x00017b86                SIFRA_Manager::calc_next_theor_weight(int)
+                0x0001e946                SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)
+                0x000164f6                SIFRA_Manager::imposta_allarme_aria(int)
+                0x00015426                SIFRA_Manager::~SIFRA_Manager()
+                0x00015c24                SIFRA_Manager::getSIFRAphase()
+                0x0001b5fc                SIFRA_Manager::SIFRAMsg_infoAskedHandler()
+                0x00015778                SIFRA_Manager::SifraResetViaStatus()
+                0x000161c4                SIFRA_Manager::ResetMotorStepCounter()
+                0x000188e2                SIFRA_Manager::SIFRARampe_Manager_Test(int)
+                0x0001b618                SIFRA_Manager::SIFRAMsg_statusAskedHandler()
+                0x00016272                SIFRA_Manager::SifraResetStateMachine()
+                0x0001b650                SIFRA_Manager::Decode_StartMsg()
+                0x000184b0                SIFRA_Manager::SIFRASpeedPump_Manager(unsigned char)
+                0x00018c8e                SIFRA_Manager::Carica_Param_Encoder(FP_STRUCT*, int)
+                0x00015880                SIFRA_Manager::SifraResetStartCmd()
+                0x00016cd0                SIFRA_Manager::controllo_errori_linea(int, int)
+                0x0001b4ce                SIFRA_Manager::DefaultSystemReset()
+                0x000162fe                SIFRA_Manager::getStatePump(int)
+                0x000156f4                SIFRA_Manager::SIFRAMsg_resetApplicationHandler()
+                0x00016694                SIFRA_Manager::Encoder_counter()
+                0x00018d44                SIFRA_Manager::Carica_StatoStart()
+                0x00016e02                SIFRA_Manager::SIFRAMsg_jumpToLoaderHandler()
+                0x00019792                SIFRA_Manager::SIFRAStop_Manager()
+                0x0001574c                SIFRA_Manager::SIFRAMsg_protocolErrorHandler()
+                0x00019822                SIFRA_Manager::SIFRAManual_Manager(int)
+                0x00016870                SIFRA_Manager::AdattaPesoSpecifico(unsigned short)
+                0x00016596                SIFRA_Manager::calcola_variazione_peso(int)
+                0x000168c4                SIFRA_Manager::SIFRASetScalesPhase(unsigned char, unsigned char)
+                0x0001b5a8                SIFRA_Manager::SIFRAMsg_debugAskedVie_4_5_Handler()
+                0x00017c2a                SIFRA_Manager::FlashLed_hw_error()
+                0x000158ae                SIFRA_Manager::SifraResetFillingData()
+                0x00016926                SIFRA_Manager::Verifica_peso_massimo()
+                0x0001b48a                SIFRA_Manager::SifraResetSystemParams()
+                0x00016828                SIFRA_Manager::SIFRA_resetStatusError()
+                0x00015b5e                SIFRA_Manager::SIFRAPhase_manager()
+                0x00016b16                SIFRA_Manager::Verifica_celle()
+                0x000182f2                SIFRA_Manager::SIFRAError_Manager()
+                0x00017a9a                SIFRA_Manager::SIFRACalibResetData(unsigned char)
+                0x00015cb8                SIFRA_Manager::Find_Enable_line(unsigned char)
+                0x00016310                SIFRA_Manager::setta_led_pannello(int, bool)
+                0x00016260                SIFRA_Manager::setStatePump(int, int)
+                0x0001d084                SIFRA_Manager::SIFRASample_Manager()
+                0x00016790                SIFRA_Manager::LoadControl(unsigned char)
+                0x00015736                SIFRA_Manager::SIFRAMsg_hwErrorHandler()
+                0x00015dc0                SIFRA_Manager::calcola_velocita_massime()
+                0x00016414                SIFRA_Manager::reset_state_leds(bool)
+                0x00015ad4                SIFRA_Manager::default_struttura_flusso(int)
+                0x0001e512                SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)
+                0x0001b634                SIFRA_Manager::SIFRAMsg_setStartHandler()
+                0x00015424                SIFRA_Manager::~SIFRA_Manager()
+                0x0001dff4                SIFRA_Manager::Manager()
+                0x0001b442                SIFRA_Manager::SifraResetStatus()
+                0x0001b5e0                SIFRA_Manager::SIFRAMsg_debugAskedHandler()
+                0x00016764                SIFRA_Manager::Set_weight_threshold()
+                0x0001d942                SIFRA_Manager::SIFRAcheck_new_command()
+                0x00015b2c                SIFRA_Manager::changeSIFRAstatus(unsigned char)
+                0x000158d0                SIFRA_Manager::SifraResetBackup()
+                0x0001705e                SIFRA_Manager::SIFRAAirIn_Manager()
+                0x0001acbe                SIFRA_Manager::readLoadInThisLine(int)
+                0x0001965e                SIFRA_Manager::Write_Param_Backup()
+                0x00015762                SIFRA_Manager::SIFRAMsg_unknownErrorHandler()
+                0x00017d9c                SIFRA_Manager::VerificaESD_Damage()
+                0x0001b208                SIFRA_Manager::SIFRACalib_Manager(int)
+                0x0001b5c4                SIFRA_Manager::SIFRAMsg_debugAskedVie_1_3_Handler()
+                0x000174d6                SIFRA_Manager::SIFRATestLed_Manager()
+                0x0001ca08                SIFRA_Manager::SIFRATest_FlussoPompe(int)
+                0x00018eba                SIFRA_Manager::SIFRART_Manager(int)
+                0x0001797e                SIFRA_Manager::SIFRASetScalesNotCalibrated()
+                0x00015d18                SIFRA_Manager::Setta_filtro_peso(int)
+                0x0001ac76                SIFRA_Manager::SetHardwareVersion()
+                0x0001559e                SIFRA_Manager::SIFRAWeightControlRestart(char)
+                0x0001c0d8                SIFRA_Manager::SIFRALed_Manager()
+                0x0001b570                SIFRA_Manager::SIFRAMsg_debugAskedRamHandler()
+                0x000196b2                SIFRA_Manager::BackUp_StatoStart()
+                0x00015b54                SIFRA_Manager::getSIFRAstatus()
+                0x00018e54                SIFRA_Manager::Backup_Param_Encoder(FP_STRUCT*, int)
+                0x0001ccd8                SIFRA_Manager::SIFRATest_Pompe(int)
+                0x00018c40                SIFRA_Manager::Carica_Param_Restart(Restart_t*)
+                0x0001c78a                SIFRA_Manager::SIFRATest_Emc()
+                0x00017a18                SIFRA_Manager::Verifica_apertura_sportello()
+                0x00016392                SIFRA_Manager::reset_state_this_led(int, bool)
+                0x000159dc                SIFRA_Manager::salva_rapporto_flusso(int, int, int, unsigned char)
+                0x0001b58c                SIFRA_Manager::SIFRAMsg_debugAskedStartHandler()
+                0x00015f80                SIFRA_Manager::encoder_updateCnt(int)
+                0x000165e8                SIFRA_Manager::UpdateDebugStruct()
+ .text          0x0001ed7a      0x792 obj/NVRDRV.o
+                0x0001ee48                _nvr_chkRead
+                0x0001f264                _nvr_readUserChkBlock
+                0x0001ef20                _nvr_writeUserChkBlock
+                0x0001eec0                _drv_writeMem
+                0x0001f332                _nvr_readParam
+                0x0001ed7a                _nvr_init
+                0x0001efc4                _nvr_writeParam
+                0x0001f12c                _nvr_chkVerify
+                0x0001eefa                _nvr_chkWrite
+                0x0001edb2                _nvr_setDeviceAddress
+                0x0001f0ee                _nvr_writeUserMem
+                0x0001ee82                _nvr_readUserMem
+                0x0001ed9c                _nvr_errors
+                0x0001ee0e                _drv_readMem
+                0x0001edd0                _nvr_chkCalcBuf
+ .text          0x0001f50c      0x7a8 obj/LEDS_PANEL.o
+                0x0001f66c                _switchoff_leds
+                0x0001f50c                _LedDrivers_clearFifo
+                0x0001f564                _switchon_red_leds
+                0x0001f614                _switchon_leds
+                0x0001fc4e                _LedDrivers_init
+                0x0001f52a                _LedDrivers_sendData
+                0x0001f6b4                _LedDrivers_DisplayTest
+                0x0001f5bc                _switchon_green_leds
+                0x0001f750                _ManageLedsInCalibStatus
+ .text          0x0001fcb4       0x20 c:\gcc850\lib\libc.a(lib_a-atoi.o)
+                0x0001fcc4                _atoi
+                0x0001fcb4                __atoi_r
+ .text          0x0001fcd4       0x20 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+                0x0001fcd4                _memcpy
+ .text          0x0001fcf4       0x1a c:\gcc850\lib\libc.a(lib_a-memset.o)
+                0x0001fcf4                _memset
+ .text          0x0001fd0e       0xa6 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+                0x0001fd0e                _sprintf
+                0x0001fd64                __sprintf_r
+ .text          0x0001fdb4       0x34 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+                0x0001fdb4                _strcmp
+ .text          0x0001fde8       0x20 c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+                0x0001fde8                _strcpy
+ .text          0x0001fe08       0x1a c:\gcc850\lib\libc.a(lib_a-strlen.o)
+                0x0001fe08                _strlen
+ .text          0x0001fe22      0x226 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+                0x0002002e                _strtol
+                0x0001fe22                __strtol_r
+ .text          0x00020048     0x1a6a c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+                0x000201f2                __svfprintf_r
+ .text          0x00021ab2        0x0 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+ .text          0x00021ab2     0x1530 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+                0x00021cc0                __dtoa_r
+ .text          0x00022fe2      0x324 c:\gcc850\lib\libc.a(lib_a-freer.o)
+                0x00022fe2                __malloc_trim_r
+                0x000230b2                __free_r
+ .text          0x00023306        0x0 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ .text          0x00023306       0x9a c:\gcc850\lib\libc.a(lib_a-locale.o)
+                0x0002338a                _setlocale
+                0x00023324                __setlocale_r
+                0x00023306                ___locale_charset
+                0x0002331a                _localeconv
+                0x00023310                __localeconv_r
+ .text          0x000233a0      0x6a8 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+                0x000233a0                __malloc_r
+ .text          0x00023a48       0x32 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+                0x00023a48                _memchr
+ .text          0x00023a7a       0x48 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+                0x00023a7a                _memmove
+ .text          0x00023ac2        0x4 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+                0x00023ac2                ___malloc_lock
+                0x00023ac4                ___malloc_unlock
+ .text          0x00023ac6      0xbc8 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+                0x00023ef6                ___d2b
+                0x00023e1e                ___any_on
+                0x00023bb0                ___mcmp
+                0x00024204                ___multiply
+                0x00023c40                ___b2d
+                0x00023dd0                ___copybits
+                0x00023ff6                ___mdiff
+                0x000245ce                ___s2b
+                0x00023b34                ___lo0bits
+                0x00023e88                __Balloc
+                0x00023d76                __mprec_log10
+                0x00024448                ___multadd
+                0x00023d02                ___ratio
+                0x0002442e                ___i2b
+                0x0002450c                ___pow5mult
+                0x00024122                ___lshift
+                0x00023ac6                __Bfree
+                0x00023ae4                ___hi0bits
+                0x00023bec                ___ulp
+ .text          0x0002468e      0x452 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+                0x0002468e                __realloc_r
+ .text          0x00024ae0       0x26 c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+                0x00024ae0                ___isinfd
+ .text          0x00024b06       0x1e c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+                0x00024b06                ___isnand
+ .text          0x00024b24       0x2a c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+                0x00024b24                __sbrk_r
+ .text          0x00024b4e       0x16 c:\gcc850\lib\libc.a(lib_a-stat.o)
+                0x00024b4e                __stat
+ .text          0x00024b64       0x12 c:\gcc850\lib\libc.a(lib_a-trap.o)
+                0x00024b64                ___trap0
+ .text          0x00024b76       0x8a c:\gcc850\lib\libc.a(lib_a-callocr.o)
+                0x00024b76                __calloc_r
+ .text          0x00024c00       0x5e c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+                0x00024c00                __sbrk
+ .text          0x00024c5e       0x16 c:\gcc850\lib\libc.a(lib_a-write.o)
+                0x00024c5e                __write
+ .text          0x00024c74       0x10 c:\gcc850\lib\libc.a(lib_a-abort.o)
+                0x00024c74                _abort
+ .text          0x00024c84      0x1a8 c:\gcc850\lib\libc.a(lib_a-signal.o)
+                0x00024c84                __raise_r
+                0x00024db6                ___sigtramp
+                0x00024cf0                _raise
+                0x00024d42                __init_signal
+                0x00024d52                ___sigtramp_r
+                0x00024e16                _signal
+                0x00024dc8                __signal_r
+                0x00024d02                __init_signal_r
+ .text          0x00024e2c       0x3a c:\gcc850\lib\libc.a(lib_a-signalr.o)
+                0x00024e2c                __getpid_r
+                0x00024e38                __kill_r
+ .text          0x00024e66       0x4a c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+                0x00024e66                __exit
+ .text          0x00024eb0        0x4 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+                0x00024eb0                __getpid
+ .text          0x00024eb4       0x18 c:\gcc850\lib\libc.a(lib_a-kill.o)
+                0x00024eb4                __kill
+ .text          0x00024ecc       0x3e c:\gcc850\lib\libgcc.a(_mulsi3.o)
+                0x00024ecc                ___mulsi3
+ .text          0x00024f0a       0x32 c:\gcc850\lib\libgcc.a(_divsi3.o)
+                0x00024f0a                ___divsi3
+ .text          0x00024f3c       0x36 c:\gcc850\lib\libgcc.a(_udivsi3.o)
+                0x00024f3c                ___udivsi3
+ .text          0x00024f72       0x2a c:\gcc850\lib\libgcc.a(_modsi3.o)
+                0x00024f72                ___modsi3
+ .text          0x00024f9c       0x2a c:\gcc850\lib\libgcc.a(_umodsi3.o)
+                0x00024f9c                ___umodsi3
+ *fill*         0x00024fc6        0x2 00
+ .text          0x00024fc8       0x68 c:\gcc850\lib\libgcc.a(_save_20c.o)
+                0x00024ffc                __return_r20_r31
+                0x00024fc8                __save_r20_r31
+ .text          0x00025030       0x50 c:\gcc850\lib\libgcc.a(_save_23c.o)
+                0x00025030                __save_r23_r31
+                0x00025058                __return_r23_r31
+ .text          0x00025080       0x40 c:\gcc850\lib\libgcc.a(_save_25c.o)
+                0x000250a0                __return_r25_r31
+                0x00025080                __save_r25_r31
+ .text          0x000250c0       0x38 c:\gcc850\lib\libgcc.a(_save_26c.o)
+                0x000250dc                __return_r26_r31
+                0x000250c0                __save_r26_r31
+ .text          0x000250f8       0x30 c:\gcc850\lib\libgcc.a(_save_27c.o)
+                0x000250f8                __save_r27_r31
+                0x00025110                __return_r27_r31
+ .text          0x00025128       0x28 c:\gcc850\lib\libgcc.a(_save_28c.o)
+                0x00025128                __save_r28_r31
+                0x0002513c                __return_r28_r31
+ .text          0x00025150       0x20 c:\gcc850\lib\libgcc.a(_save_29c.o)
+                0x00025160                __return_r29_r31
+                0x00025150                __save_r29_r31
+ .text          0x00025170       0x18 c:\gcc850\lib\libgcc.a(_save_31c.o)
+                0x0002517c                __return_r31
+                0x00025170                __save_r31
+ .text          0x00025188       0x14 c:\gcc850\lib\libgcc.a(_save_varargs.o)
+                0x00025188                __save_r6_r9
+ .text          0x0002519c       0x36 c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+                0x0002519c                ___fixunssfsi
+ .text          0x000251d2      0x25e c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+                0x00025378                ___subsf3
+                0x000253da                ___addsf3
+ .text          0x00025430      0x174 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+                0x00025430                ___mulsf3
+ .text          0x000255a4      0x11c c:\gcc850\lib\libgcc.a(_div_sf.o)
+                0x000255a4                ___divsf3
+ .text          0x000256c0       0x66 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+                0x000256c0                ___nesf2
+ .text          0x00025726       0x60 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+                0x00025726                ___gtsf2
+ .text          0x00025786       0x60 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+                0x00025786                ___gesf2
+ .text          0x000257e6       0x66 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+                0x000257e6                ___ltsf2
+ .text          0x0002584c       0x66 c:\gcc850\lib\libgcc.a(_le_sf.o)
+                0x0002584c                ___lesf2
+ .text          0x000258b2       0x70 c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+                0x000258b2                ___floatsisf
+ .text          0x00025922       0x82 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+                0x00025922                ___fixsfsi
+ .text          0x000259a4        0x0 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+ .text          0x000259a4       0x7a c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+                0x000259a4                ___floatunsisf
+ .text          0x00025a1e      0x3fa c:\gcc850\lib\libgcc.a(_addsub_df.o)
+                0x00025d50                ___subdf3
+                0x00025dba                ___adddf3
+ .text          0x00025e18      0x270 c:\gcc850\lib\libgcc.a(_mul_df.o)
+                0x00025e18                ___muldf3
+ .text          0x00026088      0x188 c:\gcc850\lib\libgcc.a(_div_df.o)
+                0x00026088                ___divdf3
+ .text          0x00026210       0x6e c:\gcc850\lib\libgcc.a(_eq_df.o)
+                0x00026210                ___eqdf2
+ .text          0x0002627e       0x6e c:\gcc850\lib\libgcc.a(_ne_df.o)
+                0x0002627e                ___nedf2
+ .text          0x000262ec       0x68 c:\gcc850\lib\libgcc.a(_gt_df.o)
+                0x000262ec                ___gtdf2
+ .text          0x00026354       0x68 c:\gcc850\lib\libgcc.a(_ge_df.o)
+                0x00026354                ___gedf2
+ .text          0x000263bc       0x6e c:\gcc850\lib\libgcc.a(_lt_df.o)
+                0x000263bc                ___ltdf2
+ .text          0x0002642a       0x9e c:\gcc850\lib\libgcc.a(_si_to_df.o)
+                0x0002642a                ___floatsidf
+ .text          0x000264c8       0xaa c:\gcc850\lib\libgcc.a(_df_to_si.o)
+                0x000264c8                ___fixdfsi
+ .text          0x00026572        0x0 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+ .text          0x00026572       0xc2 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+                0x00026572                ___floatunsidf
+ .text          0x00026634       0x12 c:\gcc850\lib\libgcc.a(_ucmpdi2.o)
+                0x00026634                ___ucmpdi2
+ .text          0x00026646       0xde c:\gcc850\lib\libgcc.a(_muldi3.o)
+                0x00026646                ___muldi3
+ .text          0x00026724       0x58 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+                0x00026724                ___clzsi2
+ .text          0x0002677c      0x118 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+                0x0002677c                ___pack_f
+ .text          0x00026894       0xaa c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+                0x00026894                ___unpack_f
+ .text          0x0002693e       0x8c c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+                0x0002693e                ___fpcmp_parts_f
+ .text          0x000269ca      0x1fc c:\gcc850\lib\libgcc.a(_pack_df.o)
+                0x000269ca                ___pack_d
+ .text          0x00026bc6       0xda c:\gcc850\lib\libgcc.a(_unpack_df.o)
+                0x00026bc6                ___unpack_d
+ .text          0x00026ca0       0xa4 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+                0x00026ca0                ___fpcmp_parts_d
+ .text          0x00026d44        0x0 c:\gcc850\lib\libgcc.a(_clz.o)
+                0x00026d50                . = ALIGN (0x10)
+ *fill*         0x00026d44        0xc 00
+ *(.call_table_text)
+ *(.gnu.warning)
+ *(.gnu.linkonce.t*)
+ .gnu.linkonce.t._ZN9HwChannelItLi5EE13physicalValueEt
+                0x00026d50       0x3e obj/main.o
+                0x00026d50                HwChannel<unsigned short, 5>::physicalValue(unsigned short)
+ .gnu.linkonce.t._ZN9HwChannelImLi10EE13physicalValueEm
+                0x00026d8e       0x3a obj/main.o
+                0x00026d8e                HwChannel<unsigned long, 10>::physicalValue(unsigned long)
+ .gnu.linkonce.t._ZN20VoltageHwChanManagerItLi5EE14getChannelTypeEv
+                0x00026dc8        0xe obj/main.o
+                0x00026dc8                VoltageHwChanManager<unsigned short, 5>::getChannelType()
+ .gnu.linkonce.t._ZN13HwChanManagerItLi5EE14getChannelTypeEv
+                0x00026dd6        0x4 obj/main.o
+                0x00026dd6                HwChanManager<unsigned short, 5>::getChannelType()
+ .gnu.linkonce.t._ZN13HwChanManagerImLi10EE14getChannelTypeEv
+                0x00026dda        0x4 obj/main.o
+                0x00026dda                HwChanManager<unsigned long, 10>::getChannelType()
+ .gnu.linkonce.t._ZN6StringD0Ev
+                0x00026dde       0x4e obj/STRCLASS.o
+                0x00026dde                String::~String()
+ .gnu.linkonce.t._ZN6StringD1Ev
+                0x00026e2c       0x26 obj/STRCLASS.o
+                0x00026e2c                String::~String()
+ .gnu.linkonce.t._ZN13HwChanManagerImLi10EE21pushFiltAdcDataToChanEim
+                0x00026e52      0x282 obj/ADC.o
+                0x00026e52                HwChanManager<unsigned long, 10>::pushFiltAdcDataToChan(int, unsigned long)
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction9GetParityEv
+                0x000270d4        0x6 obj/QUEUEUART.o
+                0x000270d4                UartDeviceAbstraction::GetParity()
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction12GetFrameBitsEv
+                0x000270da        0x6 obj/QUEUEUART.o
+                0x000270da                UartDeviceAbstraction::GetFrameBits()
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction11GetStopBitsEv
+                0x000270e0        0x6 obj/QUEUEUART.o
+                0x000270e0                UartDeviceAbstraction::GetStopBits()
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction11GetBaudRateEv
+                0x000270e6        0x6 obj/QUEUEUART.o
+                0x000270e6                UartDeviceAbstraction::GetBaudRate()
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction12GetLastErrorEv
+                0x000270ec        0x6 obj/QUEUEUART.o
+                0x000270ec                UartDeviceAbstraction::GetLastError()
+ .gnu.linkonce.t._ZN21UartDeviceAbstraction8SetErrorEi
+                0x000270f2        0x6 obj/QUEUEUART.o
+                0x000270f2                UartDeviceAbstraction::SetError(int)
+ .gnu.linkonce.t._ZN9QueueUart6TurnOnEv
+                0x000270f8       0x16 obj/QUEUEUART.o
+                0x000270f8                QueueUart::TurnOn()
+ .gnu.linkonce.t._ZN9QueueUart7TurnOffEv
+                0x0002710e       0x16 obj/QUEUEUART.o
+                0x0002710e                QueueUart::TurnOff()
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction7sendMsgEi
+                0x00027124        0x4 obj/PROTOCOLSTDUART.o
+                0x00027124                stdUartProtocolAbstraction::sendMsg(int)
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction6getMsgEv
+                0x00027128        0x4 obj/PROTOCOLSTDUART.o
+                0x00027128                stdUartProtocolAbstraction::getMsg()
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction23ClearTransmissionBufferEv
+                0x0002712c       0x16 obj/PROTOCOLSTDUART.o
+                0x0002712c                stdUartProtocolAbstraction::ClearTransmissionBuffer()
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction31GetNumBytesInTransmissionBufferEv
+                0x00027142       0x16 obj/PROTOCOLSTDUART.o
+                0x00027142                stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer()
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction7TurnOffEv
+                0x00027158       0x16 obj/PROTOCOLSTDUART.o
+                0x00027158                stdUartProtocolAbstraction::TurnOff()
+ .gnu.linkonce.t._ZN26stdUartProtocolAbstraction6TurnOnEv
+                0x0002716e       0x16 obj/PROTOCOLSTDUART.o
+                0x0002716e                stdUartProtocolAbstraction::TurnOn()
+ .gnu.linkonce.t._ZN13SIFRAProtocol31GetNumBytesInTransmissionBufferEv
+                0x00027184       0x16 obj/PROTOCOLSIFRA.o
+                0x00027184                SIFRAProtocol::GetNumBytesInTransmissionBuffer()
+
+.ctors          0x0002719c       0x1c
+                0x000271a0                . = ALIGN (0x10)
+ *fill*         0x0002719c        0x4 00
+                0x000271a0                ___ctors = .
+ *(.ctors)
+ .ctors         0x000271a0        0x4 obj/SWTIM.o
+ .ctors         0x000271a4        0x4 obj/SOUND.o
+ .ctors         0x000271a8        0x4 obj/ADC.o
+ .ctors         0x000271ac        0x4 obj/PWM.o
+ .ctors         0x000271b0        0x4 obj/PROTOCOLSIFRA.o
+ .ctors         0x000271b4        0x4 obj/LEDS_PANEL.o
+                0x000271b8                ___ctors_end = .
+
+.dtors          0x000271b8        0x0
+                0x000271b8                ___dtors = .
+ *(.dtors)
+                0x000271b8                ___dtors_end = .
+                0x00028000                . = ALIGN (0x1000)
+                0x00028000                __etext = .
+                0x00028000                PROVIDE (_etext, .)
+
+.ramcode        0x00000000        0x0 load address 0x00028000
+                0x00000000                __ramcode_start = .
+ *(.ramcode)
+                0x00000000                . = ALIGN (0x4)
+                0x00000000                __ramcode_end = .
+
+.rodata         0x00045800      0x9f0
+                0x00045800                __rodata_start = .
+ *(.rodata)
+ .rodata        0x00045800       0x38 obj/main.o
+                0x00045800                _sAppName
+                0x0004580a                _sAppRevision
+                0x0004581c                _sAppDate
+                0x00045813                _sHwVersion
+                0x00045834                _sAppDateLength
+                0x00045830                _sHwVersionLength
+                0x0004582c                _sAppRevisionLength
+                0x00045828                _sAppNameLength
+ .rodata        0x00045838        0x1 obj/STRCLASS.o
+ *fill*         0x00045839        0x3 00
+ .rodata        0x0004583c       0xb8 obj/util.o
+ .rodata        0x000458f4       0x75 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+ .rodata        0x00045969      0x281 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+                0x00045969                __ctype_
+ .rodata        0x00045bea        0xf c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+ .rodata        0x00045bf9        0x2 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ *fill*         0x00045bfb        0x1 00
+ .rodata        0x00045bfc       0x48 c:\gcc850\lib\libc.a(lib_a-locale.o)
+ .rodata        0x00045c44      0x124 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+                0x00045d34                ___mprec_tinytens
+                0x00045d0c                ___mprec_bigtens
+                0x00045c44                ___mprec_tens
+ .rodata        0x00045d68       0x1a c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+ *fill*         0x00045d82        0x2 00
+ .rodata        0x00045d84       0x10 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+                0x00045d84                ___thenan_sf
+ .rodata        0x00045d94       0x14 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+                0x00045d94                ___thenan_df
+ .rodata        0x00045da8      0x100 c:\gcc850\lib\libgcc.a(_clz.o)
+                0x00045da8                ___clz_tab
+ *(.gnu.linkonce.r*)
+ .gnu.linkonce.r._ZTV20GenericHwChanManagerImLi10EE
+                0x00045ea8        0xc obj/main.o
+                0x00045ea8                vtable for GenericHwChanManager<unsigned long, 10>
+ .gnu.linkonce.r._ZTV13HwChanManagerImLi10EE
+                0x00045eb4        0xc obj/main.o
+                0x00045eb4                vtable for HwChanManager<unsigned long, 10>
+ .gnu.linkonce.r._ZTV16GenericHwChannelImLi10EE
+                0x00045ec0        0xc obj/main.o
+                0x00045ec0                vtable for GenericHwChannel<unsigned long, 10>
+ .gnu.linkonce.r._ZTV9HwChannelImLi10EE
+                0x00045ecc        0xc obj/main.o
+                0x00045ecc                vtable for HwChannel<unsigned long, 10>
+ .gnu.linkonce.r._ZTV20VoltageHwChanManagerItLi5EE
+                0x00045ed8        0xc obj/main.o
+                0x00045ed8                vtable for VoltageHwChanManager<unsigned short, 5>
+ .gnu.linkonce.r._ZTV13HwChanManagerItLi5EE
+                0x00045ee4        0xc obj/main.o
+                0x00045ee4                vtable for HwChanManager<unsigned short, 5>
+ .gnu.linkonce.r._ZTV16VoltageHwChannelItLi5EE
+                0x00045ef0        0xc obj/main.o
+                0x00045ef0                vtable for VoltageHwChannel<unsigned short, 5>
+ .gnu.linkonce.r._ZTV9HwChannelItLi5EE
+                0x00045efc        0xc obj/main.o
+                0x00045efc                vtable for HwChannel<unsigned short, 5>
+ .gnu.linkonce.r._ZTV6String
+                0x00045f08       0x10 obj/STRCLASS.o
+                0x00045f08                vtable for String
+ .gnu.linkonce.r._ZTV9QueueUart
+                0x00045f18       0xb0 obj/QUEUEUART.o
+                0x00045f18                vtable for QueueUart
+ .gnu.linkonce.r._ZTV21UartDeviceAbstraction
+                0x00045fc8       0x70 obj/QUEUEUART.o
+                0x00045fc8                vtable for UartDeviceAbstraction
+ .gnu.linkonce.r._ZTV26stdUartProtocolAbstraction
+                0x00046038       0xdc obj/PROTOCOLSTDUART.o
+                0x00046038                vtable for stdUartProtocolAbstraction
+ .gnu.linkonce.r._ZTV13SIFRAProtocol
+                0x00046114       0xdc obj/PROTOCOLSIFRA.o
+                0x00046114                vtable for SIFRAProtocol
+ *(.gcc_except_table)
+                0x000461f0                . = ALIGN (0x4)
+
+.rodata.cst4    0x000461f0        0xc
+                0x000461f0                __rodata.cst4_start = .
+ *(.rodata.cst4)
+ .rodata.cst4   0x000461f0        0x8 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+ .rodata.cst4   0x000461f8        0x4 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+                0x000461fc                . = ALIGN (0x4)
+                0x000461fc                __rodata_end = .
+                0x000461fc                PROVIDE (_rodata_end, __rodata_end)
+                0x00000000                __message_start = 0x0
+                0x00000000                __message_end = 0x0
+
+.data           0x03ff5000      0x8a8 load address 0x000461fc
+                0x03ff5000                . = ALIGN (0x10)
+                0x03ff5000                __data_start = .
+ *(.data)
+ .data          0x03ff5000        0x0 obj/startup.o
+ .data          0x03ff5000        0x0 obj/crt0.o
+ .data          0x03ff5000        0x0 obj/crt1.o
+ .data          0x03ff5000        0x0 obj/main.o
+ .data          0x03ff5000        0x2 obj/IRQSG2.o
+ *fill*         0x03ff5002        0x2 00
+ .data          0x03ff5004        0x8 obj/ALLOC.o
+ .data          0x03ff500c        0x0 obj/NEW.o
+ .data          0x03ff500c        0x0 obj/STRCLASS.o
+ .data          0x03ff500c        0x0 obj/SWTIM.o
+ .data          0x03ff500c        0x0 obj/util.o
+ .data          0x03ff500c        0x0 obj/I2C_SW.o
+ .data          0x03ff500c        0x0 obj/I2Ceeprom.o
+ .data          0x03ff500c        0x0 obj/sioSG2.o
+ .data          0x03ff500c        0x0 obj/SOUND.o
+ .data          0x03ff500c        0x4 obj/ADC.o
+ .data          0x03ff5010        0x0 obj/PWM.o
+ .data          0x03ff5010        0x0 obj/QUEUEUART.o
+ .data          0x03ff5010        0x0 obj/PROTOCOLSTDUART.o
+ .data          0x03ff5010        0x0 obj/PROTOCOLSIFRA.o
+ .data          0x03ff5010       0x6c obj/CPUSIFRA_MANAGER.o
+                0x03ff5020                _vol_calcolo_enc
+                0x03ff5040                _vol_ExtraVol_RT
+                0x03ff5060                _vol_soglia_err_prod
+                0x03ff5030                _vol_PreTargetManuale
+                0x03ff5010                _param_encoder_nom
+                0x03ff5050                _vol_margine
+                0x03ff5038                _vol_Stop_RT
+                0x03ff5058                _vol_margine_RT
+                0x03ff506c                _pendenza_frenata
+                0x03ff5048                _vol_svuotatubi
+                0x03ff5018                _vol_controllo
+                0x03ff5028                _vol_PreTarget
+                0x03ff5074                _m_tolleranza
+                0x03ff5064                _vol_soglia_hand_move
+ .data          0x03ff507c        0x0 obj/NVRDRV.o
+ .data          0x03ff507c        0x0 obj/LEDS_PANEL.o
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-atoi.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-memset.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-strlen.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+ .data          0x03ff507c        0x0 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+ .data          0x03ff507c        0x8 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+                0x03ff5080                ___ctype_ptr__
+                0x03ff507c                ___ctype_ptr
+ .data          0x03ff5084        0x0 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+ .data          0x03ff5084        0x0 c:\gcc850\lib\libc.a(lib_a-freer.o)
+ .data          0x03ff5084      0x400 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ .data          0x03ff5484       0x10 c:\gcc850\lib\libc.a(lib_a-locale.o)
+                0x03ff5484                ___mb_cur_max
+                0x03ff5488                ___lc_ctype
+ .data          0x03ff5494      0x410 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+                0x03ff5494                ___malloc_av_
+                0x03ff589c                ___malloc_trim_threshold
+                0x03ff58a0                ___malloc_sbrk_base
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-stat.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-trap.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-callocr.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-write.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-abort.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-signal.o)
+ .data          0x03ff58a4        0x0 c:\gcc850\lib\libc.a(lib_a-signalr.o)
+ .data          0x03ff58a4        0x4 c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libc.a(lib_a-kill.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_mulsi3.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_divsi3.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_udivsi3.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_modsi3.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_umodsi3.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_20c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_23c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_25c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_26c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_27c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_28c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_29c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_31c.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_save_varargs.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_div_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_le_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_addsub_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_mul_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_div_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_eq_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_ne_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_gt_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_ge_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_lt_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_si_to_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_df_to_si.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_ucmpdi2.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_muldi3.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_pack_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_unpack_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+ .data          0x03ff58a8        0x0 c:\gcc850\lib\libgcc.a(_clz.o)
+ *(.gnu.linkonce.d*)
+                0x03ff58a8                . = ALIGN (0x4)
+                0x03ff5000                PROVIDE (_data_start, __data_start)
+
+.got
+ *(.got.plt)
+ *(.got)
+
+.dynamic
+ *(.dynamic)
+
+.tdata          0x03ff58a8        0x0 load address 0x00046aa4
+                0x03ff58a8                PROVIDE (__ep, .)
+ *(.tbyte)
+ *(.tcommon_byte)
+ *(.tdata)
+ *(.tbss)
+ *(.tcommon)
+                0x03ff58a8                __tdata_end = .
+
+.rosdata        0x03ff58a8        0x4 load address 0x00046aa4
+ *(.rosdata)
+ .rosdata       0x03ff58a8        0x4 c:\gcc850\lib\libc.a(lib_a-impure.o)
+                0x03ff58a8                __global_impure_ptr
+
+.sdata          0x03ff58ac        0x4 load address 0x00046aa8
+                0x03ffd8ac                PROVIDE (__gp, (. + 0x8000))
+ *(.sdata)
+ .sdata         0x03ff58ac        0x4 c:\gcc850\lib\libc.a(lib_a-impure.o)
+                0x03ff58ac                __impure_ptr
+                0x03ff58b0                __sbss_start = .
+ *(.sbss)
+ *(.scommon)
+                0x03ff58b0                __data_end = .
+                0x03ff58b0                PROVIDE (_data_end, __data_end)
+                0x00046aac                PROVIDE (__datarom_end, ((((__rodata_end + SIZEOF (.data)) + SIZEOF (.tdata)) + SIZEOF (.rosdata)) + SIZEOF (.sdata)))
+                0x00046aac                PROVIDE (_intflash_end, __datarom_end)
+                0x03ff58b0                _edata = DEFINED (__sbss_start)?__sbss_start:.
+                0x03ff58b0                PROVIDE (edata, _edata)
+
+.bss            0x03ff58b0     0x109c
+                0x03ff58b0                __bss_start = DEFINED (__sbss_start)?__sbss_start:.
+ *(.dynbss)
+ *(.bss)
+ .bss           0x03ff58b0        0x0 obj/startup.o
+ .bss           0x03ff58b0        0x0 obj/crt0.o
+ .bss           0x03ff58b0        0x2 obj/crt1.o
+ *fill*         0x03ff58b2        0x2 00
+ .bss           0x03ff58b4       0x20 obj/main.o
+                0x03ff58c9                _slave_ind_dat
+                0x03ff58bc                _SifraProtocol
+                0x03ff58cb                _blp_tx
+                0x03ff58b8                _powerVoltageChan
+                0x03ff58c6                _time_sec
+                0x03ff58c8                _slave_cmd
+                0x03ff58c4                _time_msec
+                0x03ff58cc                _blp_rx
+                0x03ff58c0                _CpuSifra
+                0x03ff58b4                _weightChan
+                0x03ff58ca                _blp_ini
+ .bss           0x03ff58d4       0xf8 obj/IRQSG2.o
+ .bss           0x03ff59cc       0x14 obj/ALLOC.o
+ .bss           0x03ff59e0      0x3e8 obj/NEW.o
+ .bss           0x03ff5dc8        0x0 obj/STRCLASS.o
+ .bss           0x03ff5dc8        0x8 obj/SWTIM.o
+                0x03ff5dc8                _globalTimer
+ .bss           0x03ff5dd0       0x32 obj/util.o
+ .bss           0x03ff5e02        0x0 obj/I2C_SW.o
+ .bss           0x03ff5e02        0x0 obj/I2Ceeprom.o
+ .bss           0x03ff5e02        0x0 obj/sioSG2.o
+ *fill*         0x03ff5e02        0x2 00
+ .bss           0x03ff5e04       0x28 obj/SOUND.o
+ .bss           0x03ff5e2c      0x664 obj/ADC.o
+                0x03ff643f                _m_confRegSpi2_PowerSave
+                0x03ff63e4                _powerSamplePeriod
+                0x03ff6456                _m_endContinuousConversionSpi2
+                0x03ff6457                _m_initializationSequenceStateSpi2
+                0x03ff6411                _m_TxState
+                0x03ff6128                _ADC5_serial_fifo
+                0x03ff5e60                _ADC1_serial_fifo
+                0x03ff6451                _m_TxStateSpi2
+                0x03ff640c                _m_confReg
+                0x03ff6442                _m_confRegSpi2_RstValid
+                0x03ff5e2c                _mV_Power_ADC
+                0x03ff641c                _m_lastConfRegWrote
+                0x03ff6454                _m_numByteToReceivedSpi2
+                0x03ff6417                _m_initializationSequenceState
+                0x03ff6447                _m_confRegSpi2_UniBiPolar
+                0x03ff6400                _m_confReg_RstSys
+                0x03ff6410                _m_confRegStatus
+                0x03ff6244                _CS5530_rx_fifoSpi2
+                0x03ff5ef0                _ADC3_serial_fifo
+                0x03ff6464                _timerSpi2
+                0x03ff63f2                _state_adc2
+                0x03ff6470                _m_num_max_adc_for_channelSpi2
+                0x03ff6474                _wait_reset_ADC
+                0x03ff6318                _contadc1
+                0x03ff6418                _m_txBufferEmpty
+                0x03ff63ee                _state
+                0x03ff6412                _m_CommandSent
+                0x03ff63fe                _m_confReg_PowerSave
+                0x03ff6444                _m_confRegSpi2_VoltageRef
+                0x03ff645c                _m_lastConfRegSpi2Wrote
+                0x03ff6404                _m_confReg_LatchBit
+                0x03ff6420                _m_validDataPresentInADCBuffer
+                0x03ff63fc                _vol_tick
+                0x03ff63fa                _chanToSample
+                0x03ff6424                _timerSpi
+                0x03ff6413                _m_numByteReceived
+                0x03ff600c                _CS5530_rx_fifo
+                0x03ff6415                _m_adcStates
+                0x03ff6441                _m_confRegSpi2_RstSys
+                0x03ff6458                _m_txBufferEmptySpi2
+                0x03ff644c                _m_confRegSpi2
+                0x03ff6471                _adc_to_sampleSpi2
+                0x03ff641a                _m_startContinuousConversion
+                0x03ff6406                _m_confReg_UniBiPolar
+                0x03ff63e8                _pwrVoltageAverage
+                0x03ff63ff                _m_confReg_PowerDown
+                0x03ff6170                _CS5530_tx_fifoSpi2
+                0x03ff6401                _m_confReg_RstValid
+                0x03ff6419                _m_spiOrPinMode
+                0x03ff6450                _m_confRegStatusSpi2
+                0x03ff6408                _m_confReg_filterRate
+                0x03ff6443                _m_confRegSpi2_InputShort
+                0x03ff6455                _m_adcStatesSpi2
+                0x03ff6453                _m_numByteReceivedSpi2
+                0x03ff63ec                _numPwrSamples
+                0x03ff5f38                _CS5530_tx_fifo
+                0x03ff643c                _m_num_max_adc_for_channel
+                0x03ff6440                _m_confRegSpi2_PowerDown
+                0x03ff6459                _m_spiOrPinModeSpi2
+                0x03ff63f0                _state_adc1
+                0x03ff5ea8                _ADC2_serial_fifo
+                0x03ff6449                _m_confRegSpi2_filterRate
+                0x03ff60e0                _ADC4_serial_fifo
+                0x03ff6405                _m_confReg_WordRate
+                0x03ff6430                _watchdog_adc_timer
+                0x03ff6402                _m_confReg_InputShort
+                0x03ff6448                _m_confRegSpi2_OpenCircuitDetect
+                0x03ff645a                _m_startContinuousConversionSpi2
+                0x03ff643e                _adc_to_sample
+                0x03ff631c                _Chan
+                0x03ff6403                _m_confReg_VoltageRef
+                0x03ff6445                _m_confRegSpi2_LatchBit
+                0x03ff6446                _m_confRegSpi2_WordRate
+                0x03ff63f8                _state_adc5
+                0x03ff6414                _m_numByteToReceived
+                0x03ff6460                _m_validDataPresentInADCBufferSpi2
+                0x03ff6416                _m_endContinuousConversion
+                0x03ff643d                _numByteSent
+                0x03ff63f4                _state_adc3
+                0x03ff6407                _m_confReg_OpenCircuitDetect
+                0x03ff6452                _m_CommandSentSpi2
+                0x03ff63f6                _state_adc4
+ .bss           0x03ff6490      0x120 obj/PWM.o
+                0x03ff64fc                _stato_pompa
+                0x03ff64f8                _coverState_open
+                0x03ff6490                _conta
+                0x03ff6524                _PWM_timer
+                0x03ff6510                _pre_stato_pompa
+                0x03ff6560                _MotorStatus
+                0x03ff6494                _pwm_mot
+ .bss           0x03ff65b0        0xc obj/QUEUEUART.o
+                0x03ff65b8                UartDeviceAbstraction::m_pUart2DeviceAbstraction
+                0x03ff65b0                UartDeviceAbstraction::m_pUart0DeviceAbstraction
+                0x03ff65b4                UartDeviceAbstraction::m_pUart1DeviceAbstraction
+ .bss           0x03ff65bc        0x0 obj/PROTOCOLSTDUART.o
+ .bss           0x03ff65bc      0x308 obj/PROTOCOLSIFRA.o
+                0x03ff6664                _Via
+                0x03ff6838                _bk
+                0x03ff65de                _g_rstMaxWeight
+                0x03ff6860                _g_encStruct
+                0x03ff65e2                _g_scalesNotCalibCmd
+                0x03ff6830                _g_stateMachine
+                0x03ff65df                _g_restartControlCmd
+                0x03ff65bc                _StartCmd
+                0x03ff68b0                _g_restart
+                0x03ff65e4                _StatusCmd
+                0x03ff65e0                _g_scalesPhaseCmd
+                0x03ff68b2                _g_adc_real_value
+                0x03ff660c                _DebugCmd
+ .bss           0x03ff68c4       0x18 obj/CPUSIFRA_MANAGER.o
+                0x03ff68c4                _fp
+ .bss           0x03ff68dc        0xa obj/NVRDRV.o
+                0x03ff68dc                _m_chk
+ *fill*         0x03ff68e6        0x2 00
+ .bss           0x03ff68e8       0x1c obj/LEDS_PANEL.o
+                0x03ff68e8                _DISPLAY_tx_fifo
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-atoi.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-memset.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-strlen.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-freer.o)
+ .bss           0x03ff6904        0x0 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ .bss           0x03ff6904        0xc c:\gcc850\lib\libc.a(lib_a-locale.o)
+                0x03ff6908                ___mlocale_changed
+                0x03ff690c                __PathLocale
+                0x03ff6904                ___nlocale_changed
+ .bss           0x03ff6910       0x34 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+                0x03ff6910                ___malloc_top_pad
+                0x03ff691c                ___malloc_current_mallinfo
+                0x03ff6914                ___malloc_max_sbrked_mem
+                0x03ff6918                ___malloc_max_total_mem
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-stat.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-trap.o)
+ .bss           0x03ff6944        0x0 c:\gcc850\lib\libc.a(lib_a-callocr.o)
+ .bss           0x03ff6944        0x4 c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-write.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-abort.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-signal.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-signalr.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libc.a(lib_a-kill.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_mulsi3.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_divsi3.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_udivsi3.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_modsi3.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_umodsi3.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_20c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_23c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_25c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_26c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_27c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_28c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_29c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_31c.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_save_varargs.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_div_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_le_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_addsub_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_mul_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_div_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_eq_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_ne_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_gt_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_ge_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_lt_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_si_to_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_df_to_si.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_ucmpdi2.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_muldi3.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_pack_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_unpack_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+ .bss           0x03ff6948        0x0 c:\gcc850\lib\libgcc.a(_clz.o)
+ *(COMMON)
+ COMMON         0x03ff6948        0x4 c:\gcc850\lib\libc.a(lib_a-stat.o)
+                0x03ff6948                _errno
+                0x03ff694c                _end = .
+                0x03ff694c                PROVIDE (end, .)
+                0x03ff694c                . = ALIGN (0x4)
+                0x03ff694c                __base_small_heap = .
+                0x03ff694c                PROVIDE (_base_small_heap, .)
+                0x03ff694c                . = ALIGN (0x4)
+                0x03ff694c                __base_heap = .
+                0x03ff694c                PROVIDE (_base_heap, .)
+
+.stack          0x03ffdfe0     0x1000
+                0x03ffdfe0                __end_small_heap = .
+                0x03ffdfe0                PROVIDE (_end_small_heap, __end_small_heap)
+                0x03ffdfe0                __end_heap = .
+                0x03ffdfe0                PROVIDE (_end_heap, __end_heap)
+                0x03ffdfe0                __stack = .
+ *(.stack)
+ .stack         0x03ffdfe0     0x1000 obj/startup.o
+                0x03ffdfe0                __system_stack
+                0x03ffefe0                __end_stack = .
+                0x03ffefe0                PROVIDE (_end_stack, __end_stack)
+
+.xdata          0x00110000        0x0
+                0x00110000                __xdata_start = .
+ *(.xdata)
+                0x00110000                __xdata = .
+                0x00110000                __xdata_end = .
+
+.disk
+ *(.disk)
+
+.stab           0x00000000    0x44aa8
+ *(.stab)
+ .stab          0x00000000      0x7f8 obj/crt1.o
+ .stab          0x000007f8     0x1ff8 obj/main.o
+                               0x2004 (size before relaxing)
+ .stab          0x000027f0     0x3ec4 obj/IRQSG2.o
+                               0x3ed0 (size before relaxing)
+ .stab          0x000066b4      0xc6c obj/ALLOC.o
+                                0xc78 (size before relaxing)
+ .stab          0x00007320      0x93c obj/NEW.o
+                                0x948 (size before relaxing)
+ .stab          0x00007c5c      0xf24 obj/STRCLASS.o
+                                0xf30 (size before relaxing)
+ .stab          0x00008b80      0xb04 obj/SWTIM.o
+                                0xb10 (size before relaxing)
+ .stab          0x00009684     0x1578 obj/util.o
+                               0x1584 (size before relaxing)
+ .stab          0x0000abfc      0xcfc obj/I2C_SW.o
+                                0xd08 (size before relaxing)
+ .stab          0x0000b8f8     0x1104 obj/I2Ceeprom.o
+                               0x1110 (size before relaxing)
+ .stab          0x0000c9fc     0x1c80 obj/sioSG2.o
+                               0x1c8c (size before relaxing)
+ .stab          0x0000e67c      0xe7c obj/SOUND.o
+                                0xe88 (size before relaxing)
+ .stab          0x0000f4f8     0x7f5c obj/ADC.o
+                               0x7f68 (size before relaxing)
+ .stab          0x00017454     0x1b54 obj/PWM.o
+                               0x1b60 (size before relaxing)
+ .stab          0x00018fa8     0x3a38 obj/QUEUEUART.o
+                               0x3a44 (size before relaxing)
+ .stab          0x0001c9e0     0x2148 obj/PROTOCOLSTDUART.o
+                               0x2154 (size before relaxing)
+ .stab          0x0001eb28     0x44b8 obj/PROTOCOLSIFRA.o
+                               0x44c4 (size before relaxing)
+ .stab          0x00022fe0     0xbee0 obj/CPUSIFRA_MANAGER.o
+                               0xbeec (size before relaxing)
+ .stab          0x0002eec0     0x1350 obj/NVRDRV.o
+                               0x135c (size before relaxing)
+ .stab          0x00030210     0x1260 obj/LEDS_PANEL.o
+                               0x126c (size before relaxing)
+ .stab          0x00031470      0x45c c:\gcc850\lib\libc.a(lib_a-atoi.o)
+                                0x468 (size before relaxing)
+ .stab          0x000318cc      0x1b0 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+                                0x1bc (size before relaxing)
+ .stab          0x00031a7c      0x228 c:\gcc850\lib\libc.a(lib_a-memset.o)
+                                0x42c (size before relaxing)
+ .stab          0x00031ca4      0x6b4 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+                                0x8e8 (size before relaxing)
+ .stab          0x00032358      0x1e0 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+                                0x408 (size before relaxing)
+ .stab          0x00032538      0x1bc c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+                                0x3e4 (size before relaxing)
+ .stab          0x000326f4      0x1d4 c:\gcc850\lib\libc.a(lib_a-strlen.o)
+                                0x3fc (size before relaxing)
+ .stab          0x000328c8      0x594 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+                                0x828 (size before relaxing)
+ .stab          0x00032e5c     0x2034 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+                               0x24f0 (size before relaxing)
+ .stab          0x00034e90      0x114 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+                                0x120 (size before relaxing)
+ .stab          0x00034fa4     0x1d1c c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+                               0x2190 (size before relaxing)
+ .stab          0x00036cc0      0x750 c:\gcc850\lib\libc.a(lib_a-freer.o)
+                                0xbac (size before relaxing)
+ .stab          0x00037410      0x174 c:\gcc850\lib\libc.a(lib_a-impure.o)
+                                0x3d8 (size before relaxing)
+ .stab          0x00037584      0x4e0 c:\gcc850\lib\libc.a(lib_a-locale.o)
+                                0x6cc (size before relaxing)
+ .stab          0x00037a64      0xee8 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+                               0x1344 (size before relaxing)
+ .stab          0x0003894c      0x258 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+                                0x480 (size before relaxing)
+ .stab          0x00038ba4      0x258 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+                                0x480 (size before relaxing)
+ .stab          0x00038dfc      0x204 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+                                0x420 (size before relaxing)
+ .stab          0x00039000     0x2448 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+                               0x2958 (size before relaxing)
+ .stab          0x0003b448      0xa20 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+                                0xe7c (size before relaxing)
+ .stab          0x0003be68      0x1ec c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+                                0x618 (size before relaxing)
+ .stab          0x0003c054      0x1bc c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+                                0x60c (size before relaxing)
+ .stab          0x0003c210      0x270 c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+                                0x654 (size before relaxing)
+ .stab          0x0003c480      0x450 c:\gcc850\lib\libc.a(lib_a-stat.o)
+                                0x624 (size before relaxing)
+ .stab          0x0003c8d0      0x2e8 c:\gcc850\lib\libc.a(lib_a-callocr.o)
+                                0x744 (size before relaxing)
+ .stab          0x0003cbb8      0x2dc c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+                                0x708 (size before relaxing)
+ .stab          0x0003ce94      0x1f8 c:\gcc850\lib\libc.a(lib_a-write.o)
+                                0x624 (size before relaxing)
+ .stab          0x0003d08c      0x24c c:\gcc850\lib\libc.a(lib_a-abort.o)
+                                0x66c (size before relaxing)
+ .stab          0x0003d2d8      0x7bc c:\gcc850\lib\libc.a(lib_a-signal.o)
+                                0xac8 (size before relaxing)
+ .stab          0x0003da94      0x2e8 c:\gcc850\lib\libc.a(lib_a-signalr.o)
+                                0x72c (size before relaxing)
+ .stab          0x0003dd7c      0x228 c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+                                0x654 (size before relaxing)
+ .stab          0x0003dfa4      0x1c8 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+                                0x5f4 (size before relaxing)
+ .stab          0x0003e16c      0x1e0 c:\gcc850\lib\libc.a(lib_a-kill.o)
+                                0x60c (size before relaxing)
+ .stab          0x0003e34c      0x36c c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+                                0x378 (size before relaxing)
+ .stab          0x0003e6b8      0x864 c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+                                0x90c (size before relaxing)
+ .stab          0x0003ef1c      0x5a0 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+                                0x720 (size before relaxing)
+ .stab          0x0003f4bc      0x4ec c:\gcc850\lib\libgcc.a(_div_sf.o)
+                                0x66c (size before relaxing)
+ .stab          0x0003f9a8      0x228 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x0003fbd0      0x228 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x0003fdf8      0x228 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x00040020      0x228 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x00040248      0x228 c:\gcc850\lib\libgcc.a(_le_sf.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x00040470      0x2dc c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+                                0x45c (size before relaxing)
+ .stab          0x0004074c      0x288 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+                                0x408 (size before relaxing)
+ .stab          0x000409d4      0x120 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+                                0x2a0 (size before relaxing)
+ .stab          0x00040af4      0x2c4 c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+                                0x444 (size before relaxing)
+ .stab          0x00040db8      0x8e8 c:\gcc850\lib\libgcc.a(_addsub_df.o)
+                                0x990 (size before relaxing)
+ .stab          0x000416a0      0x5c4 c:\gcc850\lib\libgcc.a(_mul_df.o)
+                                0x744 (size before relaxing)
+ .stab          0x00041c64      0x4a4 c:\gcc850\lib\libgcc.a(_div_df.o)
+                                0x624 (size before relaxing)
+ .stab          0x00042108      0x21c c:\gcc850\lib\libgcc.a(_eq_df.o)
+                                0x39c (size before relaxing)
+ .stab          0x00042324      0x21c c:\gcc850\lib\libgcc.a(_ne_df.o)
+                                0x39c (size before relaxing)
+ .stab          0x00042540      0x228 c:\gcc850\lib\libgcc.a(_gt_df.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x00042768      0x228 c:\gcc850\lib\libgcc.a(_ge_df.o)
+                                0x3a8 (size before relaxing)
+ .stab          0x00042990      0x21c c:\gcc850\lib\libgcc.a(_lt_df.o)
+                                0x39c (size before relaxing)
+ .stab          0x00042bac      0x2f4 c:\gcc850\lib\libgcc.a(_si_to_df.o)
+                                0x474 (size before relaxing)
+ .stab          0x00042ea0      0x270 c:\gcc850\lib\libgcc.a(_df_to_si.o)
+                                0x3f0 (size before relaxing)
+ .stab          0x00043110      0x120 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+                                0x2a0 (size before relaxing)
+ .stab          0x00043230      0x300 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+                                0x480 (size before relaxing)
+ .stab          0x00043530      0x198 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+                                0x348 (size before relaxing)
+ .stab          0x000436c8      0x360 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+                                0x4e0 (size before relaxing)
+ .stab          0x00043a28      0x354 c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+                                0x4d4 (size before relaxing)
+ .stab          0x00043d7c      0x294 c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+                                0x414 (size before relaxing)
+ .stab          0x00044010      0x36c c:\gcc850\lib\libgcc.a(_pack_df.o)
+                                0x4ec (size before relaxing)
+ .stab          0x0004437c      0x33c c:\gcc850\lib\libgcc.a(_unpack_df.o)
+                                0x4bc (size before relaxing)
+ .stab          0x000446b8      0x2b8 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+                                0x438 (size before relaxing)
+ .stab          0x00044970      0x138 c:\gcc850\lib\libgcc.a(_clz.o)
+                                0x2e8 (size before relaxing)
+
+.stabstr        0x00000000    0x3f022
+ *(.stabstr)
+ .stabstr       0x00000000    0x3f022 obj/crt1.o
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000      0x60c
+ *(.comment)
+ .comment       0x00000000       0x12 obj/crt1.o
+ .comment       0x00000012       0x12 obj/main.o
+ .comment       0x00000024       0x12 obj/IRQSG2.o
+ .comment       0x00000036       0x12 obj/ALLOC.o
+ .comment       0x00000048       0x12 obj/NEW.o
+ .comment       0x0000005a       0x12 obj/STRCLASS.o
+ .comment       0x0000006c       0x12 obj/SWTIM.o
+ .comment       0x0000007e       0x12 obj/util.o
+ .comment       0x00000090       0x12 obj/I2C_SW.o
+ .comment       0x000000a2       0x12 obj/I2Ceeprom.o
+ .comment       0x000000b4       0x12 obj/sioSG2.o
+ .comment       0x000000c6       0x12 obj/SOUND.o
+ .comment       0x000000d8       0x12 obj/ADC.o
+ .comment       0x000000ea       0x12 obj/PWM.o
+ .comment       0x000000fc       0x12 obj/QUEUEUART.o
+ .comment       0x0000010e       0x12 obj/PROTOCOLSTDUART.o
+ .comment       0x00000120       0x12 obj/PROTOCOLSIFRA.o
+ .comment       0x00000132       0x12 obj/CPUSIFRA_MANAGER.o
+ .comment       0x00000144       0x12 obj/NVRDRV.o
+ .comment       0x00000156       0x12 obj/LEDS_PANEL.o
+ .comment       0x00000168       0x12 c:\gcc850\lib\libc.a(lib_a-atoi.o)
+ .comment       0x0000017a       0x12 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+ .comment       0x0000018c       0x12 c:\gcc850\lib\libc.a(lib_a-memset.o)
+ .comment       0x0000019e       0x12 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+ .comment       0x000001b0       0x12 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+ .comment       0x000001c2       0x12 c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+ .comment       0x000001d4       0x12 c:\gcc850\lib\libc.a(lib_a-strlen.o)
+ .comment       0x000001e6       0x12 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+ .comment       0x000001f8       0x12 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+ .comment       0x0000020a       0x12 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+ .comment       0x0000021c       0x12 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+ .comment       0x0000022e       0x12 c:\gcc850\lib\libc.a(lib_a-freer.o)
+ .comment       0x00000240       0x12 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ .comment       0x00000252       0x12 c:\gcc850\lib\libc.a(lib_a-locale.o)
+ .comment       0x00000264       0x12 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+ .comment       0x00000276       0x12 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+ .comment       0x00000288       0x12 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+ .comment       0x0000029a       0x12 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+ .comment       0x000002ac       0x12 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+ .comment       0x000002be       0x12 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+ .comment       0x000002d0       0x12 c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+ .comment       0x000002e2       0x12 c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+ .comment       0x000002f4       0x12 c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+ .comment       0x00000306       0x12 c:\gcc850\lib\libc.a(lib_a-stat.o)
+ .comment       0x00000318       0x12 c:\gcc850\lib\libc.a(lib_a-callocr.o)
+ .comment       0x0000032a       0x12 c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+ .comment       0x0000033c       0x12 c:\gcc850\lib\libc.a(lib_a-write.o)
+ .comment       0x0000034e       0x12 c:\gcc850\lib\libc.a(lib_a-abort.o)
+ .comment       0x00000360       0x12 c:\gcc850\lib\libc.a(lib_a-signal.o)
+ .comment       0x00000372       0x12 c:\gcc850\lib\libc.a(lib_a-signalr.o)
+ .comment       0x00000384       0x12 c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+ .comment       0x00000396       0x12 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+ .comment       0x000003a8       0x12 c:\gcc850\lib\libc.a(lib_a-kill.o)
+ .comment       0x000003ba       0x12 c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+ .comment       0x000003cc       0x12 c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+ .comment       0x000003de       0x12 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+ .comment       0x000003f0       0x12 c:\gcc850\lib\libgcc.a(_div_sf.o)
+ .comment       0x00000402       0x12 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+ .comment       0x00000414       0x12 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+ .comment       0x00000426       0x12 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+ .comment       0x00000438       0x12 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+ .comment       0x0000044a       0x12 c:\gcc850\lib\libgcc.a(_le_sf.o)
+ .comment       0x0000045c       0x12 c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+ .comment       0x0000046e       0x12 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+ .comment       0x00000480       0x12 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+ .comment       0x00000492       0x12 c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+ .comment       0x000004a4       0x12 c:\gcc850\lib\libgcc.a(_addsub_df.o)
+ .comment       0x000004b6       0x12 c:\gcc850\lib\libgcc.a(_mul_df.o)
+ .comment       0x000004c8       0x12 c:\gcc850\lib\libgcc.a(_div_df.o)
+ .comment       0x000004da       0x12 c:\gcc850\lib\libgcc.a(_eq_df.o)
+ .comment       0x000004ec       0x12 c:\gcc850\lib\libgcc.a(_ne_df.o)
+ .comment       0x000004fe       0x12 c:\gcc850\lib\libgcc.a(_gt_df.o)
+ .comment       0x00000510       0x12 c:\gcc850\lib\libgcc.a(_ge_df.o)
+ .comment       0x00000522       0x12 c:\gcc850\lib\libgcc.a(_lt_df.o)
+ .comment       0x00000534       0x12 c:\gcc850\lib\libgcc.a(_si_to_df.o)
+ .comment       0x00000546       0x12 c:\gcc850\lib\libgcc.a(_df_to_si.o)
+ .comment       0x00000558       0x12 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+ .comment       0x0000056a       0x12 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+ .comment       0x0000057c       0x12 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+ .comment       0x0000058e       0x12 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+ .comment       0x000005a0       0x12 c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+ .comment       0x000005b2       0x12 c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+ .comment       0x000005c4       0x12 c:\gcc850\lib\libgcc.a(_pack_df.o)
+ .comment       0x000005d6       0x12 c:\gcc850\lib\libgcc.a(_unpack_df.o)
+ .comment       0x000005e8       0x12 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+ .comment       0x000005fa       0x12 c:\gcc850\lib\libgcc.a(_clz.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.zdata
+ *(.zdata)
+ *(.zbss)
+ *(reszdata)
+ *(.zcommon)
+
+.rozdata
+ *(.rozdata)
+ *(romzdata)
+ *(romzbss)
+LOAD obj/crt0.o
+LOAD obj/crt1.o
+LOAD obj/main.o
+LOAD obj/IRQSG2.o
+LOAD obj/ALLOC.o
+LOAD obj/NEW.o
+LOAD obj/STRCLASS.o
+LOAD obj/SWTIM.o
+LOAD obj/util.o
+LOAD obj/I2C_SW.o
+LOAD obj/I2Ceeprom.o
+LOAD obj/sioSG2.o
+LOAD obj/SOUND.o
+LOAD obj/ADC.o
+LOAD obj/PWM.o
+LOAD obj/QUEUEUART.o
+LOAD obj/PROTOCOLSTDUART.o
+LOAD obj/PROTOCOLSIFRA.o
+LOAD obj/CPUSIFRA_MANAGER.o
+LOAD obj/NVRDRV.o
+LOAD obj/LEDS_PANEL.o
+LOAD c:\gcc850\lib\v850e\libm.a
+LOAD c:\gcc850\lib\libc.a
+LOAD c:\gcc850\lib\libgcc.a
+OUTPUT(SG2.OUR elf32-v850)

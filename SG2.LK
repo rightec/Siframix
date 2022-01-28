@@ -1,0 +1,390 @@
+/* File script linker per compilazione con simboli e senza ottimizzazione per debug con simulatore */
+
+OUTPUT_FORMAT("elf32-v850", "elf32-v850",
+	      "elf32-v850")
+
+OUTPUT_ARCH(v850)
+ENTRY(_start)
+SEARCH_DIR(.);
+
+MEMORY {		/* la ram esterna (512K) inizia a 0x00100000 e finisce a  0x0017FFFF*/
+
+        text    		: ORIGIN = 0x00110000, LENGTH = 0x0002FFFF	 	/* 192K di codice in ram */       
+        
+        rodata    	: ORIGIN = 0x00140000, LENGTH = 0x00004FFF  	/* 20K di rodata */
+       
+        data    		: ORIGIN = 0x00145000, LENGTH = 0x0000FFFF  	/* 64K di data - in coda ai data andranno i dati .bss la cui dimensione la trovo nel file sg2.MAP. Tale spazio devo aggiungerlo a quello dei data */
+        														/* (FFFF) per stabilire l'indirizzo da cui partirà lo stack */        															
+        
+        stack   		: ORIGIN = 0x00157000, LENGTH = 0x00001FFF 	/* 8K di system stack */
+        
+        xdata  		: ORIGIN = 0x00159000, LENGTH = 0x0000FFFF		/* 64K di xdata */
+
+        xheap	  	: ORIGIN = 0x00169000, LENGTH = 0x00001FFF		/* 8K heap esterna */
+        	     
+}
+
+SECTIONS
+{
+
+  /* Read-only sections, merged into text segment: */
+  .init		: { *(.init) } =0
+  .plt		: { *(.plt) }
+
+  .text		:  
+  {
+  	 __stext = .;
+	__ctbp = .;    
+	
+	*(.call_table_data)
+
+    . = ALIGN(0x10);
+    *(.text)
+
+	. = ALIGN(0x10);
+    *(.call_table_text)
+
+
+    /* .gnu.warning sections are handled specially by elf32.em.  */
+    *(.gnu.warning)
+    *(.gnu.linkonce.t*)
+  } > text
+
+
+  .ctors	: {
+  . = ALIGN(0x10);
+    ___ctors = .;
+    *(.ctors)
+    ___ctors_end = .;
+  } > text
+
+  .dtors	: {
+    ___dtors = .;
+    *(.dtors)
+    ___dtors_end = .;
+
+    CONSTRUCTORS
+
+  } > text
+/*
+  .gcc_except_table : {
+
+  	*(.gcc_except_table)
+
+  } > gcc_except_table
+*/
+  
+  . = ALIGN(0x1000);
+
+ __etext = .;
+  PROVIDE (_etext = .);
+
+  .ramcode	: AT ( __etext )
+  {
+  	__ramcode_start = .;
+
+    *(.ramcode)			/* routines che devono girare in ram */
+
+  	 . = ALIGN(4);
+    __ramcode_end = .;
+  } > ramcode
+/*
+  .message :
+  {
+  	__message_start = .;
+
+	*(.message)
+
+  	 . = ALIGN(4);
+
+  	__message_end = .;
+
+  } > message
+*/
+  	/* fine della flash interna del microbo utilizzata */
+	/*PROVIDE( _intflash_end = __message_end);*/
+	PROVIDE( _intflash_end = __ramcode_end);
+
+	__message_start = 0;
+	__message_end = 0;
+	
+/*
+  .codecpy :
+  {
+  	 . = ALIGN(4);
+	 __codecpy_start = . ;
+
+	*(.codecpy)
+
+    . = ALIGN(4);
+	__codecpy_end = . ;
+
+  } > codecpy
+*/
+  
+  .rodata :
+  {
+	/* __codecpy_start = . ;
+
+	*(.codecpy)
+
+    . = ALIGN(4);
+	__codecpy_end = . ;
+	*/
+	. = ALIGN(4);
+	
+	__rodata_start = . ;
+
+  	*(.rodata)
+  	*(.gnu.linkonce.r*)
+  	*(.gcc_except_table)
+
+    . = ALIGN(4);
+	/*__rodata_end = . */;
+
+  } > rodata
+
+  
+  .rodata.cst4 :
+  {
+  	__rodata.cst4_start = .;
+	/* *(.codecpy) */
+
+    . = ALIGN(4);
+	
+  	 *(.rodata.cst4)
+
+    . = ALIGN(4);
+	__rodata_end = . ;
+  } > rodata
+  
+  _end_rodata = .;
+  PROVIDE (_end_rodata = .);
+
+ /*
+  .xtern_flash_code	:
+  {
+  	__external_code_begin = .;
+
+    *(.xtext)			
+
+  	 . = ALIGN(4);
+
+    __external_code_end = .;
+  } > xtext
+*/
+				
+ 		
+  /*.fini		: { *(.fini)    } =0*/
+
+  .data		: AT ( __rodata_end )
+  {
+  	 . = ALIGN(0x10);
+  	__data_start = .;
+
+    *(.data)			/* copia dei dati non inizializzati */
+    *(.gnu.linkonce.d*)
+
+  	 . = ALIGN(0x04);
+
+    __data_end = .;
+
+  } > data
+
+	PROVIDE( __datarom_end = __rodata_end ); /*+ SIZEOF(.data) );*/
+
+  .got		: { *(.got.plt) *(.got) }
+  .dynamic	: { *(.dynamic) }
+
+  .tdata ALIGN (4) : {
+	PROVIDE (__ep = .);
+	*(.tbyte)
+	*(.tcommon_byte)
+	*(.tdata)
+	*(.tbss)
+	*(.tcommon)
+  }
+
+  /* We want the small data sections together, so single-instruction offsets
+     can access them all, and initialized data all before uninitialized, so
+     we can shorten the on-disk segment size.  */
+  .sdata ALIGN (4) : {
+	PROVIDE (__gp = . + 0x8000);
+	*(.sdata)
+
+	__sbss_start = .;
+
+	*(.sbss)
+	*(.scommon)
+  }
+
+  /* See comment about .rozdata  */
+  .rosdata ALIGN (4) : {
+	*(.rosdata)
+  }
+  _edata  = DEFINED (__sbss_start) ? __sbss_start : . ;
+  PROVIDE (edata = _edata);
+
+  .bss ALIGN(4):
+  {
+	__bss_start = DEFINED (__sbss_start) ? __sbss_start : . ;
+
+	*(.dynbss)
+	*(.bss)
+	*(COMMON)
+  }
+
+  _end = . ;
+  PROVIDE (end = .);
+
+  . = ALIGN(4);
+  __base_small_heap = . ;
+  PROVIDE (_base_small_heap = .);
+
+
+
+   /* User stack */
+ /* .usrstk : {
+
+  	__end_small_heap = .;
+
+    PROVIDE (_end_small_heap = . );
+
+	*(.user_stack)
+
+	__user_stack = .;
+  } > usrstk
+ */
+ 
+ /* System Stack */
+  .stack : {
+
+	__end_small_heap = .;
+    PROVIDE (_end_small_heap = __end_small_heap );
+
+	__stack = .;
+	*(.stack)
+
+	__end_stack = .;	
+	PROVIDE (_end_stack = __end_stack);
+
+  } > stack
+
+  /* external ram */
+  .xdata : {
+	__xdata_start = .;
+	*(.xdata)
+	__xdata = .;
+
+	__xdata_end = .;
+	
+  } > xdata
+  
+  	/* xheap */
+	 . = ALIGN(4);
+  	__base_heap = . ;
+  	PROVIDE (_base_heap = .);
+  	__end_heap = . + 0x0001AFFF ;
+	PROVIDE( _end_heap = . + 0x0001AFFF );
+ 
+
+	/* Sezione dati per il disco virtuale copia di un disco reale per il test
+	   delle funzioni di gestione del file-system */
+
+  .disk		: {
+    *(.disk)
+  } > disk
+
+
+  /* Stabs debugging sections.  */
+  .stab 0		: { *(.stab) }
+  .stabstr 0		: { *(.stabstr) }
+  .stab.excl 0		: { *(.stab.excl) }
+  .stab.exclstr 0	: { *(.stab.exclstr) }
+  .stab.index 0		: { *(.stab.index) }
+  .stab.indexstr 0	: { *(.stab.indexstr) }
+  .comment 0		: { *(.comment) }
+
+  /* DWARF debug sections.
+     Symbols in the DWARF debugging sections are relative to the beginning
+     of the section so we begin them at 0.  */
+
+  /* DWARF 1 */
+  .debug          0	: { *(.debug) }
+  .line           0	: { *(.line) }
+
+  /* GNU DWARF 1 extensions */
+  .debug_srcinfo  0	: { *(.debug_srcinfo) }
+  .debug_sfnames  0	: { *(.debug_sfnames) }
+
+  /* DWARF 1.1 and DWARF 2 */
+  .debug_aranges  0	: { *(.debug_aranges) }
+  .debug_pubnames 0	: { *(.debug_pubnames) }
+
+  /* DWARF 2 */
+  .debug_info     0	: { *(.debug_info) }
+  .debug_abbrev   0	: { *(.debug_abbrev) }
+  .debug_line     0	: { *(.debug_line) }
+  .debug_frame    0	: { *(.debug_frame) }
+  .debug_str      0	: { *(.debug_str) }
+  .debug_loc      0	: { *(.debug_loc) }
+  .debug_macinfo  0	: { *(.debug_macinfo) }
+
+  /* SGI/MIPS DWARF 2 extensions */
+  .debug_weaknames 0	: { *(.debug_weaknames) }
+  .debug_funcnames 0	: { *(.debug_funcnames) }
+  .debug_typenames 0	: { *(.debug_typenames) }
+  .debug_varnames  0	: { *(.debug_varnames) }
+
+  /* These must appear regardless of  .  */
+  /* This saves a little space in the ELF file, since the zda starts
+     at a higher location that the ELF headers take up.  */
+  .zdata 0x00460000 : {
+	*(.zdata)
+	*(.zbss)
+	*(reszdata)
+	*(.zcommon)
+  }
+
+
+  /* This is the read only part of the zero data area.
+     Having it as a seperate section prevents its
+     attributes from being inherited by the zdata
+     section.  Specifically it prevents the zdata
+     section from being marked READONLY.  */
+  .rozdata ALIGN (4) : {
+	*(.rozdata)
+	*(romzdata)
+	*(romzbss)
+  }
+
+}
+
+STARTUP(obj/startup.o)
+INPUT(obj/crt0.o)
+INPUT(obj/crt1.o)
+INPUT(obj/main.o)
+INPUT(obj/IRQSG2.o)
+INPUT(obj/ALLOC.o)
+INPUT(obj/NEW.o)
+INPUT(obj/STRCLASS.o)
+INPUT(obj/SWTIM.o)
+INPUT(obj/util.o)
+INPUT(obj/I2C_SW.o)
+INPUT(obj/I2Ceeprom.o)
+INPUT(obj/sioSG2.o)
+INPUT(obj/SOUND.o)
+INPUT(obj/ADC.o)
+INPUT(obj/PWM.o)
+INPUT(obj/QUEUEUART.o)
+INPUT(obj/PROTOCOLSTDUART.o)
+INPUT(obj/PROTOCOLSIFRA.o)
+INPUT(obj/CPUSIFRA_MANAGER.o)
+INPUT(obj/NVRDRV.o)
+INPUT(obj/LEDS_PANEL.o)
+
+INPUT(c:\gcc850\lib\libm.a)
+INPUT(c:\gcc850\lib\libc.a)
+INPUT(c:\gcc850\lib\libgcc.a)
+OUTPUT(SG2.OUT)
+

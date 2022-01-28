@@ -1,0 +1,761 @@
+
+C:\Gcc850\source\M3100_CPU>make.exe -s -f SG2.mak 
+GNU assembler version 2.18 (v850-nec-elf) using BFD version (GNU Binutils) 2.18
+GNU assembler version 2.18 (v850-nec-elf) using BFD version (GNU Binutils) 2.18
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void __main()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void __main()
+Execution times (seconds)
+ callgraph construction:   0.00 ( 0%) usr   0.00 ( 0%) sys   0.05 ( 6%) wall       1 kB ( 0%) ggc
+ preprocessing         :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall     540 kB (27%) ggc
+ parser                :   0.02 (25%) usr   0.02 (25%) sys   0.06 ( 8%) wall     757 kB (38%) ggc
+ name lookup           :   0.01 (24%) usr   0.00 ( 0%) sys   0.01 ( 2%) wall     110 kB ( 6%) ggc
+ tree CFG cleanup      :   0.00 ( 0%) usr   0.02 (25%) sys   0.03 ( 4%) wall       0 kB ( 0%) ggc
+ tree copy propagation :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall       0 kB ( 0%) ggc
+ tree PTA              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.03 ( 4%) wall       0 kB ( 0%) ggc
+ tree alias analysis   :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall       0 kB ( 0%) ggc
+ tree PHI insertion    :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall       0 kB ( 0%) ggc
+ tree SSA other        :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.06 ( 8%) wall       0 kB ( 0%) ggc
+ tree CCP              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall       0 kB ( 0%) ggc
+ tree SSA to normal    :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.03 ( 4%) wall       0 kB ( 0%) ggc
+ expand                :   0.02 (25%) usr   0.00 ( 0%) sys   0.03 ( 4%) wall       7 kB ( 0%) ggc
+ lower subreg          :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall       0 kB ( 0%) ggc
+ CSE                   :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 2%) wall       0 kB ( 0%) ggc
+ branch prediction     :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.06 ( 8%) wall       1 kB ( 0%) ggc
+ global alloc          :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.03 ( 4%) wall       0 kB ( 0%) ggc
+ TOTAL                 :   0.06             0.06             0.80               1992 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() void* operator new(unsigned int, void*) void* operator new [](unsigned int, void*) void operator delete(void*, void*) void operator 
+delete [](void*, void*) virtual String::~String() String::~String() virtual String::~String() virtual String::~String() String::operator const char*() const char* String::getChar() word String::getStrLen() int String::operator==(const char
+*) int String::operator!=(const char*) HwChannel<T, capacity>::HwChannel(bitResolution) HwChannel<T, capacity>::~HwChannel() dword HwChannel<T, capacity>::getSampleFrq() void HwChannel<T, capacity>::setSampleFrq(dword) bool HwChannel<T, ca
+pacity>::getIsZeroable() void HwChannel<T, capacity>::setIsZeroable(bool) word HwChannel<T, capacity>::getOffset() void HwChannel<T, capacity>::setOffset(word) float HwChannel<T, capacity>::getGain() void HwChannel<T, capacity>::set2KgValu
+e(word) word HwChannel<T, capacity>::get2KgValue() void HwChannel<T, capacity>::setGain(float) bitResolution HwChannel<T, capacity>::getBitResolution() int HwChannel<T, capacity>::getNumDataBuffered() bool HwChannel<T, capacity>::isSampleB
+ufferEmpty() bool HwChannel<T, capacity>::isSampleBufferFull() int HwChannel<T, capacity>::getLastAdcDataSampled(T&) int HwChannel<T, capacity>::getLastPhyDataSampled(float&) int HwChannel<T, capacity>::pushAdcData(T) int HwChannel<T, capa
+city>::pushFiltAdcData(T) int HwChannel<T, capacity>::popAdcData(T&) void HwChannel<T, capacity>::clearAdcFifo() virtual float HwChannel<T, capacity>::physicalValue(T) int HwChannel<T, capacity>::zero() void HwChannel<T, capacity>::rstZero
+() bool HwChannel<T, capacity>::isEnabled() void HwChannel<T, capacity>::setEnabled(bool) bool HwChannel<T, capacity>::isAvFilterEnabled() bool HwChannel<T, capacity>::setAverageFilter(bool) HwChannelType HwChannel<T, capacity>::getChannel
+Type() float HwChannel<T, capacity>::getAdcResolution() float HwChannel<T, capacity>::getVoltageRefence_mV() void HwChannel<T, capacity>::setVoltageRefernce_mV(float) float HwChannel<T, capacity>::adcTOmV(T) HwChanKindOf
+HwChannel<T, 
+capacity>::kindOfError() dword HwChannel<T, capacity>::getNumErrorOccurrence() void HwChannel<T, capacity>::setChannelType(HwChannelType) int HwChannel<T, capacity>::set_filter_value(int) int HwChannel<T, capacity>::get_filter_value() word
+ HwChannel<T, capacity>::AverageFilter(T&) GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) GenericHwChannel<T, capacity>::GenericHwChannel() VoltageHwChannel<T, capacity>::VoltageHwChannel(bitResolution) Volta
+geHwChannel<T, capacity>::~VoltageHwChannel() HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) HwChanManager<T, capacity>::~HwChanManager() dword HwChanManager<T, capacity>::getSampleFrq() bitResolution HwChanManager<T,
+ capacity>::getBitResolution() float HwChanManager<T, capacity>::getAdcResolution() virtual HwChannelType HwChanManager<T, capacity>::getChannelType() float HwChanManager<T, capacity>::getVoltageRefence_mV() int HwChanManager<T, capacity>:
+:getNumHwChan() void HwChanManager<T, capacity>::setIsZeroable(int, bool) bool HwChanManager<T, capacity>::getIsZeroable(int) word HwChanManager<T, capacity>::getOffset(int) void HwChanManager<T, capacity>::setOffset(int, word) float HwCha
+nManager<T, capacity>::getGain(int) void HwChanManager<T, capacity>::setGain(int, float) void HwChanManager<T, capacity>::set2KgValue(int, long int) word HwChanManager<T, capacity>::get2KgValue(int) float HwChanManager<T, capacity>::physic
+alValue(int, T) float HwChanManager<T, capacity>::adcTOmV(int, T) int HwChanManager<T, capacity>::zero(int) void HwChanManager<T, capacity>::rstZero(int) bool HwChanManager<T, capacity>::isEnabled(int) void HwChanManager<T, capacity>::setE
+nabled(int, bool) bool HwChanManager<T, capacity>::isAvFilterEnabled(int) void HwChanManager<T, capacity>::setAverageFilter(int, bool) void HwChanManager<T, capacity>::setVoltageRefernce_mV(float) int HwChanManager<T, capacity>::pushAdcDat
+aToChan(int, T) int HwChanManager<T, capacity>::pushFiltAdcDataToChan(int, T) int HwChanManager<T, capacity>::getLastAdcDataSampledByChan(int, T&) int HwChanManager<T, capacity>::getLastPhyDataSampledByChan(int, float&) bool HwChanManager<
+T, capacity>::popAdcData(T*) bool HwChanManager<T, capacity>::popAdcData(T*, int) void HwChanManager<T, capacity>::clearFifo() int HwChanManager<T, capacity>::getNumDataFifoed(int) bool HwChanManager<T, capacity>::isFifoEmpty(int) bool HwC
+hanManager<T, capacity>::isFifoFull(int) bool HwChanManager<T, capacity>::HwChanManagerError(HwChanKindOfError*) bool HwChanManager<T, capacity>::HwChanManagerError() dword HwChanManager<T, capacity>::getNumErrorOccurrence(int) int HwChanM
+anager<T, capacity>::set_rampa(int, float*, int) int HwChanManager<T, capacity>::set_sommarampa(int, float) int HwChanManager<T, capacity>::set_filter_value(int, int) int HwChanManager<T, capacity>::get_filter_value(int) GenericHwChanManag
+er<T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) GenericHwChanManager<T, capacity>::~GenericHwChanManager() void GenericHwChanManager<T, capacity>::setChanType(int, HwChannelType) HwChannelType GenericHwChanM
+anager<T, capacity>::getChannelType(int) VoltageHwChanManager<T, capacity>::VoltageHwChanManager(int, bitResolution, dword) VoltageHwChanManager<T, capacity>::~VoltageHwChanManager() HwChannelType VoltageHwChanManager<T, capacity>::getChan
+nelType() virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDeviceAbstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::Ge
+tStopBits() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLastError() virtual void UartDeviceAbstraction::SetError(int) virtual void QueueUart::TurnOn() virt
+ual void QueueUart::TurnOff() bool QueueUart::RunningTransmission() bool QueueUart::TransmitBufferOverflow() bool QueueUart::ReceptionBufferOverflow() void QueueUart::rstTransmitBufferOverflow() void QueueUart::rstReceptionBufferOverflow()
+ virtual int stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer() void stdUartProtocolAbstraction::setTimeoutTx(int) void stdUartProtocolAbstraction::startTxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutTxElapsed() void s
+tdUartProtocolAbstraction::stopTxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusTxTimeoutTimer() void stdUartProtocolAbstraction::setTimeoutRx(int) void stdUartProtocolAbstraction::startRxTimeoutTimer() bool stdUartProtocolAbstra
+ction::timeoutRxElapsed() void stdUartProtocolAbstraction::stopRxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusRxTimeoutTimer() int stdUartProtocolAbstraction::getReceiverState() void stdUartProtocolAbstraction::setReceiverState
+(int) void stdUartProtocolAbstraction::newByteReceived() int stdUartProtocolAbstraction::getNumBytesReceived() void stdUartProtocolAbstraction::rstBytesReceived() void stdUartProtocolAbstraction::setPacketlength(int) int stdUartProtocolAbs
+traction::getPacketLength() void stdUartProtocolAbstraction::newPacketReceived() void stdUartProtocolAbstraction::addPacketsReceived(byte) void stdUartProtocolAbstraction::rstPacketsReceived() byte stdUartProtocolAbstraction::getPacketsRec
+eived() void stdUartProtocolAbstraction::setPacketsReceived(byte) void stdUartProtocolAbstraction::newPacketTransmitted() void stdUartProtocolAbstraction::addPacketsTransmitted(byte) void stdUartProtocolAbstraction::rstPacketsTransmitted()
+ byte stdUartProtocolAbstraction::getPacketsTransmitted() void stdUartProtocolAbstraction::setPacketsTransmitted(byte) int stdUartProtocolAbstraction::getLastReceivedOpCode() byte* stdUartProtocolAbstraction::bufferLastDataReceived() int s
+tdUartProtocolAbstraction::getNumDataReceived() void stdUartProtocolAbstraction::setNumDataReceived(int) void stdUartProtocolAbstraction::setNumPacketsLost(int) int stdUartProtocolAbstraction::getNumPacketsLost() virtual int stdUartProtoco
+lAbstraction::sendMsg(int) virtual int stdUartProtocolAbstraction::getMsg() virtual void stdUartProtocolAbstraction::TurnOn() virtual void stdUartProtocolAbstraction::TurnOff() virtual void stdUartProtocolAbstraction::ClearTransmissionBuff
+er() virtual int SIFRAProtocol::GetNumBytesInTransmissionBuffer() SIFRAProtocol::SIFRACmd_FromBoardToPc SIFRAProtocol::getLastCmdSent() byte SIFRAProtocol::getLastHwError() void SIFRAProtocol::rstLastHwError() void SIFRAProtocol::rstLoadPa
+cketsSent() void SIFRAProtocol::setLocalNODEID(byte) byte SIFRAProtocol::getLocalNODEID() void SIFRAProtocol::setEnabledLine(byte) byte SIFRAProtocol::getEnabledLine() void SIFRAProtocol::resetEnabledLine() void SIFRAProtocol::setNumOfEnab
+ledLines(int) int SIFRAProtocol::getNumOfEnabledLines() word SIFRAProtocol::getLoadChan(byte) void SIFRA_Manager::setVoltageHwChanManager(VoltageHwChanManager<short unsigned int, 5>*) void SIFRA_Manager::setWeightChan(GenericHwChanManager<
+long unsigned int, 10>*) void SIFRA_Manager::setMadeBackup(int) bool SIFRA_Manager::getMadeBackup(int) void SIFRA_Manager::setMadeBackup(bool) bool SIFRA_Manager::getMadeBackup() byte SIFRA_Manager::readHarwareVersion() void SIFRA_Manager:
+:set_flag_param_encoder(byte, int) byte SIFRA_Manager::get_flag_param_encoder(int) int main() void FlashLed() void hwsw_init() void HwChannels_init() void UartProcol_init() void pin_init() void pin_pld_init() void SetupTimers() void IrqHan
+dTM0(int) byte Asciihex_to_num(char*) void Num_to_Asciihex(word, char*) GenericHwChanManager<T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) [with T = long unsigned int, int capacity = 10] GenericHwChanManager<
+T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) [with T = long unsigned int, int capacity = 10] GenericHwChanManager<T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) [with T = long u
+nsigned int, int capacity = 10] void HwChanManager<T, capacity>::setEnabled(int, bool) [with T = long unsigned int, int capacity = 10] void HwChanManager<T, capacity>::setAverageFilter(int, bool) [with T = long unsigned int, int capacity =
+ 10] void HwChanManager<T, capacity>::setGain(int, float) [with T = long unsigned int, int capacity = 10] void HwChanManager<T, capacity>::setOffset(int, word) [with T = long unsigned int, int capacity = 10] void GenericHwChanManager<T, ca
+pacity>::setChanType(int, HwChannelType) [with T = long unsigned int, int capacity = 10] int HwChanManager<T, capacity>::set_filter_value(int, int) [with T = long unsigned int, int capacity = 10] VoltageHwChanManager<T, capacity>::VoltageH
+wChanManager(int, bitResolution, dword) [with T = short unsigned int, int capacity = 5] VoltageHwChanManager<T, capacity>::VoltageHwChanManager(int, bitResolution, dword) [with T = short unsigned int, int capacity = 5] VoltageHwChanManager
+<T, capacity>::VoltageHwChanManager(int, bitResolution, dword) [with T = short unsigned int, int capacity = 5] void HwChanManager<T, capacity>::setVoltageRefernce_mV(float) [with T = short unsigned int, int capacity = 5] void HwChanManager
+<T, capacity>::setIsZeroable(int, bool) [with T = short unsigned int, int capacity = 5] void HwChanManager<T, capacity>::setOffset(int, word) [with T = short unsigned int, int capacity = 5] float HwChanManager<T, capacity>::getVoltageRefen
+ce_mV() [with T = short unsigned int, int capacity = 5] float HwChanManager<T, capacity>::getAdcResolution() [with T = short unsigned int, int capacity = 5] void HwChanManager<T, capacity>::setGain(int, float) [with T = short unsigned int,
+ int capacity = 5] void HwChanManager<T, capacity>::setEnabled(int, bool) [with T = short unsigned int, int capacity = 5] HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) [with T = long unsigned int, int capacity = 10] 
+HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) [with T = long unsigned int, int capacity = 10] HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) [with T = long unsigned int, int capacity = 10] HwCha
+nManager<T, capacity>::~HwChanManager() [with T = long unsigned int, int capacity = 10] HwChanManager<T, capacity>::~HwChanManager() [with T = long unsigned int, int capacity = 10] HwChanManager<T, capacity>::~HwChanManager() [with T = lon
+g unsigned int, int capacity = 10] GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) [with T = long unsigned int, int capacity = 10] GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) 
+[with T = long unsigned int, int capacity = 10] GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) [with T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::setSampleFrq(dword) [with T = long u
+nsigned int, int capacity = 10] void HwChannel<T, capacity>::setVoltageRefernce_mV(float) [with T = long unsigned int, int capacity = 10] float HwChannel<T, capacity>::getAdcResolution() [with T = long unsigned int, int capacity = 10] void
+ HwChannel<T, capacity>::setEnabled(bool) [with T = long unsigned int, int capacity = 10] bool HwChannel<T, capacity>::setAverageFilter(bool) [with T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::setGain(float) [with
+ T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::setOffset(word) [with T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::setChannelType(HwChannelType) [with T = long unsigned int, int capacity = 
+10] int HwChannel<T, capacity>::set_filter_value(int) [with T = long unsigned int, int capacity = 10] HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) [with T = short unsigned int, int capacity = 5] HwChanManager<T, cap
+acity>::HwChanManager(int, bitResolution, dword) [with T = short unsigned int, int capacity = 5] HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) [with T = short unsigned int, int capacity = 5] HwChanManager<T, capacity
+>::~HwChanManager() [with T = short unsigned int, int capacity = 5] HwChanManager<T, capacity>::~HwChanManager() [with T = short unsigned int, int capacity = 5] HwChanManager<T, capacity>::~HwChanManager() [with T = short unsigned int, int
+ capacity = 5] VoltageHwChannel<T, capacity>::VoltageHwChannel(bitResolution) [with T = short unsigned int, int capacity = 5] VoltageHwChannel<T, capacity>::VoltageHwChannel(bitResolution) [with T = short unsigned int, int capacity = 5] Vo
+ltageHwChannel<T, capacity>::VoltageHwChannel(bitResolution) [with T = short unsigned int, int capacity = 5] void HwChannel<T, capacity>::setSampleFrq(dword) [with T = short unsigned int, int capacity = 5] void HwChannel<T, capacity>::setV
+oltageRefernce_mV(float) [with T = short unsigned int, int capacity = 5] float HwChannel<T, capacity>::getAdcResolution() [with T = short unsigned int, int capacity = 5] void HwChannel<T, capacity>::setIsZeroable(bool) [with T = short unsi
+gned int, int capacity = 5] void HwChannel<T, capacity>::setOffset(word) [with T = short unsigned int, int capacity = 5] void HwChannel<T, capacity>::setGain(float) [with T = short unsigned int, int capacity = 5] void HwChannel<T, capacity
+>::setEnabled(bool) [with T = short unsigned int, int capacity = 5] HwChannel<T, capacity>::HwChannel(bitResolution) [with T = long unsigned int, int capacity = 10] HwChannel<T, capacity>::HwChannel(bitResolution) [with T = long unsigned i
+nt, int capacity = 10] HwChannel<T, capacity>::HwChannel(bitResolution) [with T = long unsigned int, int capacity = 10] HwChannel<T, capacity>::~HwChannel() [with T = long unsigned int, int capacity = 10] HwChannel<T, capacity>::~HwChannel
+() [with T = long unsigned int, int capacity = 10] HwChannel<T, capacity>::~HwChannel() [with T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::setIsZeroable(bool) [with T = long unsigned int, int capacity = 10] HwChan
+nel<T, capacity>::HwChannel(bitResolution) [with T = short unsigned int, int capacity = 5] HwChannel<T, capacity>::HwChannel(bitResolution) [with T = short unsigned int, int capacity = 5] HwChannel<T, capacity>::HwChannel(bitResolution) [w
+ith T = short unsigned int, int capacity = 5] HwChannel<T, capacity>::~HwChannel() [with T = short unsigned int, int capacity = 5] HwChannel<T, capacity>::~HwChannel() [with T = short unsigned int, int capacity = 5] HwChannel<T, capacity>:
+:~HwChannel() [with T = short unsigned int, int capacity = 5] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = long unsigned int, int capacity = 10] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = long unsigned int, int capacity
+ = 10] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = long unsigned int, int capacity = 10] void CSmallRingBuf<T, capacity>::clear() [with T = long unsigned int, int capacity = 10] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T
+ = short unsigned int, int capacity = 5] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short unsigned int, int capacity = 5] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short unsigned int, int capacity = 5] void CSmallRin
+gBuf<T, capacity>::clear() [with T = short unsigned int, int capacity = 5] float HwChannel<T, capacity>::physicalValue(T) [with T = short unsigned int, int capacity = 5] float HwChannel<T, capacity>::physicalValue(T) [with T = long unsigne
+d int, int capacity = 10] HwChannelType VoltageHwChanManager<T, capacity>::getChannelType() [with T = short unsigned int, int capacity = 5] HwChannelType HwChanManager<T, capacity>::getChannelType() [with T = short unsigned int, int capaci
+ty = 5] HwChannelType HwChanManager<T, capacity>::getChannelType() [with T = long unsigned int, int capacity = 10] HwChannelType HwChannel<T, capacity>::getChannelType() [with T = short unsigned int, int capacity = 5]
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void FlashLed() void IrqHandTM0(int) byte Asciihex_to_num(char*) void Num_to_Asciihex(word, char*) float HwChannel<T, capacity>::physicalValue(T) [with T = short unsigned int, int capacity = 5] float HwChannel<T, capacity>::physicalValue(
+T) [with T = long unsigned int, int capacity = 10] HwChannelType VoltageHwChanManager<T, capacity>::getChannelType() [with T = short unsigned int, int capacity = 5] HwChannelType HwChanManager<T, capacity>::getChannelType() [with T = short
+ unsigned int, int capacity = 5] HwChannelType HwChanManager<T, capacity>::getChannelType() [with T = long unsigned int, int capacity = 10] int main()
+Execution times (seconds)
+ preprocessing         :   0.02 (21%) usr   0.01 (24%) sys   0.03 ( 8%) wall     677 kB (11%) ggc
+ parser                :   0.02 (21%) usr   0.03 (50%) sys   0.27 (68%) wall    2866 kB (46%) ggc
+ tree copy propagation :   0.01 (19%) usr   0.00 ( 0%) sys   0.02 ( 4%) wall      16 kB ( 0%) ggc
+ complete unrolling    :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 4%) wall       0 kB ( 0%) ggc
+ expand                :   0.00 ( 0%) usr   0.02 (26%) sys   0.02 ( 4%) wall     201 kB ( 3%) ggc
+ combiner              :   0.02 (21%) usr   0.00 ( 0%) sys   0.01 ( 4%) wall      43 kB ( 1%) ggc
+ final                 :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 4%) wall      15 kB ( 0%) ggc
+ TOTAL                 :   0.08             0.06             0.39               6282 kB
+GNU C++ (GCC) version 4.3.1 (v850-nec-elf)
+	compiled by GNU C version 4.3.1, GMP version 4.2.2, MPFR version 2.3.1.
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 1c92b5439b2ba79e60aec2f45b494c2f
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void mem_init() void mem_count(dword&, dword&) void mem_left(dword&, dword&) boo
+l mem_alloc(dword, void**) bool mem_free(void*)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void mem_init() void mem_count(dword&, dword&) void mem_left(dword&, dword&) bool mem_alloc(dword, void**) bool mem_free(void*)
+Execution times (seconds)
+ preprocessing         :   0.01 (24%) usr   0.02 (100%) sys   0.03 (40%) wall     542 kB (24%) ggc
+ name lookup           :   0.02 (25%) usr   0.00 ( 0%) sys   0.02 (21%) wall     111 kB ( 5%) ggc
+ expand                :   0.02 (25%) usr   0.00 ( 0%) sys   0.02 (21%) wall      46 kB ( 2%) ggc
+ TOTAL                 :   0.06             0.02             0.08               2268 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void* operator new(unsigned int, void*) void* operator new [](unsigned int, void
+*) void operator delete(void*, void*) void operator delete [](void*, void*) void* operator new(unsigned int) void* operator new [](unsigned int) void operator delete(void*) void operator delete [](void*)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void operator delete [](void*) void operator delete(void*) void* operator new [](unsigned int) void* operator new(unsigned int)
+Execution times (seconds)
+ parser                :   0.03 (49%) usr   0.00 ( 0%) sys   0.03 (50%) wall     770 kB (38%) ggc
+ expand                :   0.02 (25%) usr   0.00 ( 0%) sys   0.02 (26%) wall      21 kB ( 1%) ggc
+ TOTAL                 :   0.06             0.00             0.06               2038 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) virtual String::~String() String::~String() virtual String::~String() virtual St
+ring::~String() String::operator const char*() const char* String::getChar() word String::getStrLen() int String::operator==(const char*) int String::operator!=(const char*) String::String() String::String() String::String() String::String
+(const char*) String::String(const char*) String::String(const char*) String::String(const String&) String::String(const String&) String::String(const String&) void String::init(char*) String& String::operator=(const String&) String& Strin
+g::operator=(const char*)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ String::String() String::String() virtual String::~String() virtual String::~String() String& String::operator=(const char*) void String::init(char*) String::String(const String&) String::String(const String&) String::String(const char*) 
+String::String(const char*) String& String::operator=(const String&)
+Execution times (seconds)
+ preprocessing         :   0.01 (19%) usr   0.00 ( 0%) sys   0.02 (17%) wall     540 kB (22%) ggc
+ parser                :   0.03 (41%) usr   0.00 ( 0%) sys   0.02 (17%) wall     850 kB (34%) ggc
+ name lookup           :   0.00 ( 0%) usr   0.01 (100%) sys   0.03 (32%) wall     114 kB ( 5%) ggc
+ tree FRE              :   0.01 (19%) usr   0.00 ( 0%) sys   0.02 (17%) wall      12 kB ( 0%) ggc
+ dead store elim2      :   0.02 (21%) usr   0.00 ( 0%) sys   0.01 (16%) wall       5 kB ( 0%) ggc
+ TOTAL                 :   0.08             0.01             0.09               2473 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() Timer::Timer() Timer::Timer() Timer::Timer() float IncTimer::getTime() dword IncTimer::getMsec() bool DecTimer::Match() void __stati
+c_initialization_and_destruction_0(int, int) void _GLOBAL__I_globalTimer()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ Timer::Timer() Timer::Timer() float IncTimer::getTime() dword IncTimer::getMsec() bool DecTimer::Match() (static initializers for SWTIM.cpp)
+Execution times (seconds)
+ preprocessing         :   0.02 (34%) usr   0.02 (52%) sys   0.03 (40%) wall     541 kB (24%) ggc
+ parser                :   0.01 (32%) usr   0.00 ( 0%) sys   0.02 (21%) wall     823 kB (37%) ggc
+ CSE                   :   0.02 (34%) usr   0.00 ( 0%) sys   0.02 (21%) wall       0 kB ( 0%) ggc
+ TOTAL                 :   0.05             0.03             0.08               2213 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) float my_pow10(short int) void strset(char*, int) void IntToHex(int, char*, unsi
+gned int) int HexToInt(int&, char*, int) int _1on8_to_int(byte) int windowFilter(short int*, short int*, int, int, int) char* fmtReal(long int, int, int) int matherr(exception*) void ltrim(char*) void rtrim(char*) byte* skipWhites(byte*) b
+yte* packWhites(byte*) void cdate(char*) void cdaten(char*) int sumstr(char*, char*, int, int) int fsumstr(char*, char*, int, int, int) int addstr(char*, const char*) void chgext(char*, char*) int pperc(char*, float, float)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ float my_pow10(short int) void strset(char*, int) int HexToInt(int&, char*, int) int _1on8_to_int(byte) int windowFilter(short int*, short int*, int, int, int) int matherr(exception*) void ltrim(char*) void rtrim(char*) byte* skipWhites(b
+yte*) byte* packWhites(byte*) int sumstr(char*, char*, int, int) int fsumstr(char*, char*, int, int, int) int addstr(char*, const char*) char* fmtReal(long int, int, int) int pperc(char*, float, float) void chgext(char*, char*) void cdate(
+char*) void cdaten(char*) void IntToHex(int, char*, unsigned int)
+Execution times (seconds)
+ preprocessing         :   0.03 (28%) usr   0.00 ( 0%) sys   0.03 (25%) wall     546 kB (18%) ggc
+ tree gimplify         :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (13%) wall      71 kB ( 2%) ggc
+ tree FRE              :   0.01 (14%) usr   0.00 ( 0%) sys   0.01 (12%) wall      33 kB ( 1%) ggc
+ combiner              :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (13%) wall      34 kB ( 1%) ggc
+ if-conversion         :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (13%) wall      11 kB ( 0%) ggc
+ global alloc          :   0.00 ( 0%) usr   0.02 (100%) sys   0.02 (13%) wall       9 kB ( 0%) ggc
+ TOTAL                 :   0.11             0.02             0.12               3045 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void i2c_init() void i2c_delay() void i2c_start() void i2c_stop() bool i2c_putc(
+int) byte i2c_getc() void i2c_ack(int)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void i2c_delay() void i2c_start() void i2c_stop() void i2c_init() bool i2c_putc(int) byte i2c_getc() void i2c_ack(int)
+Execution times (seconds)
+ preprocessing         :   0.01 (32%) usr   0.02 (52%) sys   0.01 (19%) wall     542 kB (24%) ggc
+ parser                :   0.00 ( 0%) usr   0.01 (48%) sys   0.03 (41%) wall     791 kB (36%) ggc
+ name lookup           :   0.02 (34%) usr   0.00 ( 0%) sys   0.01 (19%) wall     110 kB ( 5%) ggc
+ final                 :   0.02 (34%) usr   0.00 ( 0%) sys   0.02 (21%) wall       0 kB ( 0%) ggc
+ TOTAL                 :   0.05             0.03             0.08               2216 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void EE_init() bool EE_byte_write(byte, byte) bool EE_page_write(byte, byte*, by
+te) bool EE_read_current_address(byte*) bool EE_random_byte_read(byte, byte*) bool EE_sequential_current_read(byte*, byte) bool EE_sequential_random_read(byte, byte*, byte) bool EE_write(void*, byte, byte) word EE_read_word(byte) int EE_re
+ad_int(byte) float EE_read_float(byte)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void EE_init() bool EE_page_write(byte, byte*, byte) bool EE_write(void*, byte, byte) bool EE_byte_write(byte, byte) bool EE_sequential_random_read(byte, byte*, byte) float EE_read_float(byte) int EE_read_int(byte) word EE_read_word(byte)
+ bool EE_sequential_current_read(byte*, byte) bool EE_random_byte_read(byte, byte*) bool EE_read_current_address(byte*)
+Execution times (seconds)
+ df live regs          :   0.01 (14%) usr   0.00 ( 0%) sys   0.02 (15%) wall       0 kB ( 0%) ggc
+ preprocessing         :   0.01 (14%) usr   0.00 ( 0%) sys   0.02 (15%) wall     546 kB (20%) ggc
+ name lookup           :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (14%) wall     112 kB ( 4%) ggc
+ tree gimplify         :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (15%) wall      58 kB ( 2%) ggc
+ tree operand scan     :   0.02 (15%) usr   0.00 ( 0%) sys   0.01 (14%) wall      36 kB ( 1%) ggc
+ final                 :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (15%) wall      10 kB ( 0%) ggc
+ TOTAL                 :   0.11             0.00             0.11               2801 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() void sio_init_ch0() void sio_init_ch1() void sio_init_ch2() void sio_init_ch3() void sio_enable_rx_interrupt_ch0(byte) void sio_enab
+le_rx_interrupt_ch1(byte) void sio_enable_rx_interrupt_ch2(byte) void sio_enable_rx_interrupt_ch3(byte) void sio_disable_rx_interrupt_ch0() void sio_disable_rx_interrupt_ch1() void sio_disable_rx_interrupt_ch2() void sio_disable_rx_interru
+pt_ch3() void sio_enable_tx_interrupt_ch0(byte) void sio_enable_tx_interrupt_ch1(byte) void sio_enable_tx_interrupt_ch2(byte) void sio_enable_tx_interrupt_ch3(byte) void sio_disable_tx_interrupt_ch0() void sio_disable_tx_interrupt_ch1() vo
+id sio_disable_tx_interrupt_ch2() void sio_disable_tx_interrupt_ch3() void sio_clocksel_ch0(int) int sio_putc_ch0(int) int sio_busy_ch0() int sio_getc_ch0(int) void sio_clocksel_ch1(int) int sio_putc_ch1(int) int sio_busy_ch1() int sio_get
+c_ch1(int) int sio_xfr_ch1(void*, void*, int) void sio_clocksel_ch2(int) int sio_putc_ch2(int) int sio_busy_ch2() int sio_getc_ch2(int) int sio_xfr_ch2(void*, void*, int) void sio_clocksel_ch3(int) int sio_putc_ch3(int) int sio_busy_ch3() 
+int sio_getc_ch3(int) int sio_xfr_ch3(void*, void*, int) int sio_fill_ch3(int, int) int sio_write_ch3(void*, int) int sio_read_ch3(void*, int) word sio_putw_ch3(word) word sio_getw_ch3(word)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void sio_init_ch0() void sio_init_ch1() void sio_init_ch2() void sio_init_ch3() void sio_enable_rx_interrupt_ch0(byte) void sio_enable_rx_interrupt_ch1(byte) void sio_enable_rx_interrupt_ch2(byte) void sio_enable_rx_interrupt_ch3(byte) vo
+id sio_disable_rx_interrupt_ch0() void sio_disable_rx_interrupt_ch1() void sio_disable_rx_interrupt_ch2() void sio_disable_rx_interrupt_ch3() void sio_enable_tx_interrupt_ch0(byte) void sio_enable_tx_interrupt_ch1(byte) void sio_enable_tx_
+interrupt_ch2(byte) void sio_enable_tx_interrupt_ch3(byte) void sio_disable_tx_interrupt_ch0() void sio_disable_tx_interrupt_ch1() void sio_disable_tx_interrupt_ch2() void sio_disable_tx_interrupt_ch3() void sio_clocksel_ch0(int) int sio_p
+utc_ch0(int) int sio_busy_ch0() int sio_getc_ch0(int) void sio_clocksel_ch1(int) int sio_putc_ch1(int) int sio_busy_ch1() int sio_getc_ch1(int) int sio_xfr_ch1(void*, void*, int) void sio_clocksel_ch2(int) int sio_putc_ch2(int) int sio_bus
+y_ch2() int sio_getc_ch2(int) int sio_xfr_ch2(void*, void*, int) void sio_clocksel_ch3(int) int sio_putc_ch3(int) int sio_busy_ch3() int sio_getc_ch3(int) int sio_xfr_ch3(void*, void*, int) int sio_fill_ch3(int, int) int sio_write_ch3(void
+*, int) int sio_read_ch3(void*, int) word sio_putw_ch3(word) word sio_getw_ch3(word)
+Execution times (seconds)
+ parser                :   0.03 (28%) usr   0.00 ( 0%) sys   0.03 (22%) wall     923 kB (28%) ggc
+ tree gimplify         :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (11%) wall      93 kB ( 3%) ggc
+ tree PTA              :   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (11%) wall      30 kB ( 1%) ggc
+ tree flow sensitive alias:   0.01 (14%) usr   0.00 ( 0%) sys   0.02 (11%) wall       1 kB ( 0%) ggc
+ dominator optimization:   0.02 (15%) usr   0.00 ( 0%) sys   0.02 (11%) wall      73 kB ( 2%) ggc
+ varconst              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 (11%) wall       0 kB ( 0%) ggc
+ final                 :   0.00 ( 0%) usr   0.02 (100%) sys   0.02 (11%) wall       4 kB ( 0%) ggc
+ TOTAL                 :   0.11             0.02             0.14               3341 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() void buzzer_init() void goBuzzer(KindOfSound) void buzzerManager() void buzzer_stop() void buzzer_start() bool buzzer_isPlaying() Ki
+ndOfSound buzzerSound() void shutBuzzer() void setPWM(word, byte) void __static_initialization_and_destruction_0(int, int) CICALINO::CICALINO() CICALINO::CICALINO() CICALINO::CICALINO() void _GLOBAL__I_buzzer_init()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void buzzer_stop() bool buzzer_isPlaying() KindOfSound buzzerSound() void shutBuzzer() void setPWM(word, byte) void buzzer_start() void goBuzzer(KindOfSound) void buzzer_init() (static initializers for SOUND.cpp) void buzzerManager()
+Execution times (seconds)
+ preprocessing         :   0.00 ( 0%) usr   0.01 (24%) sys   0.01 (16%) wall     546 kB (22%) ggc
+ parser                :   0.02 (100%) usr   0.00 ( 0%) sys   0.02 (17%) wall     849 kB (35%) ggc
+ tree operand scan     :   0.00 ( 0%) usr   0.02 (26%) sys   0.02 (17%) wall      23 kB ( 1%) ggc
+ final                 :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 (16%) wall       2 kB ( 0%) ggc
+ TOTAL                 :   0.02             0.06             0.09               2434 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() HwChannel<T, capacity>::HwChannel(bitResolution) HwChannel<T, capacity>::~HwChannel() dword HwChannel<T, capacity>::getSampleFrq() v
+oid HwChannel<T, capacity>::setSampleFrq(dword) bool HwChannel<T, capacity>::getIsZeroable() void HwChannel<T, capacity>::setIsZeroable(bool) word HwChannel<T, capacity>::getOffset() void HwChannel<T, capacity>::setOffset(word) float HwCha
+nnel<T, capacity>::getGain() void HwChannel<T, capacity>::set2KgValue(word) word HwChannel<T, capacity>::get2KgValue() void HwChannel<T, capacity>::setGain(float) bitResolution HwChannel<T, capacity>::getBitResolution() int HwChannel<T, ca
+pacity>::getNumDataBuffered() bool HwChannel<T, capacity>::isSampleBufferEmpty() bool HwChannel<T, capacity>::isSampleBufferFull() int HwChannel<T, capacity>::getLastAdcDataSampled(T&) int HwChannel<T, capacity>::getLastPhyDataSampled(floa
+t&) int HwChannel<T, capacity>::pushAdcData(T) int HwChannel<T, capacity>::pushFiltAdcData(T) int HwChannel<T, capacity>::popAdcData(T&) void HwChannel<T, capacity>::clearAdcFifo() virtual float HwChannel<T, capacity>::physicalValue(T) int
+ HwChannel<T, capacity>::zero() void HwChannel<T, capacity>::rstZero() bool HwChannel<T, capacity>::isEnabled() void HwChannel<T, capacity>::setEnabled(bool) bool HwChannel<T, capacity>::isAvFilterEnabled() bool HwChannel<T, capacity>::set
+AverageFilter(bool) HwChannelType HwChannel<T, capacity>::getChannelType() float HwChannel<T, capacity>::getAdcResolution() float HwChannel<T, capacity>::getVoltageRefence_mV() void HwChannel<T, capacity>::setVoltageRefernce_mV(float) floa
+t HwChannel<T, capacity>::adcTOmV(T) HwChanKindOfError HwChannel<T, capacity>::kindOfError() dword HwChannel<T, capacity>::getNumErrorOccurrence() void HwChannel<T, capacity>::setChannelType(HwChannelType) int HwChannel<T, capacity>::set_f
+ilter_value(int) int HwChannel<T, capacity>::get_filter_value() word HwChannel<T, capacity>::AverageFilter(T&) GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) GenericHwChannel<T, capacity>::GenericHwChannel() 
+VoltageHwChannel<T, capacity>::VoltageHwChannel(bitResolution) VoltageHwChannel<T, capacity>::~VoltageHwChannel() HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) HwChanManager<T, capacity>::~HwChanManager() dword HwCha
+nManager<T, capacity>::getSampleFrq() bitResolution HwChanManager<T, capacity>::getBitResolution() float HwChanManager<T, capacity>::getAdcResolution() virtual HwChannelType HwChanManager<T, capacity>::getChannelType() float HwChanManager<
+T, capacity>::getVoltageRefence_mV() int HwChanManager<T, capacity>::getNumHwChan() void HwChanManager<T, capacity>::setIsZeroable(int, bool) bool HwChanManager<T, capacity>::getIsZeroable(int) word HwChanManager<T, capacity>::getOffset(in
+t) void HwChanManager<T, capacity>::setOffset(int, word) float HwChanManager<T, capacity>::getGain(int) void HwChanManager<T, capacity>::setGain(int, float) void HwChanManager<T, capacity>::set2KgValue(int, long int) word HwChanManager<T, 
+capacity>::get2KgValue(int) float HwChanManager<T, capacity>::physicalValue(int, T) float HwChanManager<T, capacity>::adcTOmV(int, T) int HwChanManager<T, capacity>::zero(int) void HwChanManager<T, capacity>::rstZero(int) bool HwChanManage
+r<T, capacity>::isEnabled(int) void HwChanManager<T, capacity>::setEnabled(int, bool) bool HwChanManager<T, capacity>::isAvFilterEnabled(int) void HwChanManager<T, capacity>::setAverageFilter(int, bool) void HwChanManager<T, capacity>::set
+VoltageRefernce_mV(float) int HwChanManager<T, capacity>::pushAdcDataToChan(int, T) int HwChanManager<T, capacity>::pushFiltAdcDataToChan(int, T) int HwChanManager<T, capacity>::getLastAdcDataSampledByChan(int, T&) int HwChanManager<T, cap
+acity>::getLastPhyDataSampledByChan(int, float&) bool HwChanManager<T, capacity>::popAdcData(T*) bool HwChanManager<T, capacity>::popAdcData(T*, int) void HwChanManager<T, capacity>::clearFifo() int HwChanManager<T, capacity>::getNumDataFi
+foed(int) bool HwChanManager<T, capacity>::isFifoEmpty(int) bool HwChanManager<T, capacity>::isFifoFull(int) bool HwChanManager<T, capacity>::HwChanManagerError(HwChanKindOfError*) bool HwChanManager<T, capacity>::HwChanManagerError() dwor
+d HwChanManager<T, capacity>::getNumErrorOccurrence(int) int HwChanManager<T, capacity>::set_rampa(int, float*, int) int HwChanManager<T, capacity>::set_sommarampa(int, float) int HwChanManager<T, capacity>::set_filter_value(int, int) int 
+HwChanManager<T, capacity>::get_filter_value(int) GenericHwChanManager<T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) GenericHwChanManager<T, capacity>::~GenericHwChanManager() void GenericHwChanManager<T, cap
+acity>::setChanType(int, HwChannelType) HwChannelType GenericHwChanManager<T, capacity>::getChannelType(int) VoltageHwChanManager<T, capacity>::VoltageHwChanManager(int, bitResolution, dword) VoltageHwChanManager<T, capacity>::~VoltageHwCh
+anManager() HwChannelType VoltageHwChanManager<T, capacity>::getChannelType() void adc_uC_init() void samplePower() void IrqHandADC(int) void adc_serial_init() void load_startSampling() void load_stopSampling() int CS5530_Spi1Initializatio
+n() int CS5530_Spi2Initialization() void CS5530_EntrySpi1() int CS5530_sendCmd(CS5530_command, byte*) void CS5530_EntrySpi2() int CS5530_sendCmdSpi2(CS5530_command, byte*) bool CS5530_validDataPresentInADCBufferSpi1() void CS5530_rstValidD
+ataPresentInADCBuffer() void CS5530_setCounterWaitingData() int CS5530_getCounterWaitingData() bool CS5530_checkBlockComunication(int) bool CS5530_checkBlockCells(dword*) void CS5530_setWatchdogAdcTimer(dword) bool CS5530_getWatchdogAdcTim
+er() void CS5530_resetAdcComunication() void CS5530_setPowerSafeMode(CS5530_powerSaveMode) void CS5530_setPowerDownMode(CS5530_powerDownMode) void CS5530_setRstSys(CS5530_rstSys) void CS5530_setInputShort(CS5530_inputShort) void CS5530_set
+VoltageRef(CS5530_voltageRef) void CS5530_setLatchBits(CS5530_outputLatchBits) void CS5530_setSampleFrequecy(CS5530_sampleFrequecies) void CS5530_setAdcCoding(CS5530_adcCoding) void CS5530_setOpenCircuitDetector(CS5530_openCircuitDetector)
+ void endContinuousConversion() void startContinuousConversion() void CS5530_setPowerSafeModeSpi2(CS5530_powerSaveMode) void CS5530_setPowerDownModeSpi2(CS5530_powerDownMode) void CS5530_setRstSysSpi2(CS5530_rstSys) void CS5530_setInputSho
+rtSpi2(CS5530_inputShort) void CS5530_setVoltageRefSpi2(CS5530_voltageRef) void CS5530_setLatchBitsSpi2(CS5530_outputLatchBits) void CS5530_setSampleFrequecySpi2(CS5530_sampleFrequecies) void CS5530_setAdcCodingSpi2(CS5530_adcCoding) void 
+CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector) void endContinuousConversionSpi2() void startContinuousConversionSpi2() void CS5530_setIntGainADConv(int, byte*) bool CS5530_validDataPresentInADCBufferSpi2() void CS5530_rstVal
+idDataPresentInADCBufferSpi2() void SPI_StartTx() void SPI2_StartTx() void txBufferEmpty() void txBufferNotEmpty() byte txBufferIsEmpty() void txBufferEmptySpi2() void txBufferNotEmptySpi2() byte txBufferIsEmptySpi2() void setSPI1mode() vo
+id setPINSPI1mode() void setSPI2mode() void setPINSPI2mode() void IrqHandSIO1_R(int) void IrqHandSIO2_R(int) void IrqHandTMQ0(int) int get_adc_param() int get_factory_adc_param() int backup_new_gain_value(byte, float) int backup_new_offset
+_value(byte, word) int backup_factory_offset_value(byte, word) int backup_factory_gain_param(byte, float, word) int backup_date_adc_param(char*) CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short int, int capacity = 20] CSmallRing
+Buf<T, capacity>::CSmallRingBuf() [with T = short int, int capacity = 20] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short int, int capacity = 20] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 15] CSm
+allRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 15] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 15] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 50] CSmallRi
+ngBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 50] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 50] int HwChanManager<T, capacity>::pushAdcDataToChan(int, T) [with T = short unsigned int, int
+ capacity = 5] void CSmallRingBuf<T, capacity>::clear() [with T = int, int capacity = 50] void CSmallRingBuf<T, capacity>::clear() [with T = int, int capacity = 15] bool CSmallRingBuf<T, capacity>::empty() const [with T = int, int capacity
+ = 50] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = int, int capacity = 50] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = int, int capacity = 15] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = i
+nt, int capacity = 50] bool CSmallRingBuf<T, capacity>::empty() const [with T = int, int capacity = 15] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = int, int capacity = 15] int HwChanManager<T, capacity>::pushFiltAdcDataToChan(
+int, T) [with T = long unsigned int, int capacity = 10] void CSmallRingBuf<T, capacity>::clear() [with T = short int, int capacity = 20] int HwChannel<T, capacity>::pushAdcData(T) [with T = short unsigned int, int capacity = 5] void CSmall
+RingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = int, int capacity = 15] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = int, int capacity = 50] int HwChannel<T, capacity>::pushFiltAdcData(T) [with T = l
+ong unsigned int, int capacity = 10] bool CSmallRingBuf<T, capacity>::full() const [with T = short unsigned int, int capacity = 5] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = short unsigned int, int capacity = 5] bool CS
+mallRingBuf<T, capacity>::full() const [with T = long unsigned int, int capacity = 10] bool HwChannel<T, capacity>::isAvFilterEnabled() [with T = long unsigned int, int capacity = 10] word HwChannel<T, capacity>::AverageFilter(T&) [with T 
+= long unsigned int, int capacity = 10] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = long unsigned int, int capacity = 10] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = short unsigned int, int ca
+pacity = 5] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = long unsigned int, int capacity = 10] void __static_initialization_and_destruction_0(int, int) void _GLOBAL__I_mV_Power_ADC()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void samplePower() void IrqHandADC(int) void load_startSampling() void load_stopSampling() int CS5530_Spi1Initialization() int CS5530_Spi2Initialization() void CS5530_rstValidDataPresentInADCBuffer() void CS5530_setCounterWaitingData() in
+t CS5530_getCounterWaitingData() bool CS5530_checkBlockComunication(int) bool CS5530_checkBlockCells(dword*) void CS5530_setWatchdogAdcTimer(dword) void CS5530_setPowerSafeMode(CS5530_powerSaveMode) void CS5530_setPowerDownMode(CS5530_powe
+rDownMode) void CS5530_setRstSys(CS5530_rstSys) void CS5530_setInputShort(CS5530_inputShort) void CS5530_setVoltageRef(CS5530_voltageRef) void CS5530_setLatchBits(CS5530_outputLatchBits) void CS5530_setSampleFrequecy(CS5530_sampleFrequecie
+s) void CS5530_setAdcCoding(CS5530_adcCoding) void CS5530_setOpenCircuitDetector(CS5530_openCircuitDetector) void endContinuousConversion() void startContinuousConversion() void CS5530_setPowerSafeModeSpi2(CS5530_powerSaveMode) void CS5530
+_setPowerDownModeSpi2(CS5530_powerDownMode) void CS5530_setRstSysSpi2(CS5530_rstSys) void CS5530_setInputShortSpi2(CS5530_inputShort) void CS5530_setVoltageRefSpi2(CS5530_voltageRef) void CS5530_setLatchBitsSpi2(CS5530_outputLatchBits) voi
+d CS5530_setSampleFrequecySpi2(CS5530_sampleFrequecies) void CS5530_setAdcCodingSpi2(CS5530_adcCoding) void CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector) void endContinuousConversionSpi2() void startContinuousConversionSpi2
+() void CS5530_setIntGainADConv(int, byte*) void CS5530_rstValidDataPresentInADCBufferSpi2() void txBufferEmpty() byte txBufferIsEmpty() void txBufferEmptySpi2() byte txBufferIsEmptySpi2() void setSPI1mode() void setPINSPI1mode() void setS
+PI2mode() void setPINSPI2mode() void IrqHandSIO1_R(int) void IrqHandSIO2_R(int) void IrqHandTMQ0(int) int HwChanManager<T, capacity>::pushFiltAdcDataToChan(int, T) [with T = long unsigned int, int capacity = 10] (static initializers for AD
+C.cpp) int backup_date_adc_param(char*) int backup_new_offset_value(byte, word) int backup_new_gain_value(byte, float) int backup_factory_gain_param(byte, float, word) int backup_factory_offset_value(byte, word) int get_factory_adc_param()
+ int get_adc_param() void txBufferNotEmptySpi2() void SPI2_StartTx() int CS5530_sendCmdSpi2(CS5530_command, byte*) void txBufferNotEmpty() void SPI_StartTx() int CS5530_sendCmd(CS5530_command, byte*) bool CS5530_getWatchdogAdcTimer() void 
+CS5530_EntrySpi2() void CS5530_EntrySpi1() void adc_serial_init() void CS5530_resetAdcComunication() void adc_uC_init() bool CS5530_validDataPresentInADCBufferSpi1() bool CS5530_validDataPresentInADCBufferSpi2()
+Execution times (seconds)
+ cfg cleanup           :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall       2 kB ( 0%) ggc
+ df live regs          :   0.01 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall       0 kB ( 0%) ggc
+ preprocessing         :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.03 ( 5%) wall     588 kB ( 5%) ggc
+ parser                :   0.08 (15%) usr   0.00 ( 0%) sys   0.06 (10%) wall    2451 kB (20%) ggc
+ name lookup           :   0.06 (12%) usr   0.00 ( 0%) sys   0.06 (10%) wall     252 kB ( 2%) ggc
+ inline heuristics     :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall      82 kB ( 1%) ggc
+ integration           :   0.05 ( 9%) usr   0.00 ( 0%) sys   0.05 ( 8%) wall    1073 kB ( 9%) ggc
+ tree gimplify         :   0.01 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall     348 kB ( 3%) ggc
+ tree CFG cleanup      :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.01 ( 3%) wall      21 kB ( 0%) ggc
+ tree PTA              :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall      59 kB ( 0%) ggc
+ tree SSA incremental  :   0.00 ( 0%) usr   0.02 (35%) sys   0.02 ( 3%) wall     137 kB ( 1%) ggc
+ dominator optimization:   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall     526 kB ( 4%) ggc
+ tree split crit edges :   0.01 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall     138 kB ( 1%) ggc
+ tree code sinking     :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall      22 kB ( 0%) ggc
+ dominance computation :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall       0 kB ( 0%) ggc
+ expand                :   0.05 ( 9%) usr   0.00 ( 0%) sys   0.05 ( 8%) wall    1503 kB (13%) ggc
+ CSE                   :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.01 ( 3%) wall      52 kB ( 0%) ggc
+ branch prediction     :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall     121 kB ( 1%) ggc
+ combiner              :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall     436 kB ( 4%) ggc
+ local alloc           :   0.02 ( 3%) usr   0.00 ( 0%) sys   0.02 ( 3%) wall     260 kB ( 2%) ggc
+ global alloc          :   0.05 ( 9%) usr   0.00 ( 0%) sys   0.05 ( 8%) wall      53 kB ( 0%) ggc
+ final                 :   0.02 ( 3%) usr   0.01 (33%) sys   0.05 ( 8%) wall      60 kB ( 1%) ggc
+ TOTAL                 :   0.53             0.05             0.59              11975 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() void pwm_motors_reset() void init_PWM_MOT1() void init_PWM_MOT2() void init_PWM_MOT3() void init_PWM_MOT4() void init_PWM_MOT5() voi
+d init_PWM_EVuC() void pwmManager() void EVsManager() byte changeEVstatus(byte) void enable_PWM_EV() void disable_PWM_EV() void enable_PWM_MOT(int) void disable_PWM_MOT(int) void reg_pump_vel(byte, byte) bool getCoverPumpState() void setBl
+ockRelay(int, int) void enable_MOT(int) void setRampPump(int, byte) int getRampPump(int) void setSpeedPump(int, int) int getSpeedPump(int) void setStatePump(int, int) int getStatePump(int) void setPwmMotCycleIncrease(int, int) void setPwmM
+otCycleDecrease(int, int) void setPwmMotCycle(int, int) void setPwmCycle(int, int) void __static_initialization_and_destruction_0(int, int) void _GLOBAL__I_conta()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void init_PWM_MOT1() void init_PWM_MOT2() void init_PWM_MOT3() void init_PWM_MOT4() void init_PWM_MOT5() void init_PWM_EVuC() void EVsManager() byte changeEVstatus(byte) void enable_PWM_EV() void disable_PWM_EV() void enable_PWM_MOT(int) 
+void disable_PWM_MOT(int) void reg_pump_vel(byte, byte) bool getCoverPumpState() void setBlockRelay(int, int) void enable_MOT(int) void setRampPump(int, byte) int getRampPump(int) void setSpeedPump(int, int) int getSpeedPump(int) void setS
+tatePump(int, int) int getStatePump(int) void setPwmCycle(int, int) void setPwmMotCycle(int, int) void pwmManager() void pwm_motors_reset() void setPwmMotCycleDecrease(int, int) void setPwmMotCycleIncrease(int, int) (static initializers fo
+r PWM.cpp)
+Execution times (seconds)
+ preprocessing         :   0.02 (21%) usr   0.02 (52%) sys   0.03 (22%) wall     549 kB (18%) ggc
+ parser                :   0.01 (19%) usr   0.00 ( 0%) sys   0.02 (11%) wall     916 kB (30%) ggc
+ dominance computation :   0.01 (19%) usr   0.00 ( 0%) sys   0.01 (11%) wall       0 kB ( 0%) ggc
+ varconst              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 (11%) wall       3 kB ( 0%) ggc
+ combiner              :   0.02 (21%) usr   0.00 ( 0%) sys   0.02 (11%) wall      76 kB ( 2%) ggc
+ local alloc           :   0.02 (21%) usr   0.00 ( 0%) sys   0.02 (11%) wall      32 kB ( 1%) ggc
+ final                 :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 (11%) wall       6 kB ( 0%) ggc
+ TOTAL                 :   0.08             0.03             0.14               3087 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() vir
+tual UartDeviceAbstraction::UARTFrameBits UartDeviceAbstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate
+() virtual unsigned int UartDeviceAbstraction::GetLastError() virtual void UartDeviceAbstraction::SetError(int) virtual void QueueUart::TurnOn() virtual void QueueUart::TurnOff() bool QueueUart::RunningTransmission() bool QueueUart::Transm
+itBufferOverflow() bool QueueUart::ReceptionBufferOverflow() void QueueUart::rstTransmitBufferOverflow() void QueueUart::rstReceptionBufferOverflow() RingBuffer::RingBuffer(unsigned int) RingBuffer::RingBuffer(unsigned int) RingBuffer::Rin
+gBuffer(unsigned int) RingBuffer::~RingBuffer() RingBuffer::~RingBuffer() RingBuffer::~RingBuffer() void RingBuffer::Clear(bool) void RingBuffer::Insert(unsigned char) bool RingBuffer::Equals(const unsigned char*, unsigned int) UartDeviceA
+bstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice) UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice) UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice) virtual Ua
+rtDeviceAbstraction::~UartDeviceAbstraction() UartDeviceAbstraction::~UartDeviceAbstraction() virtual UartDeviceAbstraction::~UartDeviceAbstraction() virtual UartDeviceAbstraction::~UartDeviceAbstraction() void UartDeviceAbstraction::Selec
+tUart0() void UartDeviceAbstraction::SelectUart1() void UartDeviceAbstraction::SelectUart2() void UartDeviceAbstraction::Init() virtual void UartDeviceAbstraction::TurnOn() virtual void UartDeviceAbstraction::TurnOff() virtual bool UartDev
+iceAbstraction::IsTransmissionBufferEmpty() void UartDeviceAbstraction::SetTransmissionBuffer(unsigned char) unsigned int UartDeviceAbstraction::GetReceptionError() unsigned char UartDeviceAbstraction::GetReceptionBuffer() static void Uart
+DeviceAbstraction::IrqHandUA0T(int) static void UartDeviceAbstraction::IrqHandUA1T(int) static void UartDeviceAbstraction::IrqHandUA2T(int) static void UartDeviceAbstraction::IrqHandUA0R(int) static void UartDeviceAbstraction::IrqHandUA1R(
+int) static void UartDeviceAbstraction::IrqHandUA2R(int) virtual void UartDeviceAbstraction::SetParity(UartDeviceAbstraction::UARTParity, bool) virtual void UartDeviceAbstraction::SetFrameBits(UartDeviceAbstraction::UARTFrameBits, bool) vi
+rtual void UartDeviceAbstraction::SetStopBits(UartDeviceAbstraction::UARTStopBits, bool) virtual void UartDeviceAbstraction::SetBaudRate(UartDeviceAbstraction::UARTBaudRate, bool) virtual void UartDeviceAbstraction::TransmitLock() virtual 
+void UartDeviceAbstraction::TransmitUnlock() virtual void UartDeviceAbstraction::StartTransmission() virtual void UartDeviceAbstraction::StartTransmission(unsigned char) virtual void UartDeviceAbstraction::TransmitData(unsigned char) virtu
+al void UartDeviceAbstraction::ClearError() virtual void UartDeviceAbstraction::SetTransmitCallBack(void (*)(UartDeviceAbstraction*)) virtual void UartDeviceAbstraction::ReceiveLock() virtual void UartDeviceAbstraction::ReceiveUnlock() vir
+tual unsigned int UartDeviceAbstraction::ReceiveData() virtual void UartDeviceAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int)) QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice) QueueUart::QueueUart(Uart
+DeviceAbstraction::UARTDevice) QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice) virtual QueueUart::~QueueUart() QueueUart::~QueueUart() virtual QueueUart::~QueueUart() virtual QueueUart::~QueueUart() virtual void QueueUart::StartTra
+nsmission() virtual void QueueUart::TransmitLock() virtual void QueueUart::TransmitUnlock() virtual void QueueUart::TransmitData(unsigned char) virtual void QueueUart::TransmitData(const unsigned char*, int) virtual void QueueUart::Transmi
+tData(const unsigned char*) virtual int QueueUart::GetTransmissionBufferSize() virtual int QueueUart::GetNumBytesInTransmissionBuffer() virtual int QueueUart::GetFreeBytesInTransmissionBuffer() static void QueueUart::TransmitCallback(UartD
+eviceAbstraction*) virtual void QueueUart::SetTransmitCallBack(void (*)(UartDeviceAbstraction*, bool)) virtual void QueueUart::ReceiveLock() virtual void QueueUart::ReceiveUnlock() virtual void QueueUart::ClearReceptionBuffer() virtual voi
+d QueueUart::ClearTransmissionBuffer() virtual bool QueueUart::ReceiveData(short unsigned int&) virtual bool QueueUart::ReceiveData(short unsigned int*, int&) virtual bool QueueUart::ReceiveData(unsigned char&) virtual bool QueueUart::Rece
+iveData(unsigned char*, int&) virtual void QueueUart::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int)) virtual int QueueUart::GetReceptionBufferSize() virtual int QueueUart::GetNumBytesInReceptionBuffer() virtual int Queu
+eUart::GetFreeBytesInReceptionBuffer() virtual void QueueUart::resetFifo() static void QueueUart::ReceiveCallback(UartDeviceAbstraction*, unsigned int) CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = unsigned char, int capacity = 600
+] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = unsigned char, int capacity = 600] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = unsigned char, int capacity = 600] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short
+ unsigned int, int capacity = 600] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short unsigned int, int capacity = 600] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short unsigned int, int capacity = 600] bool CSmallRingB
+uf<T, capacity>::empty() const [with T = unsigned char, int capacity = 600] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = unsigned char, int capacity = 600] bool CSmallRingBuf<T, capacity>::full() const [with T = unsigned char, 
+int capacity = 600] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = unsigned char, int capacity = 600] int CSmallRingBuf<T, capacity>::numItem() const [with T = unsigned char, int capacity = 600] void CSmallRingBuf<T, capaci
+ty>::clear() [with T = short unsigned int, int capacity = 600] void CSmallRingBuf<T, capacity>::clear() [with T = unsigned char, int capacity = 600] bool CSmallRingBuf<T, capacity>::empty() const [with T = short unsigned int, int capacity 
+= 600] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = short unsigned int, int capacity = 600] int CSmallRingBuf<T, capacity>::numItem() const [with T = short unsigned int, int capacity = 600] bool CSmallRingBuf<T, capacity>::full
+() const [with T = short unsigned int, int capacity = 600] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = short unsigned int, int capacity = 600] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = unsig
+ned char, int capacity = 600] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = short unsigned int, int capacity = 600]
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDeviceAbstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits
+() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLastError() virtual void UartDeviceAbstraction::SetError(int) void RingBuffer::Clear(bool) void RingBuffer::
+Insert(unsigned char) bool RingBuffer::Equals(const unsigned char*, unsigned int) void UartDeviceAbstraction::Init() virtual void UartDeviceAbstraction::TurnOn() virtual void QueueUart::TurnOn() virtual void UartDeviceAbstraction::TurnOff(
+) virtual void QueueUart::TurnOff() virtual UartDeviceAbstraction::~UartDeviceAbstraction() UartDeviceAbstraction::~UartDeviceAbstraction() virtual bool UartDeviceAbstraction::IsTransmissionBufferEmpty() void UartDeviceAbstraction::SetTran
+smissionBuffer(unsigned char) unsigned char UartDeviceAbstraction::GetReceptionBuffer() unsigned int UartDeviceAbstraction::GetReceptionError() static void UartDeviceAbstraction::IrqHandUA0T(int) static void UartDeviceAbstraction::IrqHandU
+A1T(int) static void UartDeviceAbstraction::IrqHandUA2T(int) static void UartDeviceAbstraction::IrqHandUA0R(int) static void UartDeviceAbstraction::IrqHandUA1R(int) static void UartDeviceAbstraction::IrqHandUA2R(int) virtual void UartDevic
+eAbstraction::SetParity(UartDeviceAbstraction::UARTParity, bool) virtual void UartDeviceAbstraction::SetFrameBits(UartDeviceAbstraction::UARTFrameBits, bool) virtual void UartDeviceAbstraction::SetStopBits(UartDeviceAbstraction::UARTStopBi
+ts, bool) virtual void UartDeviceAbstraction::SetBaudRate(UartDeviceAbstraction::UARTBaudRate, bool) virtual void UartDeviceAbstraction::TransmitLock() virtual void UartDeviceAbstraction::TransmitUnlock() virtual void UartDeviceAbstraction
+::StartTransmission() virtual void UartDeviceAbstraction::StartTransmission(unsigned char) virtual void UartDeviceAbstraction::TransmitData(unsigned char) virtual void UartDeviceAbstraction::ClearError() virtual void UartDeviceAbstraction:
+:SetTransmitCallBack(void (*)(UartDeviceAbstraction*)) virtual void UartDeviceAbstraction::ReceiveLock() virtual void UartDeviceAbstraction::ReceiveUnlock() virtual unsigned int UartDeviceAbstraction::ReceiveData() virtual void UartDeviceA
+bstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int)) QueueUart::~QueueUart() virtual QueueUart::~QueueUart() virtual void QueueUart::StartTransmission() virtual void QueueUart::TransmitLock() virtual void QueueUar
+t::TransmitUnlock() virtual void QueueUart::TransmitData(unsigned char) virtual void QueueUart::TransmitData(const unsigned char*, int) virtual int QueueUart::GetTransmissionBufferSize() virtual int QueueUart::GetNumBytesInTransmissionBuff
+er() virtual int QueueUart::GetFreeBytesInTransmissionBuffer() static void QueueUart::TransmitCallback(UartDeviceAbstraction*) virtual void QueueUart::SetTransmitCallBack(void (*)(UartDeviceAbstraction*, bool)) virtual void QueueUart::Rece
+iveLock() virtual void QueueUart::ReceiveUnlock() virtual void QueueUart::ClearReceptionBuffer() virtual void QueueUart::ClearTransmissionBuffer() virtual bool QueueUart::ReceiveData(short unsigned int&) virtual bool QueueUart::ReceiveData
+(short unsigned int*, int&) virtual bool QueueUart::ReceiveData(unsigned char&) virtual bool QueueUart::ReceiveData(unsigned char*, int&) virtual void QueueUart::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int)) virtual in
+t QueueUart::GetReceptionBufferSize() virtual int QueueUart::GetNumBytesInReceptionBuffer() virtual int QueueUart::GetFreeBytesInReceptionBuffer() virtual void QueueUart::resetFifo() static void QueueUart::ReceiveCallback(UartDeviceAbstrac
+tion*, unsigned int) virtual void QueueUart::TransmitData(const unsigned char*) virtual UartDeviceAbstraction::~UartDeviceAbstraction() virtual QueueUart::~QueueUart() void UartDeviceAbstraction::SelectUart2() void UartDeviceAbstraction::S
+electUart1() void UartDeviceAbstraction::SelectUart0() UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice) UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice) QueueUart::QueueUart(Uar
+tDeviceAbstraction::UARTDevice) QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice) RingBuffer::~RingBuffer() RingBuffer::~RingBuffer() RingBuffer::RingBuffer(unsigned int) RingBuffer::RingBuffer(unsigned int)
+Execution times (seconds)
+ preprocessing         :   0.00 ( 0%) usr   0.01 (24%) sys   0.02 ( 6%) wall     551 kB (11%) ggc
+ parser                :   0.00 ( 0%) usr   0.03 (51%) sys   0.05 (18%) wall    1266 kB (25%) ggc
+ tree PTA              :   0.02 (10%) usr   0.00 ( 0%) sys   0.02 ( 6%) wall      76 kB ( 2%) ggc
+ tree operand scan     :   0.03 (20%) usr   0.00 ( 0%) sys   0.03 (12%) wall     180 kB ( 4%) ggc
+ dominator optimization:   0.02 (10%) usr   0.00 ( 0%) sys   0.02 ( 6%) wall     165 kB ( 3%) ggc
+ tree copy headers     :   0.02 (10%) usr   0.00 ( 0%) sys   0.01 ( 6%) wall      24 kB ( 0%) ggc
+ dominance computation :   0.02 (10%) usr   0.02 (25%) sys   0.02 ( 6%) wall       0 kB ( 0%) ggc
+ expand                :   0.05 (29%) usr   0.00 ( 0%) sys   0.05 (17%) wall     535 kB (11%) ggc
+ varconst              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.03 (12%) wall       2 kB ( 0%) ggc
+ if-conversion         :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 6%) wall      25 kB ( 1%) ggc
+ TOTAL                 :   0.16             0.06             0.27               5084 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDevice
+Abstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLa
+stError() virtual void UartDeviceAbstraction::SetError(int) virtual void QueueUart::TurnOn() virtual void QueueUart::TurnOff() bool QueueUart::RunningTransmission() bool QueueUart::TransmitBufferOverflow() bool QueueUart::ReceptionBufferOv
+erflow() void QueueUart::rstTransmitBufferOverflow() void QueueUart::rstReceptionBufferOverflow() virtual int stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer() void stdUartProtocolAbstraction::setTimeoutTx(int) void stdUartProt
+ocolAbstraction::startTxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutTxElapsed() void stdUartProtocolAbstraction::stopTxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusTxTimeoutTimer() void stdUartProtocolAbstraction::se
+tTimeoutRx(int) void stdUartProtocolAbstraction::startRxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutRxElapsed() void stdUartProtocolAbstraction::stopRxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusRxTimeoutTimer() int
+ stdUartProtocolAbstraction::getReceiverState() void stdUartProtocolAbstraction::setReceiverState(int) void stdUartProtocolAbstraction::newByteReceived() int stdUartProtocolAbstraction::getNumBytesReceived() void stdUartProtocolAbstraction
+::rstBytesReceived() void stdUartProtocolAbstraction::setPacketlength(int) int stdUartProtocolAbstraction::getPacketLength() void stdUartProtocolAbstraction::newPacketReceived() void stdUartProtocolAbstraction::addPacketsReceived(byte) voi
+d stdUartProtocolAbstraction::rstPacketsReceived() byte stdUartProtocolAbstraction::getPacketsReceived() void stdUartProtocolAbstraction::setPacketsReceived(byte) void stdUartProtocolAbstraction::newPacketTransmitted() void stdUartProtocol
+Abstraction::addPacketsTransmitted(byte) void stdUartProtocolAbstraction::rstPacketsTransmitted() byte stdUartProtocolAbstraction::getPacketsTransmitted() void stdUartProtocolAbstraction::setPacketsTransmitted(byte) int stdUartProtocolAbst
+raction::getLastReceivedOpCode() byte* stdUartProtocolAbstraction::bufferLastDataReceived() int stdUartProtocolAbstraction::getNumDataReceived() void stdUartProtocolAbstraction::setNumDataReceived(int) void stdUartProtocolAbstraction::setN
+umPacketsLost(int) int stdUartProtocolAbstraction::getNumPacketsLost() virtual int stdUartProtocolAbstraction::sendMsg(int) virtual int stdUartProtocolAbstraction::getMsg() virtual void stdUartProtocolAbstraction::TurnOn() virtual void std
+UartProtocolAbstraction::TurnOff() virtual void stdUartProtocolAbstraction::ClearTransmissionBuffer() stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice) stdUartProtocolAbstraction::stdUartProtocolAbst
+raction(UartDeviceAbstraction::UARTDevice) stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice) virtual stdUartProtocolAbstraction::~stdUartProtocolAbstraction() stdUartProtocolAbstraction::~stdUartProt
+ocolAbstraction() virtual stdUartProtocolAbstraction::~stdUartProtocolAbstraction() virtual stdUartProtocolAbstraction::~stdUartProtocolAbstraction() virtual void stdUartProtocolAbstraction::SetDataAnalyseCallBack(bool (*)(short unsigned i
+nt, stdUartProtocolAbstraction*)) virtual void stdUartProtocolAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int)) static void stdUartProtocolAbstraction::stdUartProtocolAbstractionReceiveCallback(UartDeviceAbstr
+action*, unsigned int) virtual void stdUartProtocolAbstraction::restoreIntialCondition() virtual void stdUartProtocolAbstraction::Manager() bool stdUartProtocolAbstraction::checkTimeOutElapsed() virtual void stdUartProtocolAbstraction::set
+Error(int, bool) virtual void stdUartProtocolAbstraction::rstError() virtual int stdUartProtocolAbstraction::getLastError() virtual int stdUartProtocolAbstraction::popError() virtual bool stdUartProtocolAbstraction::IsTransmissionAvailable
+() virtual bool stdUartProtocolAbstraction::IsReceptionAvailable() int stdUartProtocolAbstraction::SendCommand(unsigned char*, int, int) void stdUartProtocolAbstraction::setLastDataReceivedBuffer(int) bool stdUartProtocolAbstraction::addDa
+taToReceiveBuffer(byte*, int, int) void stdUartProtocolAbstraction::setReceivedOpCode(int) bool stdUartProtocolAbstraction::popPacketReceived(int&) int stdUartProtocolAbstraction::getNewPacketReceived() void stdUartProtocolAbstraction::rst
+NewPacketReceived() byte stdUartProtocolAbstraction::calculateChecksum(byte*, int) CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 10] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 10] 
+CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 10] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 5] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 5] CSmallR
+ingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 5] void CSmallRingBuf<T, capacity>::clear() [with T = int, int capacity = 10] void CSmallRingBuf<T, capacity>::clear() [with T = int, int capacity = 5] bool CSmallRingBuf<T
+, capacity>::full() const [with T = int, int capacity = 10] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = int, int capacity = 10] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = int, int capacity = 10] bool CSmall
+RingBuf<T, capacity>::empty() const [with T = int, int capacity = 10] bool CSmallRingBuf<T, capacity>::full() const [with T = int, int capacity = 5] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = int, int capacity = 5] void
+ CSmallRingBuf<T, capacity>::pop_front(T&) [with T = int, int capacity = 5] bool CSmallRingBuf<T, capacity>::empty() const [with T = int, int capacity = 5] int CSmallRingBuf<T, capacity>::numItem() const [with T = int, int capacity = 5] vo
+id CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = int, int capacity = 10] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = int, int capacity = 5]
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDeviceAbstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits
+() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLastError() virtual void UartDeviceAbstraction::SetError(int) virtual int stdUartProtocolAbstraction::sendMs
+g(int) virtual int stdUartProtocolAbstraction::getMsg() virtual void stdUartProtocolAbstraction::SetDataAnalyseCallBack(bool (*)(short unsigned int, stdUartProtocolAbstraction*)) virtual void stdUartProtocolAbstraction::SetReceiveCallBack(
+void (*)(UartDeviceAbstraction*, unsigned int)) static void stdUartProtocolAbstraction::stdUartProtocolAbstractionReceiveCallback(UartDeviceAbstraction*, unsigned int) virtual void stdUartProtocolAbstraction::restoreIntialCondition() virtu
+al void stdUartProtocolAbstraction::setError(int, bool) virtual void stdUartProtocolAbstraction::rstError() virtual int stdUartProtocolAbstraction::getLastError() virtual int stdUartProtocolAbstraction::popError() virtual bool stdUartProto
+colAbstraction::IsTransmissionAvailable() virtual bool stdUartProtocolAbstraction::IsReceptionAvailable() bool stdUartProtocolAbstraction::addDataToReceiveBuffer(byte*, int, int) void stdUartProtocolAbstraction::setReceivedOpCode(int) bool
+ stdUartProtocolAbstraction::popPacketReceived(int&) int stdUartProtocolAbstraction::getNewPacketReceived() void stdUartProtocolAbstraction::rstNewPacketReceived() byte stdUartProtocolAbstraction::calculateChecksum(byte*, int) int stdUartP
+rotocolAbstraction::SendCommand(unsigned char*, int, int) virtual void stdUartProtocolAbstraction::ClearTransmissionBuffer() virtual int stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer() virtual void stdUartProtocolAbstraction:
+:TurnOff() virtual void stdUartProtocolAbstraction::TurnOn() void stdUartProtocolAbstraction::setLastDataReceivedBuffer(int) bool stdUartProtocolAbstraction::checkTimeOutElapsed() virtual void stdUartProtocolAbstraction::Manager() virtual 
+stdUartProtocolAbstraction::~stdUartProtocolAbstraction() virtual stdUartProtocolAbstraction::~stdUartProtocolAbstraction() stdUartProtocolAbstraction::~stdUartProtocolAbstraction() stdUartProtocolAbstraction::stdUartProtocolAbstraction(Ua
+rtDeviceAbstraction::UARTDevice) stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
+Execution times (seconds)
+ preprocessing         :   0.01 (16%) usr   0.00 ( 0%) sys   0.02 (10%) wall     559 kB (14%) ggc
+ parser                :   0.02 (17%) usr   0.02 (34%) sys   0.05 (30%) wall    1241 kB (32%) ggc
+ tree FRE              :   0.02 (17%) usr   0.00 ( 0%) sys   0.01 (10%) wall      32 kB ( 1%) ggc
+ dominance computation :   0.02 (17%) usr   0.02 (34%) sys   0.03 (20%) wall       0 kB ( 0%) ggc
+ combiner              :   0.01 (16%) usr   0.00 ( 0%) sys   0.02 (10%) wall      19 kB ( 1%) ggc
+ symout                :   0.00 ( 0%) usr   0.01 (32%) sys   0.02 (10%) wall      25 kB ( 1%) ggc
+ TOTAL                 :   0.09             0.05             0.16               3932 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDevice
+Abstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLa
+stError() virtual void UartDeviceAbstraction::SetError(int) virtual void QueueUart::TurnOn() virtual void QueueUart::TurnOff() bool QueueUart::RunningTransmission() bool QueueUart::TransmitBufferOverflow() bool QueueUart::ReceptionBufferOv
+erflow() void QueueUart::rstTransmitBufferOverflow() void QueueUart::rstReceptionBufferOverflow() virtual int stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer() void stdUartProtocolAbstraction::setTimeoutTx(int) void stdUartProt
+ocolAbstraction::startTxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutTxElapsed() void stdUartProtocolAbstraction::stopTxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusTxTimeoutTimer() void stdUartProtocolAbstraction::se
+tTimeoutRx(int) void stdUartProtocolAbstraction::startRxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutRxElapsed() void stdUartProtocolAbstraction::stopRxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusRxTimeoutTimer() int
+ stdUartProtocolAbstraction::getReceiverState() void stdUartProtocolAbstraction::setReceiverState(int) void stdUartProtocolAbstraction::newByteReceived() int stdUartProtocolAbstraction::getNumBytesReceived() void stdUartProtocolAbstraction
+::rstBytesReceived() void stdUartProtocolAbstraction::setPacketlength(int) int stdUartProtocolAbstraction::getPacketLength() void stdUartProtocolAbstraction::newPacketReceived() void stdUartProtocolAbstraction::addPacketsReceived(byte) voi
+d stdUartProtocolAbstraction::rstPacketsReceived() byte stdUartProtocolAbstraction::getPacketsReceived() void stdUartProtocolAbstraction::setPacketsReceived(byte) void stdUartProtocolAbstraction::newPacketTransmitted() void stdUartProtocol
+Abstraction::addPacketsTransmitted(byte) void stdUartProtocolAbstraction::rstPacketsTransmitted() byte stdUartProtocolAbstraction::getPacketsTransmitted() void stdUartProtocolAbstraction::setPacketsTransmitted(byte) int stdUartProtocolAbst
+raction::getLastReceivedOpCode() byte* stdUartProtocolAbstraction::bufferLastDataReceived() int stdUartProtocolAbstraction::getNumDataReceived() void stdUartProtocolAbstraction::setNumDataReceived(int) void stdUartProtocolAbstraction::setN
+umPacketsLost(int) int stdUartProtocolAbstraction::getNumPacketsLost() virtual int stdUartProtocolAbstraction::sendMsg(int) virtual int stdUartProtocolAbstraction::getMsg() virtual void stdUartProtocolAbstraction::TurnOn() virtual void std
+UartProtocolAbstraction::TurnOff() virtual void stdUartProtocolAbstraction::ClearTransmissionBuffer() HwChannel<T, capacity>::HwChannel(bitResolution) HwChannel<T, capacity>::~HwChannel() dword HwChannel<T, capacity>::getSampleFrq() void H
+wChannel<T, capacity>::setSampleFrq(dword) bool HwChannel<T, capacity>::getIsZeroable() void HwChannel<T, capacity>::setIsZeroable(bool) word HwChannel<T, capacity>::getOffset() void HwChannel<T, capacity>::setOffset(word) float HwChannel<
+T, capacity>::getGain() void HwChannel<T, capacity>::set2KgValue(word) word HwChannel<T, capacity>::get2KgValue() void HwChannel<T, capacity>::setGain(float) bitResolution HwChannel<T, capacity>::getBitResolution() int HwChannel<T, capacit
+y>::getNumDataBuffered() bool HwChannel<T, capacity>::isSampleBufferEmpty() bool HwChannel<T, capacity>::isSampleBufferFull() int HwChannel<T, capacity>::getLastAdcDataSampled(T&) int HwChannel<T, capacity>::getLastPhyDataSampled(float&) i
+nt HwChannel<T, capacity>::pushAdcData(T) int HwChannel<T, capacity>::pushFiltAdcData(T) int HwChannel<T, capacity>::popAdcData(T&) void HwChannel<T, capacity>::clearAdcFifo() virtual float HwChannel<T, capacity>::physicalValue(T) int HwCh
+annel<T, capacity>::zero() void HwChannel<T, capacity>::rstZero() bool HwChannel<T, capacity>::isEnabled() void HwChannel<T, capacity>::setEnabled(bool) bool HwChannel<T, capacity>::isAvFilterEnabled() bool HwChannel<T, capacity>::setAvera
+geFilter(bool) HwChannelType HwChannel<T, capacity>::getChannelType() float HwChannel<T, capacity>::getAdcResolution() float HwChannel<T, capacity>::getVoltageRefence_mV() void HwChannel<T, capacity>::setVoltageRefernce_mV(float) float HwC
+hannel<T, capacity>::adcTOmV(T) HwChanKindOfError HwChannel<T, capacity>::kindOfError() dword HwChannel<T, capacity>::getNumErrorOccurrence() void HwChannel<T, capacity>::setChannelType(HwChannelType) int HwChannel<T, capacity>::set_filter
+_value(int) int HwChannel<T, capacity>::get_filter_value() word HwChannel<T, capacity>::AverageFilter(T&) GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) GenericHwChannel<T, capacity>::GenericHwChannel() Volta
+geHwChannel<T, capacity>::VoltageHwChannel(bitResolution) VoltageHwChannel<T, capacity>::~VoltageHwChannel() HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) HwChanManager<T, capacity>::~HwChanManager() dword HwChanMana
+ger<T, capacity>::getSampleFrq() bitResolution HwChanManager<T, capacity>::getBitResolution() float HwChanManager<T, capacity>::getAdcResolution() virtual HwChannelType HwChanManager<T, capacity>::getChannelType() float HwChanManager<T, ca
+pacity>::getVoltageRefence_mV() int HwChanManager<T, capacity>::getNumHwChan() void HwChanManager<T, capacity>::setIsZeroable(int, bool) bool HwChanManager<T, capacity>::getIsZeroable(int) word HwChanManager<T, capacity>::getOffset(int) vo
+id HwChanManager<T, capacity>::setOffset(int, word) float HwChanManager<T, capacity>::getGain(int) void HwChanManager<T, capacity>::setGain(int, float) void HwChanManager<T, capacity>::set2KgValue(int, long int) word HwChanManager<T, capac
+ity>::get2KgValue(int) float HwChanManager<T, capacity>::physicalValue(int, T) float HwChanManager<T, capacity>::adcTOmV(int, T) int HwChanManager<T, capacity>::zero(int) void HwChanManager<T, capacity>::rstZero(int) bool HwChanManager<T, 
+capacity>::isEnabled(int) void HwChanManager<T, capacity>::setEnabled(int, bool) bool HwChanManager<T, capacity>::isAvFilterEnabled(int) void HwChanManager<T, capacity>::setAverageFilter(int, bool) void HwChanManager<T, capacity>::setVolta
+geRefernce_mV(float) int HwChanManager<T, capacity>::pushAdcDataToChan(int, T) int HwChanManager<T, capacity>::pushFiltAdcDataToChan(int, T) int HwChanManager<T, capacity>::getLastAdcDataSampledByChan(int, T&) int HwChanManager<T, capacity
+>::getLastPhyDataSampledByChan(int, float&) bool HwChanManager<T, capacity>::popAdcData(T*) bool HwChanManager<T, capacity>::popAdcData(T*, int) void HwChanManager<T, capacity>::clearFifo() int HwChanManager<T, capacity>::getNumDataFifoed(
+int) bool HwChanManager<T, capacity>::isFifoEmpty(int) bool HwChanManager<T, capacity>::isFifoFull(int) bool HwChanManager<T, capacity>::HwChanManagerError(HwChanKindOfError*) bool HwChanManager<T, capacity>::HwChanManagerError() dword HwC
+hanManager<T, capacity>::getNumErrorOccurrence(int) int HwChanManager<T, capacity>::set_rampa(int, float*, int) int HwChanManager<T, capacity>::set_sommarampa(int, float) int HwChanManager<T, capacity>::set_filter_value(int, int) int HwCha
+nManager<T, capacity>::get_filter_value(int) GenericHwChanManager<T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) GenericHwChanManager<T, capacity>::~GenericHwChanManager() void GenericHwChanManager<T, capacity
+>::setChanType(int, HwChannelType) HwChannelType GenericHwChanManager<T, capacity>::getChannelType(int) VoltageHwChanManager<T, capacity>::VoltageHwChanManager(int, bitResolution, dword) VoltageHwChanManager<T, capacity>::~VoltageHwChanMan
+ager() HwChannelType VoltageHwChanManager<T, capacity>::getChannelType() virtual int SIFRAProtocol::GetNumBytesInTransmissionBuffer() SIFRAProtocol::SIFRACmd_FromBoardToPc SIFRAProtocol::getLastCmdSent() byte SIFRAProtocol::getLastHwError(
+) void SIFRAProtocol::rstLastHwError() void SIFRAProtocol::rstLoadPacketsSent() void SIFRAProtocol::setLocalNODEID(byte) byte SIFRAProtocol::getLocalNODEID() void SIFRAProtocol::setEnabledLine(byte) byte SIFRAProtocol::getEnabledLine() voi
+d SIFRAProtocol::resetEnabledLine() void SIFRAProtocol::setNumOfEnabledLines(int) int SIFRAProtocol::getNumOfEnabledLines() word SIFRAProtocol::getLoadChan(byte) SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int) SIFRAPro
+tocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int) SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int) virtual SIFRAProtocol::~SIFRAProtocol() SIFRAProtocol::~SIFRAProtocol() virtual SIFRAProtocol::~SIFRAProtocol
+() virtual SIFRAProtocol::~SIFRAProtocol() static bool SIFRAProtocol::SIFRADataAnalyse(short unsigned int, stdUartProtocolAbstraction*) virtual void SIFRAProtocol::Manager() int SIFRAProtocol::SIFRA_decodeStartCmd(byte*) int SIFRAProtocol:
+:sendSIFRAStart() int SIFRAProtocol::sendSIFRAStatus() int SIFRAProtocol::sendSIFRAInfo() int SIFRAProtocol::sendSIFRADebug() int SIFRAProtocol::sendAcknowledge() void SIFRAProtocol::SIFRA_resetStatusError() int SIFRAProtocol::sendSIFRALoa
+dSamples(dword, int) int SIFRAProtocol::sendSIFRALoadSamples(dword*) int SIFRAProtocol::SIFRA_getInfoCmdDecode() int SIFRAProtocol::SIFRA_getDebugCmdDecode() int SIFRAProtocol::SIFRA_set_Stop_All() int SIFRAProtocol::SIFRA_getStatusCmdDeco
+de() int SIFRAProtocol::SIFRA_setStart() int SIFRAProtocol::SIFRA_setZeroCell1() int SIFRAProtocol::SIFRA_setZeroCell2() int SIFRAProtocol::SIFRA_setZeroCell3() int SIFRAProtocol::SIFRA_setZeroCell4() int SIFRAProtocol::SIFRA_setZeroCell5(
+) int SIFRAProtocol::SIFRA_setZeroCell6_H20() int SIFRAProtocol::SIFRA_setGainCell1() int SIFRAProtocol::SIFRA_setGainCell2() int SIFRAProtocol::SIFRA_setGainCell3() int SIFRAProtocol::SIFRA_setGainCell4() int SIFRAProtocol::SIFRA_setGainC
+ell5() int SIFRAProtocol::SIFRA_setGainCell6() int SIFRAProtocol::SIFRA_setGainCellH2O() int SIFRAProtocol::SIFRA_setJumpToLoader() int SIFRAProtocol::SIFRA_startAcquisitionCmdDecode() int SIFRAProtocol::SIFRA_stopAcquisitionCmdDecode() in
+t SIFRAProtocol::SIFRA_zeroLoadCmdDecode() int SIFRAProtocol::SIFRA_stopMotCmdDecode() void SIFRAProtocol::setLocalNodeID(byte) byte SIFRAProtocol::getLocalNodeID() void SIFRAProtocol::setLastRemoteNodeID(byte) byte SIFRAProtocol::getLastR
+emoteNodeID() bool SIFRAProtocol::checkOpCode(byte, int, int&) bool SIFRAProtocol::checksum(byte, byte, byte) virtual int SIFRAProtocol::sendMsg(int) virtual int SIFRAProtocol::getMsg() CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T =
+ int, int capacity = 20] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 20] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = int, int capacity = 20] float HwChanManager<T, capacity>::getGain(int) [with T = l
+ong unsigned int, int capacity = 10] word HwChanManager<T, capacity>::getOffset(int) [with T = long unsigned int, int capacity = 10] bool CSmallRingBuf<T, capacity>::full() const [with T = int, int capacity = 20] void CSmallRingBuf<T, capa
+city>::push_back(const T&) [with T = int, int capacity = 20] bool CSmallRingBuf<T, capacity>::empty() const [with T = int, int capacity = 20] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = int, int capacity = 20] void CSmallRingB
+uf<T, capacity>::clear() [with T = int, int capacity = 20] float HwChannel<T, capacity>::getGain() [with T = long unsigned int, int capacity = 10] word HwChannel<T, capacity>::getOffset() [with T = long unsigned int, int capacity = 10] voi
+d CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = int, int capacity = 20] void __static_initialization_and_destruction_0(int, int) LINES_STATUS::LINES_STATUS() LINES_STATUS::LINES_STATUS() LINES_STATUS::LINES_STATUS() vo
+id _GLOBAL__I_StartCmd()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDeviceAbstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits
+() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLastError() virtual void UartDeviceAbstraction::SetError(int) int SIFRAProtocol::SIFRA_decodeStartCmd(byte*)
+ void SIFRAProtocol::SIFRA_resetStatusError() int SIFRAProtocol::sendSIFRALoadSamples(dword, int) int SIFRAProtocol::sendSIFRALoadSamples(dword*) int SIFRAProtocol::SIFRA_getInfoCmdDecode() int SIFRAProtocol::SIFRA_getDebugCmdDecode() int 
+SIFRAProtocol::SIFRA_set_Stop_All() int SIFRAProtocol::SIFRA_getStatusCmdDecode() int SIFRAProtocol::SIFRA_setStart() int SIFRAProtocol::SIFRA_setZeroCell1() int SIFRAProtocol::SIFRA_setZeroCell2() int SIFRAProtocol::SIFRA_setZeroCell3() i
+nt SIFRAProtocol::SIFRA_setZeroCell4() int SIFRAProtocol::SIFRA_setZeroCell5() int SIFRAProtocol::SIFRA_setZeroCell6_H20() int SIFRAProtocol::SIFRA_setGainCell1() int SIFRAProtocol::SIFRA_setGainCell2() int SIFRAProtocol::SIFRA_setGainCell
+3() int SIFRAProtocol::SIFRA_setGainCell4() int SIFRAProtocol::SIFRA_setGainCell5() int SIFRAProtocol::SIFRA_setGainCell6() int SIFRAProtocol::SIFRA_setGainCellH2O() int SIFRAProtocol::SIFRA_setJumpToLoader() int SIFRAProtocol::SIFRA_start
+AcquisitionCmdDecode() int SIFRAProtocol::SIFRA_stopAcquisitionCmdDecode() int SIFRAProtocol::SIFRA_zeroLoadCmdDecode() int SIFRAProtocol::SIFRA_stopMotCmdDecode() void SIFRAProtocol::setLocalNodeID(byte) byte SIFRAProtocol::getLocalNodeID
+() void SIFRAProtocol::setLastRemoteNodeID(byte) byte SIFRAProtocol::getLastRemoteNodeID() bool SIFRAProtocol::checkOpCode(byte, int, int&) bool SIFRAProtocol::checksum(byte, byte, byte) virtual int SIFRAProtocol::sendMsg(int) virtual int 
+SIFRAProtocol::getMsg() (static initializers for PROTOCOLSIFRA.cpp) virtual void stdUartProtocolAbstraction::ClearTransmissionBuffer() virtual int SIFRAProtocol::GetNumBytesInTransmissionBuffer() virtual void stdUartProtocolAbstraction::Tu
+rnOff() virtual void stdUartProtocolAbstraction::TurnOn() int SIFRAProtocol::sendAcknowledge() int SIFRAProtocol::sendSIFRADebug() int SIFRAProtocol::sendSIFRAInfo() int SIFRAProtocol::sendSIFRAStatus() int SIFRAProtocol::sendSIFRAStart() 
+virtual void SIFRAProtocol::Manager() static bool SIFRAProtocol::SIFRADataAnalyse(short unsigned int, stdUartProtocolAbstraction*) virtual SIFRAProtocol::~SIFRAProtocol() SIFRAProtocol::~SIFRAProtocol() virtual SIFRAProtocol::~SIFRAProtoco
+l() SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int) SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
+Execution times (seconds)
+ preprocessing         :   0.03 (15%) usr   0.00 ( 0%) sys   0.03 (10%) wall     591 kB ( 9%) ggc
+ parser                :   0.02 ( 8%) usr   0.02 (35%) sys   0.05 (15%) wall    2488 kB (36%) ggc
+ name lookup           :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall     296 kB ( 4%) ggc
+ tree gimplify         :   0.01 ( 7%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall     260 kB ( 4%) ggc
+ tree alias analysis   :   0.02 ( 7%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall       9 kB ( 0%) ggc
+ tree operand scan     :   0.02 ( 8%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall     277 kB ( 4%) ggc
+ tree SSA to normal    :   0.02 ( 7%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall      33 kB ( 0%) ggc
+ tree rename SSA copies:   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall       0 kB ( 0%) ggc
+ dominance frontiers   :   0.02 ( 8%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall       0 kB ( 0%) ggc
+ expand                :   0.02 ( 8%) usr   0.01 (33%) sys   0.02 ( 5%) wall     506 kB ( 7%) ggc
+ varconst              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.03 (10%) wall      18 kB ( 0%) ggc
+ local alloc           :   0.02 ( 8%) usr   0.00 ( 0%) sys   0.01 ( 5%) wall      63 kB ( 1%) ggc
+ global alloc          :   0.02 ( 8%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall      21 kB ( 0%) ggc
+ thread pro- & epilogue:   0.01 ( 7%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall      34 kB ( 0%) ggc
+ symout                :   0.02 ( 8%) usr   0.00 ( 0%) sys   0.02 ( 5%) wall      26 kB ( 0%) ggc
+ TOTAL                 :   0.20             0.05             0.31               6948 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() virtual UartDeviceAbstraction::UARTParity UartDeviceAbstraction::GetParity() virtual UartDeviceAbstraction::UARTFrameBits UartDevice
+Abstraction::GetFrameBits() virtual UartDeviceAbstraction::UARTStopBits UartDeviceAbstraction::GetStopBits() virtual UartDeviceAbstraction::UARTBaudRate UartDeviceAbstraction::GetBaudRate() virtual unsigned int UartDeviceAbstraction::GetLa
+stError() virtual void UartDeviceAbstraction::SetError(int) virtual void QueueUart::TurnOn() virtual void QueueUart::TurnOff() bool QueueUart::RunningTransmission() bool QueueUart::TransmitBufferOverflow() bool QueueUart::ReceptionBufferOv
+erflow() void QueueUart::rstTransmitBufferOverflow() void QueueUart::rstReceptionBufferOverflow() virtual int stdUartProtocolAbstraction::GetNumBytesInTransmissionBuffer() void stdUartProtocolAbstraction::setTimeoutTx(int) void stdUartProt
+ocolAbstraction::startTxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutTxElapsed() void stdUartProtocolAbstraction::stopTxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusTxTimeoutTimer() void stdUartProtocolAbstraction::se
+tTimeoutRx(int) void stdUartProtocolAbstraction::startRxTimeoutTimer() bool stdUartProtocolAbstraction::timeoutRxElapsed() void stdUartProtocolAbstraction::stopRxTimeoutTimer() bool stdUartProtocolAbstraction::getStatusRxTimeoutTimer() int
+ stdUartProtocolAbstraction::getReceiverState() void stdUartProtocolAbstraction::setReceiverState(int) void stdUartProtocolAbstraction::newByteReceived() int stdUartProtocolAbstraction::getNumBytesReceived() void stdUartProtocolAbstraction
+::rstBytesReceived() void stdUartProtocolAbstraction::setPacketlength(int) int stdUartProtocolAbstraction::getPacketLength() void stdUartProtocolAbstraction::newPacketReceived() void stdUartProtocolAbstraction::addPacketsReceived(byte) voi
+d stdUartProtocolAbstraction::rstPacketsReceived() byte stdUartProtocolAbstraction::getPacketsReceived() void stdUartProtocolAbstraction::setPacketsReceived(byte) void stdUartProtocolAbstraction::newPacketTransmitted() void stdUartProtocol
+Abstraction::addPacketsTransmitted(byte) void stdUartProtocolAbstraction::rstPacketsTransmitted() byte stdUartProtocolAbstraction::getPacketsTransmitted() void stdUartProtocolAbstraction::setPacketsTransmitted(byte) int stdUartProtocolAbst
+raction::getLastReceivedOpCode() byte* stdUartProtocolAbstraction::bufferLastDataReceived() int stdUartProtocolAbstraction::getNumDataReceived() void stdUartProtocolAbstraction::setNumDataReceived(int) void stdUartProtocolAbstraction::setN
+umPacketsLost(int) int stdUartProtocolAbstraction::getNumPacketsLost() virtual int stdUartProtocolAbstraction::sendMsg(int) virtual int stdUartProtocolAbstraction::getMsg() virtual void stdUartProtocolAbstraction::TurnOn() virtual void std
+UartProtocolAbstraction::TurnOff() virtual void stdUartProtocolAbstraction::ClearTransmissionBuffer() HwChannel<T, capacity>::HwChannel(bitResolution) HwChannel<T, capacity>::~HwChannel() dword HwChannel<T, capacity>::getSampleFrq() void H
+wChannel<T, capacity>::setSampleFrq(dword) bool HwChannel<T, capacity>::getIsZeroable() void HwChannel<T, capacity>::setIsZeroable(bool) word HwChannel<T, capacity>::getOffset() void HwChannel<T, capacity>::setOffset(word) float HwChannel<
+T, capacity>::getGain() void HwChannel<T, capacity>::set2KgValue(word) word HwChannel<T, capacity>::get2KgValue() void HwChannel<T, capacity>::setGain(float) bitResolution HwChannel<T, capacity>::getBitResolution() int HwChannel<T, capacit
+y>::getNumDataBuffered() bool HwChannel<T, capacity>::isSampleBufferEmpty() bool HwChannel<T, capacity>::isSampleBufferFull() int HwChannel<T, capacity>::getLastAdcDataSampled(T&) int HwChannel<T, capacity>::getLastPhyDataSampled(float&) i
+nt HwChannel<T, capacity>::pushAdcData(T) int HwChannel<T, capacity>::pushFiltAdcData(T) int HwChannel<T, capacity>::popAdcData(T&) void HwChannel<T, capacity>::clearAdcFifo() virtual float HwChannel<T, capacity>::physicalValue(T) int HwCh
+annel<T, capacity>::zero() void HwChannel<T, capacity>::rstZero() bool HwChannel<T, capacity>::isEnabled() void HwChannel<T, capacity>::setEnabled(bool) bool HwChannel<T, capacity>::isAvFilterEnabled() bool HwChannel<T, capacity>::setAvera
+geFilter(bool) HwChannelType HwChannel<T, capacity>::getChannelType() float HwChannel<T, capacity>::getAdcResolution() float HwChannel<T, capacity>::getVoltageRefence_mV() void HwChannel<T, capacity>::setVoltageRefernce_mV(float) float HwC
+hannel<T, capacity>::adcTOmV(T) HwChanKindOfError HwChannel<T, capacity>::kindOfError() dword HwChannel<T, capacity>::getNumErrorOccurrence() void HwChannel<T, capacity>::setChannelType(HwChannelType) int HwChannel<T, capacity>::set_filter
+_value(int) int HwChannel<T, capacity>::get_filter_value() word HwChannel<T, capacity>::AverageFilter(T&) GenericHwChannel<T, capacity>::GenericHwChannel(HwChannelType, bitResolution) GenericHwChannel<T, capacity>::GenericHwChannel() Volta
+geHwChannel<T, capacity>::VoltageHwChannel(bitResolution) VoltageHwChannel<T, capacity>::~VoltageHwChannel() HwChanManager<T, capacity>::HwChanManager(int, bitResolution, dword) HwChanManager<T, capacity>::~HwChanManager() dword HwChanMana
+ger<T, capacity>::getSampleFrq() bitResolution HwChanManager<T, capacity>::getBitResolution() float HwChanManager<T, capacity>::getAdcResolution() virtual HwChannelType HwChanManager<T, capacity>::getChannelType() float HwChanManager<T, ca
+pacity>::getVoltageRefence_mV() int HwChanManager<T, capacity>::getNumHwChan() void HwChanManager<T, capacity>::setIsZeroable(int, bool) bool HwChanManager<T, capacity>::getIsZeroable(int) word HwChanManager<T, capacity>::getOffset(int) vo
+id HwChanManager<T, capacity>::setOffset(int, word) float HwChanManager<T, capacity>::getGain(int) void HwChanManager<T, capacity>::setGain(int, float) void HwChanManager<T, capacity>::set2KgValue(int, long int) word HwChanManager<T, capac
+ity>::get2KgValue(int) float HwChanManager<T, capacity>::physicalValue(int, T) float HwChanManager<T, capacity>::adcTOmV(int, T) int HwChanManager<T, capacity>::zero(int) void HwChanManager<T, capacity>::rstZero(int) bool HwChanManager<T, 
+capacity>::isEnabled(int) void HwChanManager<T, capacity>::setEnabled(int, bool) bool HwChanManager<T, capacity>::isAvFilterEnabled(int) void HwChanManager<T, capacity>::setAverageFilter(int, bool) void HwChanManager<T, capacity>::setVolta
+geRefernce_mV(float) int HwChanManager<T, capacity>::pushAdcDataToChan(int, T) int HwChanManager<T, capacity>::pushFiltAdcDataToChan(int, T) int HwChanManager<T, capacity>::getLastAdcDataSampledByChan(int, T&) int HwChanManager<T, capacity
+>::getLastPhyDataSampledByChan(int, float&) bool HwChanManager<T, capacity>::popAdcData(T*) bool HwChanManager<T, capacity>::popAdcData(T*, int) void HwChanManager<T, capacity>::clearFifo() int HwChanManager<T, capacity>::getNumDataFifoed(
+int) bool HwChanManager<T, capacity>::isFifoEmpty(int) bool HwChanManager<T, capacity>::isFifoFull(int) bool HwChanManager<T, capacity>::HwChanManagerError(HwChanKindOfError*) bool HwChanManager<T, capacity>::HwChanManagerError() dword HwC
+hanManager<T, capacity>::getNumErrorOccurrence(int) int HwChanManager<T, capacity>::set_rampa(int, float*, int) int HwChanManager<T, capacity>::set_sommarampa(int, float) int HwChanManager<T, capacity>::set_filter_value(int, int) int HwCha
+nManager<T, capacity>::get_filter_value(int) GenericHwChanManager<T, capacity>::GenericHwChanManager(int, HwChannelType, bitResolution, dword) GenericHwChanManager<T, capacity>::~GenericHwChanManager() void GenericHwChanManager<T, capacity
+>::setChanType(int, HwChannelType) HwChannelType GenericHwChanManager<T, capacity>::getChannelType(int) VoltageHwChanManager<T, capacity>::VoltageHwChanManager(int, bitResolution, dword) VoltageHwChanManager<T, capacity>::~VoltageHwChanMan
+ager() HwChannelType VoltageHwChanManager<T, capacity>::getChannelType() virtual int SIFRAProtocol::GetNumBytesInTransmissionBuffer() SIFRAProtocol::SIFRACmd_FromBoardToPc SIFRAProtocol::getLastCmdSent() byte SIFRAProtocol::getLastHwError(
+) void SIFRAProtocol::rstLastHwError() void SIFRAProtocol::rstLoadPacketsSent() void SIFRAProtocol::setLocalNODEID(byte) byte SIFRAProtocol::getLocalNODEID() void SIFRAProtocol::setEnabledLine(byte) byte SIFRAProtocol::getEnabledLine() voi
+d SIFRAProtocol::resetEnabledLine() void SIFRAProtocol::setNumOfEnabledLines(int) int SIFRAProtocol::getNumOfEnabledLines() word SIFRAProtocol::getLoadChan(byte) void SIFRA_Manager::setVoltageHwChanManager(VoltageHwChanManager<short unsign
+ed int, 5>*) void SIFRA_Manager::setWeightChan(GenericHwChanManager<long unsigned int, 10>*) void SIFRA_Manager::setMadeBackup(int) bool SIFRA_Manager::getMadeBackup(int) void SIFRA_Manager::setMadeBackup(bool) bool SIFRA_Manager::getMadeB
+ackup() byte SIFRA_Manager::readHarwareVersion() void SIFRA_Manager::set_flag_param_encoder(byte, int) byte SIFRA_Manager::get_flag_param_encoder(int) SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*) SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*
+) SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*) SIFRA_Manager::~SIFRA_Manager() SIFRA_Manager::~SIFRA_Manager() SIFRA_Manager::~SIFRA_Manager() void SIFRA_Manager::Manager() void SIFRA_Manager::SIFRAcheck_new_command() bool SIFRA_Manager::S
+IFRASacca_Manager() bool SIFRA_Manager::SIFRAManual_Manager(int) bool SIFRA_Manager::SIFRART_Manager(int) bool SIFRA_Manager::SIFRAST_Manager(int) bool SIFRA_Manager::SIFRARampe_Manager(int, bool) int SIFRA_Manager::SIFRASpeedPump_Manager(
+byte) bool SIFRA_Manager::SIFRASample_Manager() void SIFRA_Manager::SIFRACalib_Manager(int) int SIFRA_Manager::SIFRAAirIn_Manager() void SIFRA_Manager::SIFRAResetAirManager() bool SIFRA_Manager::SIFRAError_Manager() void SIFRA_Manager::SIF
+RABreak_Manager() bool SIFRA_Manager::SIFRAStop_Manager() bool SIFRA_Manager::SIFRAService_Manager() bool SIFRA_Manager::SIFRATest_Pompe(int) bool SIFRA_Manager::SIFRATest_Emc() int SIFRA_Manager::SIFRALed_Manager() void SIFRA_Manager::SIF
+RAFlow_manager() byte SIFRA_Manager::Decode_StartMsg()
+CPUSIFRA_MANAGER.cpp:2731: error: expected `)' before '{' token
+ int SIFRA_Manager::SIFRAMsg_setStopAllHandler() int SIFRA_Manager::SIFRAMsg_setStartHandler() int SIFRA_Manager::SIFRAMsg_statusAskedHandler() int SIFRA_Manager::SIFRAMsg_infoAskedHandler() int SIFRA_Manager::SIFRAMsg_debugAskedHandler() 
+int SIFRA_Manager::SIFRAMsg_startAcquisitionHandler() int SIFRA_Manager::SIFRAMsg_jumpToLoaderHandler() int SIFRA_Manager::SIFRAMsg_resetApplicationHandler() int SIFRA_Manager::SIFRAMsg_unknownErrorHandler() void SIFRA_Manager::SIFRAresetV
+iaStatus() void SIFRA_Manager::SIFRASetViaStatus() void SIFRA_Manager::SIFRASetViaStatus(int) byte SIFRA_Manager::SIFRAresetSystemStatus() bool SIFRA_Manager::SIFRAOpenLineEV(int) bool SIFRA_Manager::SIFRACloseLineEV(int) int SIFRA_Manager
+::readZeroInThisLine(int) int SIFRA_Manager::readLoadInThisLine(int) bool SIFRA_Manager::SetHarwareVersion() void SIFRA_Manager::setErrorEEpromReding() void SIFRA_Manager::setBackUpSequenceState() int SIFRA_Manager::downloadSequenceState(b
+yte) int SIFRA_Manager::backup_fillingState(int) int SIFRA_Manager::RichiamaStatoSospeso(int) bool SIFRA_Manager::BackUp_StatoStart() bool SIFRA_Manager::DownLoad_StatoStart() bool SIFRA_Manager::Backup_Param_Encoder(FP_STRUCT*, int) void 
+SIFRA_Manager::set_backup_line_type(byte) byte SIFRA_Manager::get_backup_line_type() bool SIFRA_Manager::Carica_Param_Encoder(FP_STRUCT*, int) byte SIFRA_Manager::Verifica_linea_montata(int, int) bool SIFRA_Manager::salva_rapporto_flussope
+so(int, int, int, byte) void SIFRA_Manager::default_struttura_flussopeso(int) void SIFRA_Manager::Setta_Valori_Riempitubi(int, byte) byte SIFRA_Manager::FindTypeOfLineKit(word) byte SIFRA_Manager::changeSIFRAstatus(byte) byte SIFRA_Manager
+::getSIFRAstatus() byte SIFRA_Manager::getSIFRApreviousStatus() byte SIFRA_Manager::controllo_errori_linea(int, int) int SIFRA_Manager::calcolo_margine_tara(int, int) int SIFRA_Manager::Find_Num_of_Enabled_Lines(byte) int SIFRA_Manager::Fi
+nd_Enable_line(byte) void SIFRA_Manager::Aggiorna_pesi_erogati() bool SIFRA_Manager::Verifica_celle() bool SIFRA_Manager::Verifica_encoder_motori() void SIFRA_Manager::Setta_filtro_peso(int) void SIFRA_Manager::calcola_velocita_massime() v
+oid SIFRA_Manager::setta_soglie_riempimento() void SIFRA_Manager::encoder_updateCnt(int) float SIFRA_Manager::calc_flusso_pompa(int) void SIFRA_Manager::ResetMotorStepCounter() void SIFRA_Manager::setStatePump(int, int) int SIFRA_Manager::
+getStatePump(int) void SIFRA_Manager::ResetMadeBackup(int) void SIFRA_Manager::VerificaESD_Damage() void SIFRA_Manager::setta_led_pannello(int, bool) void SIFRA_Manager::reset_state_leds(bool) void SIFRA_Manager::reset_state_this_led(int, 
+bool) void SIFRA_Manager::imposta_allarme_aria(int) void SIFRA_Manager::DefaultSystemReset() void SIFRA_Manager::FlashLed_hw_error() void SIFRA_Manager::DeleteBackedUpState() int SIFRA_Manager::calc_next_theor_weight(int) int SIFRA_Manager
+::calcola_variazione_peso(int) void SIFRA_Manager::UpdateDebugStruct() void SIFRA_Manager::Encoder_counter() void SIFRA_Manager::EncoderPumpsControl(byte) void SIFRA_Manager::Set_weight_threshold() CSmallRingBuf<T, capacity>::CSmallRingBuf
+() [with T = ViaSample, int capacity = 3] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = ViaSample, int capacity = 3] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = ViaSample, int capacity = 3] bool HwChanManager<T, capacity>
+::popAdcData(T*) [with T = long unsigned int, int capacity = 10] bool CSmallRingBuf<T, capacity>::full() const [with T = ViaSample, int capacity = 3] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = ViaSample, int capacity = 
+3] int CSmallRingBuf<T, capacity>::numItem() const [with T = ViaSample, int capacity = 3] bool CSmallRingBuf<T, capacity>::empty() const [with T = ViaSample, int capacity = 3] void CSmallRingBuf<T, capacity>::readLastPushed(T&) [with T = V
+iaSample, int capacity = 3] void CSmallRingBuf<T, capacity>::clear() [with T = ViaSample, int capacity = 3] void HwChanManager<T, capacity>::setOffset(int, word) [with T = long unsigned int, int capacity = 10] word HwChanManager<T, capacit
+y>::getOffset(int) [with T = long unsigned int, int capacity = 10] void HwChanManager<T, capacity>::setGain(int, float) [with T = long unsigned int, int capacity = 10] void HwChanManager<T, capacity>::set2KgValue(int, long int) [with T = l
+ong unsigned int, int capacity = 10] int HwChanManager<T, capacity>::set_filter_value(int, int) [with T = long unsigned int, int capacity = 10] int HwChanManager<T, capacity>::get_filter_value(int) [with T = long unsigned int, int capacity
+ = 10] bool HwChannel<T, capacity>::isEnabled() [with T = long unsigned int, int capacity = 10] bool HwChannel<T, capacity>::isSampleBufferEmpty() [with T = long unsigned int, int capacity = 10] int HwChannel<T, capacity>::popAdcData(T&) [
+with T = long unsigned int, int capacity = 10] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = ViaSample, int capacity = 3] void HwChannel<T, capacity>::setOffset(word) [with T = long unsigned int, int capacity = 10
+] word HwChannel<T, capacity>::getOffset() [with T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::setGain(float) [with T = long unsigned int, int capacity = 10] void HwChannel<T, capacity>::set2KgValue(word) [with T =
+ long unsigned int, int capacity = 10] int HwChannel<T, capacity>::set_filter_value(int) [with T = long unsigned int, int capacity = 10] int HwChannel<T, capacity>::get_filter_value() [with T = long unsigned int, int capacity = 10] bool CS
+mallRingBuf<T, capacity>::empty() const [with T = long unsigned int, int capacity = 10] void CSmallRingBuf<T, capacity>::pop_front(T&) [with T = long unsigned int, int capacity = 10] void __static_initialization_and_destruction_0(int, int)
+ void _GLOBAL__I_fp()
+Execution times (seconds)
+ preprocessing         :   0.03 (15%) usr   0.00 ( 0%) sys   0.05 (18%) wall     681 kB ( 9%) ggc
+ parser                :   0.12 (62%) usr   0.03 (50%) sys   0.14 (53%) wall    4715 kB (65%) ggc
+ name lookup           :   0.05 (23%) usr   0.02 (26%) sys   0.06 (23%) wall     424 kB ( 6%) ggc
+ TOTAL                 :   0.20             0.06             0.26               7282 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void nvr_init(byte) int nvr_errors() void nvr_setDeviceAddress(byte) bool nvr_re
+adUserMem(void*, int, int) bool nvr_writeUserMem(void*, int, int) bool nvr_readParam(void*, int, int, bool*) bool nvr_writeParam(void*, int, int, bool*) bool nvr_readUserChkBlock(void*, int, int, bool*) bool nvr_writeUserChkBlock(void*, in
+t, int, bool*) word nvr_chkCalcBuf(void*, int) bool nvr_chkWrite(word, word, word*) word nvr_chkRead(word, word) bool nvr_chkVerify(word, word, word) bool drv_readMem(void*, int, int) bool drv_writeMem(void*, int, int)
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void nvr_init(byte) int nvr_errors() void nvr_setDeviceAddress(byte) word nvr_chkCalcBuf(void*, int) bool drv_readMem(void*, int, int) word nvr_chkRead(word, word) bool nvr_readUserMem(void*, int, int) bool drv_writeMem(void*, int, int) b
+ool nvr_chkWrite(word, word, word*) bool nvr_writeUserChkBlock(void*, int, int, bool*) bool nvr_writeParam(void*, int, int, bool*) bool nvr_writeUserMem(void*, int, int) bool nvr_chkVerify(word, word, word) bool nvr_readUserChkBlock(void*,
+ int, int, bool*) bool nvr_readParam(void*, int, int, bool*)
+Execution times (seconds)
+ parser                :   0.05 (50%) usr   0.00 ( 0%) sys   0.05 (43%) wall     838 kB (30%) ggc
+ name lookup           :   0.02 (17%) usr   0.00 ( 0%) sys   0.02 (14%) wall     112 kB ( 4%) ggc
+ varconst              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 (14%) wall       0 kB ( 0%) ggc
+ combiner              :   0.01 (16%) usr   0.00 ( 0%) sys   0.02 (15%) wall      36 kB ( 1%) ggc
+ final                 :   0.02 (17%) usr   0.00 ( 0%) sys   0.02 (15%) wall       1 kB ( 0%) ggc
+ TOTAL                 :   0.09             0.00             0.11               2768 kB
+Compilazione su CCR.BAT
+ CSmallRingBuf<T, capacity>::CSmallRingBuf() bool CSmallRingBuf<T, capacity>::empty() const bool CSmallRingBuf<T, capacity>::full() const int CSmallRingBuf<T, capacity>::size() const int CSmallRingBuf<T, capacity>::numItem() const int CSma
+llRingBuf<T, capacity>::getMemIndex() const int CSmallRingBuf<T, capacity>::getCapacity() const void CSmallRingBuf<T, capacity>::push_back(const T&) void CSmallRingBuf<T, capacity>::pop_front(T&) void CSmallRingBuf<T, capacity>::read(T&, i
+nt) void CSmallRingBuf<T, capacity>::readLastPushed(T&) void CSmallRingBuf<T, capacity>::clear() void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) void Timer::clockTick(dword, word) float Timer::getTime() dword Timer::getMsec()
+ IncTimer::IncTimer() IncTimer::IncTimer() IncTimer::IncTimer() void IncTimer::Start() void IncTimer::Stop() void IncTimer::Latch() void IncTimer::Reset() bool IncTimer::getStatus() DecTimer::DecTimer() DecTimer::DecTimer() DecTimer::DecTi
+mer() void DecTimer::Preset(dword) void DecTimer::Stop() void DecTimer::Start() bool DecTimer::getStatus() void LedDrivers_init() void LedDrivers_clearFifo() bool LedDrivers_sendData(short int) void switchon_red_leds() void switchon_green_
+leds() void switchon_leds() void switchoff_leds() void ManageLedsInCalibStatus(byte) void LedDrivers_DisplayTest() CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short unsigned int, int capacity = 8] CSmallRingBuf<T, capacity>::CSma
+llRingBuf() [with T = short unsigned int, int capacity = 8] CSmallRingBuf<T, capacity>::CSmallRingBuf() [with T = short unsigned int, int capacity = 8] void CSmallRingBuf<T, capacity>::clear() [with T = short unsigned int, int capacity = 8
+] void CSmallRingBuf<T, capacity>::push_back(const T&) [with T = short unsigned int, int capacity = 8] void CSmallRingBuf<T, capacity>::datacpy(byte*, byte*, byte*) [with T = short unsigned int, int capacity = 8] void __static_initializati
+on_and_destruction_0(int, int) void _GLOBAL__I_DISPLAY_tx_fifo()
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <visibility> <early_local_cleanups> <inline> <static-var> <pure-const>Assembling functions:
+ void LedDrivers_clearFifo() bool LedDrivers_sendData(short int) void switchon_red_leds() void switchon_green_leds() void switchon_leds() void switchoff_leds() void LedDrivers_DisplayTest() (static initializers for LEDS_PANEL.cpp) void Man
+ageLedsInCalibStatus(byte) void LedDrivers_init()
+Execution times (seconds)
+ preprocessing         :   0.02 (25%) usr   0.00 ( 0%) sys   0.03 (33%) wall     553 kB (19%) ggc
+ parser                :   0.00 ( 0%) usr   0.03 (100%) sys   0.01 (16%) wall     897 kB (30%) ggc
+ tree CFG construction :   0.01 (24%) usr   0.00 ( 0%) sys   0.02 (17%) wall      28 kB ( 1%) ggc
+ dominance computation :   0.02 (25%) usr   0.00 ( 0%) sys   0.02 (16%) wall       0 kB ( 0%) ggc
+ expand                :   0.02 (25%) usr   0.00 ( 0%) sys   0.02 (17%) wall     144 kB ( 5%) ggc
+ TOTAL                 :   0.06             0.03             0.09               2969 kB
+
+C:\Gcc850\source\M3100_CPU>ld -v -T .\SG2.LKR -warn-common -Map .\SG2.MAP -L c:\gcc850\lib 
+ld:.\SG2.LKR:95: warning: memory region ramcode not declared
+ld:.\SG2.LKR:163: warning: memory region tdata not declared
+ld:.\SG2.LKR:173: warning: memory region rosdata not declared
+ld:.\SG2.LKR:187: warning: memory region sdata not declared
+ld:.\SG2.LKR:263: warning: memory region disk not declared
+c:\gcc850\lib\libc.a(lib_a-sbrk.o): warning: multiple common of `_errno'
+c:\gcc850\lib\libc.a(lib_a-stat.o): warning: previous common is here
+c:\gcc850\lib\libc.a(lib_a-write.o): warning: multiple common of `_errno'
+c:\gcc850\lib\libc.a(lib_a-stat.o): warning: previous common is here
+c:\gcc850\lib\libc.a(lib_a-_Exit.o): warning: multiple common of `_errno'
+c:\gcc850\lib\libc.a(lib_a-stat.o): warning: previous common is here
+c:\gcc850\lib\libc.a(lib_a-getpid.o): warning: multiple common of `_errno'
+c:\gcc850\lib\libc.a(lib_a-stat.o): warning: previous common is here
+c:\gcc850\lib\libc.a(lib_a-kill.o): warning: multiple common of `_errno'
+c:\gcc850\lib\libc.a(lib_a-stat.o): warning: previous common is here
+obj/main.o: In function `main':
+/Gcc850/source/M3100_CPU/MAIN.cpp:205: undefined reference to `SIFRA_Manager::setErrorEEpromReding()'
+/Gcc850/source/M3100_CPU/MAIN.cpp:188: undefined reference to `SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)'
+/Gcc850/source/M3100_CPU/MAIN.cpp:127: undefined reference to `SIFRA_Manager::Manager()'
+/Gcc850/source/M3100_CPU/MAIN.cpp:127: undefined reference to `SIFRA_Manager::Manager()'
+GNU ld (GNU Binutils) 2.18
+make: *** [SG2.OUT] Error 1
+
+C:\Gcc850\source\M3100_CPU>V850checksum.exe
+
