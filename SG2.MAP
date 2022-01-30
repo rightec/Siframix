@@ -245,795 +245,794 @@ LOAD obj/startup.o
                 0x001107f4                _start
  .text          0x00110880       0x60 obj/crt1.o
                 0x00110880                ___main
- .text          0x001108e0      0xb22 obj/main.o
+ .text          0x001108e0      0xb26 obj/main.o
                 0x001108e0                FlashLed()
                 0x001109e0                Asciihex_to_num(char*)
                 0x00110a0e                Num_to_Asciihex(unsigned short, char*)
                 0x00110ac6                _main
- .text          0x00111402      0xad8 obj/IRQSG2.o
-                0x00111b92                _irq_INTCB1R
-                0x00111402                _irq_init
-                0x00111a6c                _irq_INTTP4CC1
-                0x00111ac0                _irq_INTTP5CC0
-                0x00111662                _irq_INTP2
-                0x001116b2                _irq_INTP4
-                0x001119c4                _irq_INTTP3CC0
-                0x001118c8                _irq_INTTP1CC0
-                0x00111874                _irq_INTTP0CC1
-                0x00111522                _irq_RESET
-                0x001117f6                _irq_INTTQ0CC3
-                0x0011149c                _irq_resetVect
-                0x0011163a                _irq_INTP1
-                0x00111e32                _irq_INTDMA3
-                0x001115c2                _irq_ILGOP_TRAPDB
-                0x00111c10                _irq_INTCB2T
-                0x00111eb0                _irq_INTWT
-                0x00111b3e                _irq_INTCB0R_INTIIC1
-                0x00111e08                _irq_INTDMA2
-                0x0011184a                _irq_INTTP0CC0
-                0x00111946                _irq_INTTP2CC0
-                0x00111a42                _irq_INTTP4CC0
-                0x001115ea                _irq_INTLVI
-                0x00111a96                _irq_INTTP5OV
-                0x0011199a                _irq_INTTP3OV
-                0x00111db4                _irq_INTDMA0
-                0x00111d8a                _irq_INTAD
-                0x00111aea                _irq_INTTP5CC1
-                0x00111702                _irq_INTP6
-                0x0011168a                _irq_INTP3
-                0x0011154a                _irq_NMI
-                0x00111b68                _irq_INTCB0T
-                0x00111752                _irq_INTTQ0OV
-                0x001118f2                _irq_INTTP1CC1
-                0x00111c64                _irq_INTCB3T
-                0x00111d60                _irq_INTUA2T
-                0x00111be6                _irq_INTCB2R
-                0x00111444                _irq_setVect
-                0x00111e5c                _irq_INTKR
-                0x00111b14                _irq_INTTM0EQ0
-                0x00111612                _irq_INTP0
-                0x001117a2                _irq_INTTQ0CC1
-                0x00111bbc                _irq_INTCB1T
-                0x001114d4                _irq_chkErrors
-                0x00111d36                _irq_INTUA2R_INTIIC0
-                0x00111970                _irq_INTTP2CC1
-                0x00111c3a                _irq_INTCB3R
-                0x00111c8e                _irq_INTUA0R_INTCB4R
-                0x001116da                _irq_INTP5
-                0x001119ee                _irq_INTTP3CC1
-                0x0011172a                _irq_INTP7
-                0x00111572                _irq_TRAP0
-                0x00111e86                _irq_INTWTI
-                0x0011189e                _irq_INTTP1OV
-                0x00111a18                _irq_INTTP4OV
-                0x0011159a                _irq_TRAP1
-                0x00111d0c                _irq_INTUA1T
-                0x00111cb8                _irq_INTUA0T_INTCB4T
-                0x001117cc                _irq_INTTQ0CC2
-                0x0011191c                _irq_INTTP2OV
-                0x00111ce2                _irq_INTUA1R_INTIIC2
-                0x00111820                _irq_INTTP0OV
-                0x00111dde                _irq_INTDMA1
-                0x0011177a                _irq_INTTQ0CC0
- .text          0x00111eda      0x282 obj/ALLOC.o
-                0x00111eda                _mem_init
-                0x00111f88                _mem_alloc
-                0x00111f4a                _mem_count
-                0x00111f64                _mem_left
-                0x00112088                _mem_free
- .text          0x0011215c       0xa0 obj/NEW.o
-                0x0011217e                operator delete(void*)
-                0x001121a0                operator new[](unsigned int)
-                0x001121ce                operator new(unsigned int)
-                0x0011215c                operator delete[](void*)
- .text          0x001121fc      0x3e4 obj/STRCLASS.o
-                0x001124be                String::String(char const*)
-                0x001121fc                String::String()
-                0x0011221e                String::String()
-                0x00112240                String::operator=(char const*)
-                0x001122e8                String::init(char*)
-                0x00112388                String::String(String const&)
-                0x00112530                String::operator=(String const&)
-                0x001123ea                String::String(String const&)
-                0x0011244c                String::String(char const*)
- .text          0x001125e0      0x10c obj/SWTIM.o
-                0x001125e0                Timer::Timer()
-                0x001125ea                Timer::Timer()
-                0x0011264a                IncTimer::getMsec()
-                0x001125f4                IncTimer::getTime()
-                0x00112682                DecTimer::Match()
- .text          0x001126ec      0x774 obj/util.o
-                0x0011270c                strset(char*, int)
-                0x00112724                HexToInt(int&, char*, int)
-                0x00112a6e                bubble_sort_array(int, unsigned long*)
-                0x0011294a                skipWhites(unsigned char*)
-                0x00112a3e                addstr(char*, char const*)
-                0x001129e4                fsumstr(char*, char*, int, int, int)
-                0x001128c8                ltrim(char*)
-                0x001128c4                matherr(exception*)
-                0x00112cbe                cdaten(char*)
-                0x00112d62                IntToHex(int, char*, unsigned int)
-                0x001129ba                sumstr(char*, char*, int, int)
-                0x00112c64                cdate(char*)
-                0x00112c16                chgext(char*, char*)
-                0x00112910                rtrim(char*)
-                0x0011282c                _1on8_to_int(unsigned char)
-                0x0011284e                windowFilter(short*, short*, int, int, int)
-                0x00112978                packWhites(unsigned char*)
-                0x00112a9e                fmtReal(long, int, int)
-                0x001126ec                my_pow10(short)
-                0x00112b96                pperc(char*, float, float)
- .text          0x00112e60      0x420 obj/I2C_SW.o
-                0x001131ec                _i2c_ack
-                0x00112fb6                _i2c_putc
-                0x00112e70                _i2c_start
-                0x00112eee                _i2c_stop
-                0x00113134                _i2c_getc
-                0x00112e60                _i2c_delay
-                0x00112f68                _i2c_init
- .text          0x00113280      0x86e obj/I2Ceeprom.o
-                0x001133c2                EE_write(void*, unsigned char, unsigned char)
-                0x00113662                EE_sequential_random_read(unsigned char, unsigned char*, unsigned char)
-                0x00113280                EE_init()
-                0x00113a7a                EE_read_current_address(unsigned char*)
-                0x001139cc                EE_random_byte_read(unsigned char, unsigned char*)
-                0x00113886                EE_read_word(unsigned char)
-                0x0011391c                EE_sequential_current_read(unsigned char*, unsigned char)
-                0x001137f0                EE_read_int(unsigned char)
-                0x00113576                EE_byte_write(unsigned char, unsigned char)
-                0x0011374e                EE_read_float(unsigned char)
- .text          0x00113aee      0x664 obj/sioSG2.o
-                0x00113d4a                _sio_getc_ch1
-                0x00113c12                _sio_disable_rx_interrupt_ch1
-                0x00113c62                _sio_disable_tx_interrupt_ch1
-                0x00113bf4                _sio_enable_rx_interrupt_ch2
-                0x00113dde                _sio_clocksel_ch2
-                0x00113c44                _sio_enable_tx_interrupt_ch2
-                0x00113f96                _sio_fill_ch3
-                0x00113c3a                _sio_enable_tx_interrupt_ch1
-                0x00113b32                _sio_init_ch1
-                0x00113c58                _sio_disable_tx_interrupt_ch0
-                0x001140fe                _sio_getw_ch3
-                0x00113f3c                _sio_xfr_ch3
-                0x00113c08                _sio_disable_rx_interrupt_ch0
-                0x00113e60                _sio_xfr_ch2
-                0x00113f02                _sio_getc_ch3
-                0x00113cc8                _sio_getc_ch0
-                0x00113d18                _sio_putc_ch1
-                0x00113c26                _sio_disable_rx_interrupt_ch3
-                0x00113bfe                _sio_enable_rx_interrupt_ch3
-                0x00113be0                _sio_enable_rx_interrupt_ch0
-                0x00113c76                _sio_disable_tx_interrupt_ch3
-                0x00113e26                _sio_getc_ch2
-                0x00113c6c                _sio_disable_tx_interrupt_ch2
-                0x00113ef6                _sio_busy_ch3
-                0x00113c4e                _sio_enable_tx_interrupt_ch3
-                0x00113c96                _sio_putc_ch0
-                0x00113e1a                _sio_busy_ch2
-                0x00114054                _sio_read_ch3
-                0x00113d02                _sio_clocksel_ch1
-                0x00113c80                _sio_clocksel_ch0
-                0x00113ff2                _sio_write_ch3
-                0x00113d3e                _sio_busy_ch1
-                0x001140b8                _sio_putw_ch3
-                0x00113ed0                _sio_putc_ch3
-                0x00113b34                _sio_init_ch2
-                0x00113cbc                _sio_busy_ch0
-                0x00113bea                _sio_enable_rx_interrupt_ch1
-                0x00113aee                _sio_init_ch0
-                0x00113c30                _sio_enable_tx_interrupt_ch0
-                0x00113c1c                _sio_disable_rx_interrupt_ch2
-                0x00113eba                _sio_clocksel_ch3
-                0x00113d84                _sio_xfr_ch1
-                0x00113b36                _sio_init_ch3
-                0x00113df4                _sio_putc_ch2
- .text          0x00114152      0x3e2 obj/SOUND.o
-                0x00114280                _goBuzzer
-                0x00114190                _shutBuzzer
-                0x0011417c                _buzzer_isPlaying
-                0x00114152                buzzer_stop()
-                0x00114218                buzzer_start()
-                0x001142ee                _buzzer_init
-                0x00114482                _buzzerManager
-                0x001141a6                setPWM(unsigned short, unsigned char)
-                0x00114186                _buzzerSound
- .text          0x00114534     0x4ce6 obj/ADC.o
-                0x001149d6                CS5530_rstValidDataPresentInADCBuffer()
-                0x00116cda                CS5530_sendCmd(CS5530_command, unsigned char*)
-                0x0011501a                setSPI1mode()
-                0x00115004                txBufferEmptySpi2()
-                0x00114cde                CS5530_setAdcCoding(CS5530_adcCoding)
-                0x001153e2                resetAdcValues(unsigned char)
-                0x00116c48                txBufferNotEmpty()
-                0x00114fbc                startContinuousConversionSpi2()
-                0x00115a20                backup_new_gain_value(unsigned char, float)
-                0x0011471e                CS5530_Spi1Initialization()
-                0x00114d86                CS5530_setSampleFrequencySpi2(CS5530_sampleFrequecies)
-                0x00114694                load_startSampling()
-                0x00118e9a                CS5530_resetAdcComunication()
-                0x00115472                controlAdcValuesRead()
-                0x00115984                backup_date_adc_param(char*)
-                0x00114d3e                CS5530_setRstSysSpi2(CS5530_rstSys)
-                0x00114f9e                CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector)
-                0x00114fc8                CS5530_setIntGainADConv(int, unsigned char*)
-                0x001159a8                backup_calib_state(unsigned char, unsigned char)
-                0x00115e80                CS5530_sendCmdSpi2(CS5530_command, unsigned char*)
-                0x00117ab0                CS5530_getWatchdogAdcTimer()
-                0x0011559a                CS5530_validDataPresentInADCBufferSpi2()
-                0x00114aa2                CS5530_setInputShort(CS5530_inputShort)
-                0x00114ffa                txBufferIsEmpty()
-                0x00114d1a                CS5530_setPowerSafeModeSpi2(CS5530_powerSaveMode)
-                0x00114cf0                CS5530_setOpenCircuitDetector(CS5530_openCircuitDetector)
-                0x00114d74                CS5530_setLatchBitsSpi2(CS5530_outputLatchBits)
-                0x00114a90                CS5530_setRstSys(CS5530_rstSys)
-                0x00114a1a                CS5530_checkBlockCells(unsigned long*)
-                0x00115be8                get_factory_adc_param()
-                0x00115010                txBufferIsEmptySpi2()
-                0x00115dee                txBufferNotEmptySpi2()
-                0x00115b6e                backup_factory_offset_value(unsigned char, unsigned short)
-                0x00115a5c                reset_backup_factory_values(unsigned char, unsigned char)
-                0x00114ad8                CS5530_setSampleFrequecy(CS5530_sampleFrequecies)
-                0x00114d0e                startContinuousConversion()
-                0x001183d6                CS5530_EntrySpi1()
-                0x00114ac6                CS5530_setLatchBits(CS5530_outputLatchBits)
-                0x00115abc                backup_factory_gain_param(unsigned char, float, int, int)
-                0x00114ab4                CS5530_setVoltageRef(CS5530_voltageRef)
-                0x001149e0                CS5530_setCounterWaitingData()
-                0x00118f4e                CS5530_validDataPresentInADCBuffer()
-                0x001146a2                load_stopSampling()
-                0x00114fe4                CS5530_rstValidDataPresentInADCBufferSpi2()
-                0x00118cf8                adc_serial_init()
-                0x00114d50                CS5530_setInputShortSpi2(CS5530_inputShort)
-                0x00114d2c                CS5530_setPowerDownModeSpi2(CS5530_powerDownMode)
-                0x00116c6c                SPI_StartTx()
-                0x001149ea                CS5530_getCounterWaitingData()
-                0x00114d02                endContinuousConversion()
-                0x00114fee                txBufferEmpty()
-                0x00115e12                SPI2_StartTx()
-                0x00114a6c                CS5530_setPowerSafeMode(CS5530_powerSaveMode)
-                0x00117ace                CS5530_EntrySpi2()
-                0x00115092                setPINSPI1mode()
-                0x00114fb0                endContinuousConversionSpi2()
-                0x001150ba                setSPI2mode()
-                0x00115da6                get_adc_param()
-                0x00114f8c                CS5530_setAdcCodingSpi2(CS5530_adcCoding)
-                0x001159e4                backup_new_offset_value(unsigned char, unsigned short)
-                0x001148a2                CS5530_Spi2Initialization()
-                0x00118ecc                adc_uC_init()
-                0x00114534                samplePower()
-                0x001149f4                CS5530_checkBlockComunication(int)
-                0x00114a46                CS5530_setWatchdogAdcTimer(unsigned long)
-                0x0011514a                setPINSPI2mode()
-                0x00114d62                CS5530_setVoltageRefSpi2(CS5530_voltageRef)
-                0x00114a7e                CS5530_setPowerDownMode(CS5530_powerDownMode)
- .text          0x0011921a      0x924 obj/PWM.o
-                0x00119794                CloseLineEV(int)
-                0x00119614                getStateCoverM3300Pump()
-                0x0011960a                setStateCoverM3300Pump(bool)
-                0x00119500                getCoverPumpState()
-                0x00119484                enable_MOT(int)
-                0x00119586                getSpeedPump(int)
-                0x0011996e                pwmManager()
-                0x001194e4                reg_pump_vel(unsigned char, unsigned char)
-                0x00119446                enable_PWM_MOT(int)
-                0x001192da                init_PWM_MOT5()
-                0x001192d4                init_PWM_MOT2()
-                0x001198e0                EVsManager()
-                0x001192d8                init_PWM_MOT4()
-                0x0011956a                setSpeedPump(int, unsigned char)
-                0x0011954e                getRampPump(int)
-                0x00119516                setBlockRelay(int, int)
-                0x00119536                setRampPump(int, unsigned char)
-                0x001193f6                enable_PWM_EV()
-                0x001192d6                init_PWM_MOT3()
-                0x001194ae                disable_PWM_MOT(int)
-                0x001193ce                changeEVstatus(unsigned char)
-                0x0011959e                setPwmCycle(int, unsigned char)
-                0x00119424                disable_PWM_EV()
-                0x001195d8                setPwmMotCycle(int, int)
-                0x0011961e                OpenLineEV(int)
-                0x0011921a                init_PWM_MOT1()
-                0x0011939a                set_PWM_EVuC(unsigned char)
-                0x001192dc                init_PWM_EVuC()
- .text          0x00119b3e     0x165c obj/QUEUEUART.o
-                0x0011b136                RingBuffer::RingBuffer(unsigned int)
-                0x0011a62a                QueueUart::GetNumBytesInTransmissionBuffer()
-                0x00119dd6                UartDeviceAbstraction::SetTransmissionBuffer(unsigned char)
-                0x0011a352                UartDeviceAbstraction::TransmitData(unsigned char)
-                0x0011a936                QueueUart::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
-                0x0011ac32                UartDeviceAbstraction::SelectUart1()
-                0x0011a3ca                UartDeviceAbstraction::ReceiveData()
-                0x00119c4a                UartDeviceAbstraction::TurnOn()
-                0x0011aa6c                QueueUart::TransmitData(unsigned char const*)
-                0x00119ee8                UartDeviceAbstraction::IrqHandUA2T(int)
-                0x00119ba8                RingBuffer::Equals(unsigned char const*, unsigned int)
-                0x0011a4ce                QueueUart::TransmitLock()
-                0x0011a70a                QueueUart::SetTransmitCallBack(void (*)(UartDeviceAbstraction*, bool))
-                0x00119db4                UartDeviceAbstraction::IsTransmissionBufferEmpty()
-                0x0011ad2e                UartDeviceAbstraction::SelectUart0()
-                0x0011a310                UartDeviceAbstraction::StartTransmission()
-                0x0011a876                QueueUart::ReceiveData(unsigned char&)
-                0x0011a454                QueueUart::StartTransmission()
-                0x0011b118                RingBuffer::~RingBuffer()
-                0x0011a2f4                UartDeviceAbstraction::TransmitLock()
-                0x0011a802                QueueUart::ReceiveData(unsigned short*, int&)
-                0x0011ae16                UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice)
-                0x0011a5c2                QueueUart::TransmitData(unsigned char const*, int)
-                0x00119f16                UartDeviceAbstraction::IrqHandUA0R(int)
-                0x0011a942                QueueUart::GetNumBytesInReceptionBuffer()
-                0x0011b072                QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice)
-                0x00119bee                UartDeviceAbstraction::Init()
-                0x0011a93c                QueueUart::GetReceptionBufferSize()
-                0x0011aab6                UartDeviceAbstraction::~UartDeviceAbstraction()
-                0x00119e08                UartDeviceAbstraction::GetReceptionError()
-                0x0011a302                UartDeviceAbstraction::TransmitUnlock()
-                0x0011a624                QueueUart::GetTransmissionBufferSize()
-                0x0011a186                UartDeviceAbstraction::SetBaudRate(UartDeviceAbstraction::UARTBaudRate, bool)
-                0x0011a3bc                UartDeviceAbstraction::ReceiveUnlock()
-                0x00119d50                UartDeviceAbstraction::~UartDeviceAbstraction()
-                0x00119cec                UartDeviceAbstraction::~UartDeviceAbstraction()
-                0x0011a74a                QueueUart::ReceiveUnlock()
-                0x0011a338                UartDeviceAbstraction::StartTransmission(unsigned char)
-                0x00119e8c                UartDeviceAbstraction::IrqHandUA0T(int)
-                0x0011a77a                QueueUart::ClearReceptionBuffer()
-                0x0011b0fa                RingBuffer::~RingBuffer()
-                0x0011a54c                QueueUart::TransmitData(unsigned char)
-                0x0011a710                QueueUart::ReceiveLock()
-                0x0011a682                QueueUart::TransmitCallback(UartDeviceAbstraction*)
-                0x0011a432                QueueUart::~QueueUart()
-                0x00119fae                UartDeviceAbstraction::IrqHandUA2R(int)
-                0x00119ffa                UartDeviceAbstraction::SetParity(UartDeviceAbstraction::UARTParity, bool)
-                0x0011a3ae                UartDeviceAbstraction::ReceiveLock()
-                0x0011a3a2                UartDeviceAbstraction::ClearError()
-                0x0011a51c                QueueUart::TransmitUnlock()
-                0x0011af00                UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice)
-                0x00119dec                UartDeviceAbstraction::GetReceptionBuffer()
-                0x0011a8c2                QueueUart::ReceiveData(unsigned char*, int&)
-                0x0011a0ae                UartDeviceAbstraction::SetFrameBits(UartDeviceAbstraction::UARTFrameBits, bool)
-                0x00119b3e                RingBuffer::Clear(bool)
-                0x0011a638                QueueUart::GetFreeBytesInTransmissionBuffer()
-                0x0011a950                QueueUart::GetFreeBytesInReceptionBuffer()
-                0x0011a9d8                QueueUart::ReceiveCallback(UartDeviceAbstraction*, unsigned int)
-                0x0011a798                QueueUart::ClearTransmissionBuffer()
-                0x00119f62                UartDeviceAbstraction::IrqHandUA1R(int)
-                0x0011a11a                UartDeviceAbstraction::SetStopBits(UartDeviceAbstraction::UARTStopBits, bool)
-                0x0011a7ba                QueueUart::ReceiveData(unsigned short&)
-                0x00119eba                UartDeviceAbstraction::IrqHandUA1T(int)
-                0x0011ab52                UartDeviceAbstraction::SelectUart2()
-                0x0011a40a                UartDeviceAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
-                0x0011b168                RingBuffer::RingBuffer(unsigned int)
-                0x00119b76                RingBuffer::Insert(unsigned char)
-                0x00119ca2                UartDeviceAbstraction::TurnOff()
-                0x0011ab20                QueueUart::~QueueUart()
-                0x0011a410                QueueUart::~QueueUart()
-                0x0011a3a8                UartDeviceAbstraction::SetTransmitCallBack(void (*)(UartDeviceAbstraction*))
-                0x0011a99a                QueueUart::resetFifo()
-                0x0011afea                QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice)
- .text          0x0011b19a      0x756 obj/PROTOCOLSTDUART.o
-                0x0011b2fa                stdUartProtocolAbstraction::addDataToReceiveBuffer(unsigned char*, int, int)
-                0x0011b754                stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
-                0x0011b710                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
-                0x0011b58c                stdUartProtocolAbstraction::checkTimeOutElapsed()
-                0x0011b732                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
-                0x0011b1a0                stdUartProtocolAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
-                0x0011b4ba                stdUartProtocolAbstraction::SendCommand(unsigned char*, int, int)
-                0x0011b6de                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
-                0x0011b296                stdUartProtocolAbstraction::rstError()
-                0x0011b822                stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
-                0x0011b430                stdUartProtocolAbstraction::popPacketReceived(int&)
-                0x0011b1a8                stdUartProtocolAbstraction::restoreIntialCondition()
-                0x0011b19a                stdUartProtocolAbstraction::SetDataAnalyseCallBack(bool (*)(unsigned short, stdUartProtocolAbstraction*))
-                0x0011b2f2                stdUartProtocolAbstraction::IsTransmissionAvailable()
-                0x0011b1b8                stdUartProtocolAbstraction::setError(int, bool)
-                0x0011b2b0                stdUartProtocolAbstraction::getLastError()
-                0x0011b60e                stdUartProtocolAbstraction::Manager()
-                0x0011b54c                stdUartProtocolAbstraction::setLastDataReceivedBuffer(int)
-                0x0011b48c                stdUartProtocolAbstraction::calculateChecksum(unsigned char*, unsigned char)
-                0x0011b1a6                stdUartProtocolAbstraction::stdUartProtocolAbstractionReceiveCallback(UartDeviceAbstraction*, unsigned int)
-                0x0011b2f6                stdUartProtocolAbstraction::IsReceptionAvailable()
-                0x0011b470                stdUartProtocolAbstraction::getNewPacketReceived()
-                0x0011b358                stdUartProtocolAbstraction::setReceivedOpCode(int)
-                0x0011b2b6                stdUartProtocolAbstraction::popError()
-                0x0011b476                stdUartProtocolAbstraction::rstNewPacketReceived()
- .text          0x0011b8f0     0x1eb2 obj/PROTOCOLSIFRA.o
-                0x0011bf34                SIFRAProtocol::getMsg()
-                0x0011bc38                SIFRAProtocol::SIFRA_getStatusCmdDecode()
-                0x0011bf9c                SIFRAProtocol::jumpToLoaderHandler()
-                0x0011ba82                SIFRAProtocol::SIFRA_getInfoCmdDecode()
-                0x0011d706                SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
-                0x0011be86                SIFRAProtocol::checksum(unsigned char, unsigned char, unsigned char)
-                0x0011b9da                SIFRAProtocol::SIFRA_decodeScalesPhaseCmd(unsigned char*)
-                0x0011bdd8                SIFRAProtocol::getLastRemoteNodeID()
-                0x0011bce6                SIFRAProtocol::SIFRA_setZeroCell8_Cell15()
-                0x0011bcbe                SIFRAProtocol::SIFRA_setResetCalib()
-                0x0011b8f0                SIFRAProtocol::SIFRA_decodeStartCmd(unsigned char*)
-                0x0011bbd8                SIFRAProtocol::SIFRA_setScalesNotCalib()
-                0x0011bc98                SIFRAProtocol::SIFRA_setZeroVerification()
-                0x0011bd34                SIFRAProtocol::SIFRA_setGainCell15()
-                0x0011cd08                SIFRAProtocol::Manager()
-                0x0011b9ba                SIFRAProtocol::SIFRA_decodeWeightSensibilityCmd(unsigned char*)
-                0x0011bec0                SIFRAProtocol::sendMsg(int)
-                0x0011bdde                SIFRAProtocol::checkOpCode(unsigned char, int, int&)
-                0x0011c9a4                SIFRAProtocol::sendSIFRAStatus()
-                0x0011b9ca                SIFRAProtocol::SIFRA_decodeRestartFormulaCmd(unsigned char*)
-                0x0011c11a                SIFRAProtocol::sendSIFRARamDebug()
-                0x0011d25c                SIFRAProtocol::SIFRADataAnalyse(unsigned short, stdUartProtocolAbstraction*)
-                0x0011bd5c                SIFRAProtocol::SIFRA_setJumpToLoader()
-                0x0011bace                SIFRAProtocol::SIFRA_getDebugStartCmdDecode()
-                0x0011bb1a                SIFRAProtocol::SIFRA_getDebugRamCmdDecode()
-                0x0011bdd2                SIFRAProtocol::setLastRemoteNodeID(unsigned char)
-                0x0011d66a                SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
-                0x0011bdcc                SIFRAProtocol::getLocalNodeID()
-                0x0011c646                SIFRAProtocol::sendSIFRAViaDebug()
-                0x0011bd84                SIFRAProtocol::resetApplicationHandler()
-                0x0011cbf0                SIFRAProtocol::sendSIFRAStart()
-                0x0011bb66                SIFRAProtocol::SIFRA_restartWeightCoverControl()
-                0x0011d638                SIFRAProtocol::~SIFRAProtocol()
-                0x0011c0b8                SIFRAProtocol::sendAcknowledge()
-                0x0011bb40                SIFRAProtocol::SIFRA_setWeightSensibility()
-                0x0011bc5e                SIFRAProtocol::SIFRA_setStart()
-                0x0011d5f4                SIFRAProtocol::~SIFRAProtocol()
-                0x0011d616                SIFRAProtocol::~SIFRAProtocol()
-                0x0011bbb2                SIFRAProtocol::SIFRA_setScalesPhase()
-                0x0011b9f6                SIFRAProtocol::sendSIFRALoadSamples(float)
-                0x0011c52e                SIFRAProtocol::sendSIFRAStartDebug()
-                0x0011bdc6                SIFRAProtocol::setLocalNodeID(unsigned char)
-                0x0011c832                SIFRAProtocol::sendSIFRAInfo()
-                0x0011baf4                SIFRAProtocol::SIFRA_getDebugStatusCmdDecode()
-                0x0011baa8                SIFRAProtocol::SIFRA_getDebugViaCmdDecode()
-                0x0011bd0c                SIFRAProtocol::SIFRA_setGainCell8()
-                0x0011bb8c                SIFRAProtocol::SIFRA_restartFormula()
-                0x0011bbfe                SIFRAProtocol::SIFRA_set_Stop_All()
-                0x0011c2ee                SIFRAProtocol::sendSIFRAStatusDebug()
- .text          0x0011d7a2     0x9720 obj/CPUSIFRA_MANAGER.o
-                0x0011d8d4                SIFRA_Manager::SIFRAMsg_startAcquisitionHandler()
-                0x0011d7a6                SIFRA_Manager::SIFRABreak_Manager()
-                0x001217a0                SIFRA_Manager::SIFRARisciacquo_Manager(int)
-                0x0011f8ea                SIFRA_Manager::Verifica_encoder_motori()
-                0x0011da6e                SIFRA_Manager::readLoadInLine8()
-                0x0011de06                SIFRA_Manager::Find_Num_of_Enabled_Lines(unsigned char)
-                0x00122c82                SIFRA_Manager::SIFRASacca_Manager()
-                0x0011e0ea                SIFRA_Manager::salva_rapporto_flussopeso(int)
-                0x001214e4                SIFRA_Manager::SIFRAService_Manager()
-                0x0011ddbe                SIFRA_Manager::controllo_vuoto(int)
-                0x0011e048                SIFRA_Manager::calc_flusso_pompa()
-                0x0011da58                SIFRA_Manager::SifraStopTimers()
-                0x0011e93a                SIFRA_Manager::SIFRA_resetStatusErrorStop()
-                0x00123a68                SIFRA_Manager::SIFRAMsg_debugRamAskedHandler()
-                0x0011dbb6                SIFRA_Manager::setErrorEEpromReading()
-                0x0012396a                SIFRA_Manager::SIFRATest_OpenMoreEVs()
-                0x001215e4                SIFRA_Manager::SIFRAST_Manager(int)
-                0x0011fff6                SIFRA_Manager::Read_Param_Backup()
-                0x0011f81c                SIFRA_Manager::calc_next_theor_weight(int)
-                0x00126b0e                SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)
-                0x0011e9c0                SIFRA_Manager::set_unstable_threshold(unsigned char)
-                0x0011dd2a                SIFRA_Manager::getSIFRApreviousStatus()
-                0x0011d7a4                SIFRA_Manager::~SIFRA_Manager()
-                0x0012026a                SIFRA_Manager::Backup_StatoStart()
-                0x0011dd34                SIFRA_Manager::getSIFRAphase()
-                0x00123ad8                SIFRA_Manager::SIFRAMsg_infoAskedHandler()
-                0x0011d962                SIFRA_Manager::SifraResetViaStatus()
-                0x0011e008                SIFRA_Manager::ResetMotorStepCounter()
-                0x0011f9f4                SIFRA_Manager::controllo_non_cala(int, int)
-                0x0011fd58                SIFRA_Manager::SIFRARampe_Manager(unsigned char, unsigned char)
-                0x00124dcc                SIFRA_Manager::SIFRATest_FlussoPompa(int)
-                0x00120900                SIFRA_Manager::readZeroInBothLine()
-                0x00123af4                SIFRA_Manager::SIFRAMsg_statusAskedHandler()
-                0x0011fec6                SIFRA_Manager::SifraResetStateMachine()
-                0x0011e60e                SIFRA_Manager::calc_param_weight(ChannelsBackupParam*)
-                0x00123b48                SIFRA_Manager::Decode_StartMsg()
-                0x0011e474                SIFRA_Manager::check_volume_error(int)
-                0x0011fcd0                SIFRA_Manager::SIFRASpeedPump_Manager(unsigned char)
-                0x00125366                SIFRA_Manager::SIFRACalibr_Manager()
-                0x00121352                SIFRA_Manager::SIFRAOpenLineEV(int)
-                0x0011dd3e                SIFRA_Manager::controllo_flussopeso(long, unsigned short, float)
-                0x0011dbc2                SIFRA_Manager::GetSystemLoad(unsigned long*)
-                0x0011d9ae                SIFRA_Manager::SifraResetStartCmd()
-                0x00120c78                SIFRA_Manager::DefaultSystemReset()
-                0x0011e036                SIFRA_Manager::getStatePump(int)
-                0x0011d8de                SIFRA_Manager::SIFRAMsg_resetApplicationHandler()
-                0x0011e8be                SIFRA_Manager::Encoder_counter()
-                0x00120d96                SIFRA_Manager::SIFRATestPinch()
-                0x0011e290                SIFRA_Manager::Init_Variables()
-                0x00120c9e                SIFRA_Manager::SIFRAStop_Manager()
-                0x0011e1c4                SIFRA_Manager::Set_START_Erogazione(int)
-                0x0011d936                SIFRA_Manager::SIFRAMsg_protocolErrorHandler()
-                0x00120d7e                SIFRA_Manager::SIFRACloseLineEV(int)
-                0x001225d0                SIFRA_Manager::SIFRAManual_Manager(int)
-                0x0011e74e                SIFRA_Manager::AdattaPesoSpecifico(unsigned short)
-                0x0011dcbe                SIFRA_Manager::SIFRASetScalesPhase(unsigned char, unsigned char)
-                0x0011fb6a                SIFRA_Manager::FlashLed_hw_error()
-                0x0011e69e                SIFRA_Manager::aggiorna_capacita(unsigned short, unsigned short, float)
-                0x0011d9e2                SIFRA_Manager::SifraResetFillingData()
-                0x0011ffa6                SIFRA_Manager::Read_Param_Encoder()
-                0x0011eb78                SIFRA_Manager::Verifica_peso_massimo()
-                0x00120c20                SIFRA_Manager::SifraResetSystemParams()
-                0x0011e960                SIFRA_Manager::SIFRA_resetStatusError()
-                0x001201f6                SIFRA_Manager::default_struttura_flussopeso()
-                0x0011ea32                SIFRA_Manager::SIFRAPhase_manager()
-                0x0011e8ec                SIFRA_Manager::EncoderPumpsControl()
-                0x0011ec72                SIFRA_Manager::Verifica_celle()
-                0x0012566a                SIFRA_Manager::SIFRASetScalesNotCalib()
-                0x00121200                SIFRA_Manager::SIFRAError_Manager()
-                0x0012004a                SIFRA_Manager::DownLoad_StatoStart()
-                0x0011da0c                SIFRA_Manager::SifraResetServiceData()
-                0x0011e22c                SIFRA_Manager::set_air_alarm(int)
-                0x0011de46                SIFRA_Manager::Find_Enable_line(unsigned char)
-                0x0011e16e                SIFRA_Manager::setta_led_pannello(int, bool)
-                0x0011fe90                SIFRA_Manager::setStatePump(int, int)
-                0x001256c2                SIFRA_Manager::SIFRASample_Manager()
-                0x00120538                SIFRA_Manager::readLoadInLine15()
-                0x0011e3f6                SIFRA_Manager::check_conditions(int)
-                0x0011d920                SIFRA_Manager::SIFRAMsg_hwErrorHandler()
-                0x0011e71c                SIFRA_Manager::ViaDaEseguire()
-                0x0012675a                SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)
-                0x00123b10                SIFRA_Manager::SIFRAMsg_setStartHandler()
-                0x0011d7a2                SIFRA_Manager::~SIFRA_Manager()
-                0x001261ee                SIFRA_Manager::Manager()
-                0x00120bec                SIFRA_Manager::SifraResetStatus()
-                0x00120152                SIFRA_Manager::Write_Param_Encoder()
-                0x0011e980                SIFRA_Manager::Set_weight_threshold()
-                0x0011def4                SIFRA_Manager::read_encoder_motors(int)
-                0x00125d1c                SIFRA_Manager::SIFRAcheck_new_command()
-                0x0011dc96                SIFRA_Manager::changeSIFRAstatus(unsigned char)
-                0x0011da1a                SIFRA_Manager::SifraResetBackup()
-                0x0011ed3c                SIFRA_Manager::SIFRAAirIn_Manager()
-                0x001201a2                SIFRA_Manager::Write_Param_Backup()
-                0x0011d94c                SIFRA_Manager::SIFRAMsg_unknownErrorHandler()
-                0x0011eb1a                SIFRA_Manager::SIFRACalibResetData()
-                0x00120332                SIFRA_Manager::VerificaESD_Damage()
-                0x00123aa0                SIFRA_Manager::SIFRAMsg_debugStartAskedHandler()
-                0x0011f178                SIFRA_Manager::SIFRATestLed_Manager()
-                0x00121d36                SIFRA_Manager::SIFRART_Manager(int)
-                0x0011de64                SIFRA_Manager::Setta_filtro_peso(int)
-                0x001204e2                SIFRA_Manager::SetHardwareVersion()
-                0x001213f2                SIFRA_Manager::SIFRATestEMC_Manager()
-                0x0011d81c                SIFRA_Manager::SIFRAWeightControlRestart(char)
-                0x00124712                SIFRA_Manager::SIFRALed_Manager()
-                0x0011dd20                SIFRA_Manager::getSIFRAstatus()
-                0x00123b2c                SIFRA_Manager::SIFRAMsg_setStopAllHandler()
-                0x00124f1e                SIFRA_Manager::SIFRATest_Pompe(int)
-                0x00123abc                SIFRA_Manager::SIFRAMsg_debugViaAskedHandler()
-                0x0011e994                SIFRA_Manager::LoadControl()
-                0x0011ff30                SIFRA_Manager::Verifica_apertura_sportello()
-                0x0011e1fe                SIFRA_Manager::reset_state_this_led(int, bool)
-                0x0011e6f2                SIFRA_Manager::controllo_capacita_iniziale(unsigned short)
-                0x00123a84                SIFRA_Manager::SIFRAMsg_debugStatusAskedHandler()
-                0x0011e7a6                SIFRA_Manager::UpdateDebugStruct()
-                0x0011df40                SIFRA_Manager::encoder_updateCnt()
- .text          0x00126ec2      0x792 obj/NVRDRV.o
-                0x00126f90                _nvr_chkRead
-                0x001273ac                _nvr_readUserChkBlock
-                0x00127068                _nvr_writeUserChkBlock
-                0x00127008                _drv_writeMem
-                0x0012747a                _nvr_readParam
-                0x00126ec2                _nvr_init
-                0x0012710c                _nvr_writeParam
-                0x00127274                _nvr_chkVerify
-                0x00127042                _nvr_chkWrite
-                0x00126efa                _nvr_setDeviceAddress
-                0x00127236                _nvr_writeUserMem
-                0x00126fca                _nvr_readUserMem
-                0x00126ee4                _nvr_errors
-                0x00126f56                _drv_readMem
-                0x00126f18                _nvr_chkCalcBuf
- .text          0x00127654      0x2aa obj/LEDS_PANEL.o
-                0x001277b4                _switchoff_leds
-                0x00127654                _LedDrivers_clearFifo
-                0x001276ac                _switchon_red_leds
-                0x0012775c                _switchon_leds
-                0x00127898                _LedDrivers_init
-                0x00127672                _LedDrivers_sendData
-                0x001277fc                _LedDrivers_DisplayTest
-                0x00127704                _switchon_green_leds
- .text          0x001278fe       0x20 c:\gcc850\lib\libc.a(lib_a-atoi.o)
-                0x0012790e                _atoi
-                0x001278fe                __atoi_r
- .text          0x0012791e       0x20 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
-                0x0012791e                _memcpy
- .text          0x0012793e       0x1a c:\gcc850\lib\libc.a(lib_a-memset.o)
-                0x0012793e                _memset
- .text          0x00127958       0xa6 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
-                0x00127958                _sprintf
-                0x001279ae                __sprintf_r
- .text          0x001279fe       0x34 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
-                0x001279fe                _strcmp
- .text          0x00127a32       0x20 c:\gcc850\lib\libc.a(lib_a-strcpy.o)
-                0x00127a32                _strcpy
- .text          0x00127a52       0x1a c:\gcc850\lib\libc.a(lib_a-strlen.o)
-                0x00127a52                _strlen
- .text          0x00127a6c      0x226 c:\gcc850\lib\libc.a(lib_a-strtol.o)
-                0x00127c78                _strtol
-                0x00127a6c                __strtol_r
- .text          0x00127c92     0x1a6a c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
-                0x00127e3c                __svfprintf_r
- .text          0x001296fc        0x0 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
- .text          0x001296fc     0x1530 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
-                0x0012990a                __dtoa_r
- .text          0x0012ac2c      0x324 c:\gcc850\lib\libc.a(lib_a-freer.o)
-                0x0012ac2c                __malloc_trim_r
-                0x0012acfc                __free_r
- .text          0x0012af50        0x0 c:\gcc850\lib\libc.a(lib_a-impure.o)
- .text          0x0012af50       0x9a c:\gcc850\lib\libc.a(lib_a-locale.o)
-                0x0012afd4                _setlocale
-                0x0012af6e                __setlocale_r
-                0x0012af50                ___locale_charset
-                0x0012af64                _localeconv
-                0x0012af5a                __localeconv_r
- .text          0x0012afea      0x6a8 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
-                0x0012afea                __malloc_r
- .text          0x0012b692       0x32 c:\gcc850\lib\libc.a(lib_a-memchr.o)
-                0x0012b692                _memchr
- .text          0x0012b6c4       0x48 c:\gcc850\lib\libc.a(lib_a-memmove.o)
-                0x0012b6c4                _memmove
- .text          0x0012b70c        0x4 c:\gcc850\lib\libc.a(lib_a-mlock.o)
-                0x0012b70c                ___malloc_lock
-                0x0012b70e                ___malloc_unlock
- .text          0x0012b710      0xbc8 c:\gcc850\lib\libc.a(lib_a-mprec.o)
-                0x0012bb40                ___d2b
-                0x0012ba68                ___any_on
-                0x0012b7fa                ___mcmp
-                0x0012be4e                ___multiply
-                0x0012b88a                ___b2d
-                0x0012ba1a                ___copybits
-                0x0012bc40                ___mdiff
-                0x0012c218                ___s2b
-                0x0012b77e                ___lo0bits
-                0x0012bad2                __Balloc
-                0x0012b9c0                __mprec_log10
-                0x0012c092                ___multadd
-                0x0012b94c                ___ratio
-                0x0012c078                ___i2b
-                0x0012c156                ___pow5mult
-                0x0012bd6c                ___lshift
-                0x0012b710                __Bfree
-                0x0012b72e                ___hi0bits
-                0x0012b836                ___ulp
- .text          0x0012c2d8      0x452 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
-                0x0012c2d8                __realloc_r
- .text          0x0012c72a       0x26 c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
-                0x0012c72a                ___isinfd
- .text          0x0012c750       0x1e c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
-                0x0012c750                ___isnand
- .text          0x0012c76e       0x2a c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
-                0x0012c76e                __sbrk_r
- .text          0x0012c798       0x16 c:\gcc850\lib\libc.a(lib_a-stat.o)
-                0x0012c798                __stat
- .text          0x0012c7ae       0x12 c:\gcc850\lib\libc.a(lib_a-trap.o)
-                0x0012c7ae                ___trap0
- .text          0x0012c7c0       0x8a c:\gcc850\lib\libc.a(lib_a-callocr.o)
-                0x0012c7c0                __calloc_r
- .text          0x0012c84a       0x5e c:\gcc850\lib\libc.a(lib_a-sbrk.o)
-                0x0012c84a                __sbrk
- .text          0x0012c8a8       0x16 c:\gcc850\lib\libc.a(lib_a-write.o)
-                0x0012c8a8                __write
- .text          0x0012c8be       0x10 c:\gcc850\lib\libc.a(lib_a-abort.o)
-                0x0012c8be                _abort
- .text          0x0012c8ce      0x1a8 c:\gcc850\lib\libc.a(lib_a-signal.o)
-                0x0012c8ce                __raise_r
-                0x0012ca00                ___sigtramp
-                0x0012c93a                _raise
-                0x0012c98c                __init_signal
-                0x0012c99c                ___sigtramp_r
-                0x0012ca60                _signal
-                0x0012ca12                __signal_r
-                0x0012c94c                __init_signal_r
- .text          0x0012ca76       0x3a c:\gcc850\lib\libc.a(lib_a-signalr.o)
-                0x0012ca76                __getpid_r
-                0x0012ca82                __kill_r
- .text          0x0012cab0       0x4a c:\gcc850\lib\libc.a(lib_a-_Exit.o)
-                0x0012cab0                __exit
- .text          0x0012cafa        0x4 c:\gcc850\lib\libc.a(lib_a-getpid.o)
-                0x0012cafa                __getpid
- .text          0x0012cafe       0x18 c:\gcc850\lib\libc.a(lib_a-kill.o)
-                0x0012cafe                __kill
- .text          0x0012cb16       0x3e c:\gcc850\lib\libgcc.a(_mulsi3.o)
-                0x0012cb16                ___mulsi3
- .text          0x0012cb54       0x32 c:\gcc850\lib\libgcc.a(_divsi3.o)
-                0x0012cb54                ___divsi3
- .text          0x0012cb86       0x36 c:\gcc850\lib\libgcc.a(_udivsi3.o)
-                0x0012cb86                ___udivsi3
- .text          0x0012cbbc       0x2a c:\gcc850\lib\libgcc.a(_modsi3.o)
-                0x0012cbbc                ___modsi3
- .text          0x0012cbe6       0x2a c:\gcc850\lib\libgcc.a(_umodsi3.o)
-                0x0012cbe6                ___umodsi3
- .text          0x0012cc10       0x68 c:\gcc850\lib\libgcc.a(_save_20c.o)
-                0x0012cc44                __return_r20_r31
-                0x0012cc10                __save_r20_r31
- .text          0x0012cc78       0x50 c:\gcc850\lib\libgcc.a(_save_23c.o)
-                0x0012cc78                __save_r23_r31
-                0x0012cca0                __return_r23_r31
- .text          0x0012ccc8       0x40 c:\gcc850\lib\libgcc.a(_save_25c.o)
-                0x0012cce8                __return_r25_r31
-                0x0012ccc8                __save_r25_r31
- .text          0x0012cd08       0x38 c:\gcc850\lib\libgcc.a(_save_26c.o)
-                0x0012cd24                __return_r26_r31
-                0x0012cd08                __save_r26_r31
- .text          0x0012cd40       0x30 c:\gcc850\lib\libgcc.a(_save_27c.o)
-                0x0012cd40                __save_r27_r31
-                0x0012cd58                __return_r27_r31
- .text          0x0012cd70       0x28 c:\gcc850\lib\libgcc.a(_save_28c.o)
-                0x0012cd70                __save_r28_r31
-                0x0012cd84                __return_r28_r31
- .text          0x0012cd98       0x20 c:\gcc850\lib\libgcc.a(_save_29c.o)
-                0x0012cda8                __return_r29_r31
-                0x0012cd98                __save_r29_r31
- .text          0x0012cdb8       0x18 c:\gcc850\lib\libgcc.a(_save_31c.o)
-                0x0012cdc4                __return_r31
-                0x0012cdb8                __save_r31
- .text          0x0012cdd0       0x14 c:\gcc850\lib\libgcc.a(_save_varargs.o)
-                0x0012cdd0                __save_r6_r9
- .text          0x0012cde4       0x36 c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
-                0x0012cde4                ___fixunssfsi
- .text          0x0012ce1a      0x25e c:\gcc850\lib\libgcc.a(_addsub_sf.o)
-                0x0012cfc0                ___subsf3
-                0x0012d022                ___addsf3
- .text          0x0012d078      0x174 c:\gcc850\lib\libgcc.a(_mul_sf.o)
-                0x0012d078                ___mulsf3
- .text          0x0012d1ec      0x11c c:\gcc850\lib\libgcc.a(_div_sf.o)
-                0x0012d1ec                ___divsf3
- .text          0x0012d308       0x66 c:\gcc850\lib\libgcc.a(_ne_sf.o)
-                0x0012d308                ___nesf2
- .text          0x0012d36e       0x60 c:\gcc850\lib\libgcc.a(_gt_sf.o)
-                0x0012d36e                ___gtsf2
- .text          0x0012d3ce       0x60 c:\gcc850\lib\libgcc.a(_ge_sf.o)
-                0x0012d3ce                ___gesf2
- .text          0x0012d42e       0x66 c:\gcc850\lib\libgcc.a(_lt_sf.o)
-                0x0012d42e                ___ltsf2
- .text          0x0012d494       0x66 c:\gcc850\lib\libgcc.a(_le_sf.o)
-                0x0012d494                ___lesf2
- .text          0x0012d4fa       0x70 c:\gcc850\lib\libgcc.a(_si_to_sf.o)
-                0x0012d4fa                ___floatsisf
- .text          0x0012d56a       0x82 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
-                0x0012d56a                ___fixsfsi
- .text          0x0012d5ec        0x0 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
- .text          0x0012d5ec       0x7a c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
-                0x0012d5ec                ___floatunsisf
- .text          0x0012d666      0x3fa c:\gcc850\lib\libgcc.a(_addsub_df.o)
-                0x0012d998                ___subdf3
-                0x0012da02                ___adddf3
- .text          0x0012da60      0x270 c:\gcc850\lib\libgcc.a(_mul_df.o)
-                0x0012da60                ___muldf3
- .text          0x0012dcd0      0x188 c:\gcc850\lib\libgcc.a(_div_df.o)
-                0x0012dcd0                ___divdf3
- .text          0x0012de58       0x6e c:\gcc850\lib\libgcc.a(_eq_df.o)
-                0x0012de58                ___eqdf2
- .text          0x0012dec6       0x6e c:\gcc850\lib\libgcc.a(_ne_df.o)
-                0x0012dec6                ___nedf2
- .text          0x0012df34       0x68 c:\gcc850\lib\libgcc.a(_gt_df.o)
-                0x0012df34                ___gtdf2
- .text          0x0012df9c       0x68 c:\gcc850\lib\libgcc.a(_ge_df.o)
-                0x0012df9c                ___gedf2
- .text          0x0012e004       0x6e c:\gcc850\lib\libgcc.a(_lt_df.o)
-                0x0012e004                ___ltdf2
- .text          0x0012e072       0x9e c:\gcc850\lib\libgcc.a(_si_to_df.o)
-                0x0012e072                ___floatsidf
- .text          0x0012e110       0xaa c:\gcc850\lib\libgcc.a(_df_to_si.o)
-                0x0012e110                ___fixdfsi
- .text          0x0012e1ba        0x0 c:\gcc850\lib\libgcc.a(_thenan_df.o)
- .text          0x0012e1ba       0xc2 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
-                0x0012e1ba                ___floatunsidf
- .text          0x0012e27c       0x12 c:\gcc850\lib\libgcc.a(_ucmpdi2.o)
-                0x0012e27c                ___ucmpdi2
- .text          0x0012e28e       0xde c:\gcc850\lib\libgcc.a(_muldi3.o)
-                0x0012e28e                ___muldi3
- .text          0x0012e36c       0x58 c:\gcc850\lib\libgcc.a(_clzsi2.o)
-                0x0012e36c                ___clzsi2
- .text          0x0012e3c4      0x118 c:\gcc850\lib\libgcc.a(_pack_sf.o)
-                0x0012e3c4                ___pack_f
- .text          0x0012e4dc       0xaa c:\gcc850\lib\libgcc.a(_unpack_sf.o)
-                0x0012e4dc                ___unpack_f
- .text          0x0012e586       0x8c c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
-                0x0012e586                ___fpcmp_parts_f
- .text          0x0012e612      0x1fc c:\gcc850\lib\libgcc.a(_pack_df.o)
-                0x0012e612                ___pack_d
- .text          0x0012e80e       0xda c:\gcc850\lib\libgcc.a(_unpack_df.o)
-                0x0012e80e                ___unpack_d
- .text          0x0012e8e8       0xa4 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
-                0x0012e8e8                ___fpcmp_parts_d
- .text          0x0012e98c        0x0 c:\gcc850\lib\libgcc.a(_clz.o)
+ .text          0x00111406      0xad8 obj/IRQSG2.o
+                0x00111b96                _irq_INTCB1R
+                0x00111406                _irq_init
+                0x00111a70                _irq_INTTP4CC1
+                0x00111ac4                _irq_INTTP5CC0
+                0x00111666                _irq_INTP2
+                0x001116b6                _irq_INTP4
+                0x001119c8                _irq_INTTP3CC0
+                0x001118cc                _irq_INTTP1CC0
+                0x00111878                _irq_INTTP0CC1
+                0x00111526                _irq_RESET
+                0x001117fa                _irq_INTTQ0CC3
+                0x001114a0                _irq_resetVect
+                0x0011163e                _irq_INTP1
+                0x00111e36                _irq_INTDMA3
+                0x001115c6                _irq_ILGOP_TRAPDB
+                0x00111c14                _irq_INTCB2T
+                0x00111eb4                _irq_INTWT
+                0x00111b42                _irq_INTCB0R_INTIIC1
+                0x00111e0c                _irq_INTDMA2
+                0x0011184e                _irq_INTTP0CC0
+                0x0011194a                _irq_INTTP2CC0
+                0x00111a46                _irq_INTTP4CC0
+                0x001115ee                _irq_INTLVI
+                0x00111a9a                _irq_INTTP5OV
+                0x0011199e                _irq_INTTP3OV
+                0x00111db8                _irq_INTDMA0
+                0x00111d8e                _irq_INTAD
+                0x00111aee                _irq_INTTP5CC1
+                0x00111706                _irq_INTP6
+                0x0011168e                _irq_INTP3
+                0x0011154e                _irq_NMI
+                0x00111b6c                _irq_INTCB0T
+                0x00111756                _irq_INTTQ0OV
+                0x001118f6                _irq_INTTP1CC1
+                0x00111c68                _irq_INTCB3T
+                0x00111d64                _irq_INTUA2T
+                0x00111bea                _irq_INTCB2R
+                0x00111448                _irq_setVect
+                0x00111e60                _irq_INTKR
+                0x00111b18                _irq_INTTM0EQ0
+                0x00111616                _irq_INTP0
+                0x001117a6                _irq_INTTQ0CC1
+                0x00111bc0                _irq_INTCB1T
+                0x001114d8                _irq_chkErrors
+                0x00111d3a                _irq_INTUA2R_INTIIC0
+                0x00111974                _irq_INTTP2CC1
+                0x00111c3e                _irq_INTCB3R
+                0x00111c92                _irq_INTUA0R_INTCB4R
+                0x001116de                _irq_INTP5
+                0x001119f2                _irq_INTTP3CC1
+                0x0011172e                _irq_INTP7
+                0x00111576                _irq_TRAP0
+                0x00111e8a                _irq_INTWTI
+                0x001118a2                _irq_INTTP1OV
+                0x00111a1c                _irq_INTTP4OV
+                0x0011159e                _irq_TRAP1
+                0x00111d10                _irq_INTUA1T
+                0x00111cbc                _irq_INTUA0T_INTCB4T
+                0x001117d0                _irq_INTTQ0CC2
+                0x00111920                _irq_INTTP2OV
+                0x00111ce6                _irq_INTUA1R_INTIIC2
+                0x00111824                _irq_INTTP0OV
+                0x00111de2                _irq_INTDMA1
+                0x0011177e                _irq_INTTQ0CC0
+ .text          0x00111ede      0x282 obj/ALLOC.o
+                0x00111ede                _mem_init
+                0x00111f8c                _mem_alloc
+                0x00111f4e                _mem_count
+                0x00111f68                _mem_left
+                0x0011208c                _mem_free
+ .text          0x00112160       0xa0 obj/NEW.o
+                0x00112182                operator delete(void*)
+                0x001121a4                operator new[](unsigned int)
+                0x001121d2                operator new(unsigned int)
+                0x00112160                operator delete[](void*)
+ .text          0x00112200      0x3e4 obj/STRCLASS.o
+                0x001124c2                String::String(char const*)
+                0x00112200                String::String()
+                0x00112222                String::String()
+                0x00112244                String::operator=(char const*)
+                0x001122ec                String::init(char*)
+                0x0011238c                String::String(String const&)
+                0x00112534                String::operator=(String const&)
+                0x001123ee                String::String(String const&)
+                0x00112450                String::String(char const*)
+ .text          0x001125e4      0x10c obj/SWTIM.o
+                0x001125e4                Timer::Timer()
+                0x001125ee                Timer::Timer()
+                0x0011264e                IncTimer::getMsec()
+                0x001125f8                IncTimer::getTime()
+                0x00112686                DecTimer::Match()
+ .text          0x001126f0      0x774 obj/util.o
+                0x00112710                strset(char*, int)
+                0x00112728                HexToInt(int&, char*, int)
+                0x00112a72                bubble_sort_array(int, unsigned long*)
+                0x0011294e                skipWhites(unsigned char*)
+                0x00112a42                addstr(char*, char const*)
+                0x001129e8                fsumstr(char*, char*, int, int, int)
+                0x001128cc                ltrim(char*)
+                0x001128c8                matherr(exception*)
+                0x00112cc2                cdaten(char*)
+                0x00112d66                IntToHex(int, char*, unsigned int)
+                0x001129be                sumstr(char*, char*, int, int)
+                0x00112c68                cdate(char*)
+                0x00112c1a                chgext(char*, char*)
+                0x00112914                rtrim(char*)
+                0x00112830                _1on8_to_int(unsigned char)
+                0x00112852                windowFilter(short*, short*, int, int, int)
+                0x0011297c                packWhites(unsigned char*)
+                0x00112aa2                fmtReal(long, int, int)
+                0x001126f0                my_pow10(short)
+                0x00112b9a                pperc(char*, float, float)
+ .text          0x00112e64      0x420 obj/I2C_SW.o
+                0x001131f0                _i2c_ack
+                0x00112fba                _i2c_putc
+                0x00112e74                _i2c_start
+                0x00112ef2                _i2c_stop
+                0x00113138                _i2c_getc
+                0x00112e64                _i2c_delay
+                0x00112f6c                _i2c_init
+ .text          0x00113284      0x86e obj/I2Ceeprom.o
+                0x001133c6                EE_write(void*, unsigned char, unsigned char)
+                0x00113666                EE_sequential_random_read(unsigned char, unsigned char*, unsigned char)
+                0x00113284                EE_init()
+                0x00113a7e                EE_read_current_address(unsigned char*)
+                0x001139d0                EE_random_byte_read(unsigned char, unsigned char*)
+                0x0011388a                EE_read_word(unsigned char)
+                0x00113920                EE_sequential_current_read(unsigned char*, unsigned char)
+                0x001137f4                EE_read_int(unsigned char)
+                0x0011357a                EE_byte_write(unsigned char, unsigned char)
+                0x00113752                EE_read_float(unsigned char)
+ .text          0x00113af2      0x664 obj/sioSG2.o
+                0x00113d4e                _sio_getc_ch1
+                0x00113c16                _sio_disable_rx_interrupt_ch1
+                0x00113c66                _sio_disable_tx_interrupt_ch1
+                0x00113bf8                _sio_enable_rx_interrupt_ch2
+                0x00113de2                _sio_clocksel_ch2
+                0x00113c48                _sio_enable_tx_interrupt_ch2
+                0x00113f9a                _sio_fill_ch3
+                0x00113c3e                _sio_enable_tx_interrupt_ch1
+                0x00113b36                _sio_init_ch1
+                0x00113c5c                _sio_disable_tx_interrupt_ch0
+                0x00114102                _sio_getw_ch3
+                0x00113f40                _sio_xfr_ch3
+                0x00113c0c                _sio_disable_rx_interrupt_ch0
+                0x00113e64                _sio_xfr_ch2
+                0x00113f06                _sio_getc_ch3
+                0x00113ccc                _sio_getc_ch0
+                0x00113d1c                _sio_putc_ch1
+                0x00113c2a                _sio_disable_rx_interrupt_ch3
+                0x00113c02                _sio_enable_rx_interrupt_ch3
+                0x00113be4                _sio_enable_rx_interrupt_ch0
+                0x00113c7a                _sio_disable_tx_interrupt_ch3
+                0x00113e2a                _sio_getc_ch2
+                0x00113c70                _sio_disable_tx_interrupt_ch2
+                0x00113efa                _sio_busy_ch3
+                0x00113c52                _sio_enable_tx_interrupt_ch3
+                0x00113c9a                _sio_putc_ch0
+                0x00113e1e                _sio_busy_ch2
+                0x00114058                _sio_read_ch3
+                0x00113d06                _sio_clocksel_ch1
+                0x00113c84                _sio_clocksel_ch0
+                0x00113ff6                _sio_write_ch3
+                0x00113d42                _sio_busy_ch1
+                0x001140bc                _sio_putw_ch3
+                0x00113ed4                _sio_putc_ch3
+                0x00113b38                _sio_init_ch2
+                0x00113cc0                _sio_busy_ch0
+                0x00113bee                _sio_enable_rx_interrupt_ch1
+                0x00113af2                _sio_init_ch0
+                0x00113c34                _sio_enable_tx_interrupt_ch0
+                0x00113c20                _sio_disable_rx_interrupt_ch2
+                0x00113ebe                _sio_clocksel_ch3
+                0x00113d88                _sio_xfr_ch1
+                0x00113b3a                _sio_init_ch3
+                0x00113df8                _sio_putc_ch2
+ .text          0x00114156      0x3e2 obj/SOUND.o
+                0x00114284                _goBuzzer
+                0x00114194                _shutBuzzer
+                0x00114180                _buzzer_isPlaying
+                0x00114156                buzzer_stop()
+                0x0011421c                buzzer_start()
+                0x001142f2                _buzzer_init
+                0x00114486                _buzzerManager
+                0x001141aa                setPWM(unsigned short, unsigned char)
+                0x0011418a                _buzzerSound
+ .text          0x00114538     0x4ce6 obj/ADC.o
+                0x001149da                CS5530_rstValidDataPresentInADCBuffer()
+                0x00116cde                CS5530_sendCmd(CS5530_command, unsigned char*)
+                0x0011501e                setSPI1mode()
+                0x00115008                txBufferEmptySpi2()
+                0x00114ce2                CS5530_setAdcCoding(CS5530_adcCoding)
+                0x001153e6                resetAdcValues(unsigned char)
+                0x00116c4c                txBufferNotEmpty()
+                0x00114fc0                startContinuousConversionSpi2()
+                0x00115a24                backup_new_gain_value(unsigned char, float)
+                0x00114722                CS5530_Spi1Initialization()
+                0x00114d8a                CS5530_setSampleFrequencySpi2(CS5530_sampleFrequecies)
+                0x00114698                load_startSampling()
+                0x00118e9e                CS5530_resetAdcComunication()
+                0x00115476                controlAdcValuesRead()
+                0x00115988                backup_date_adc_param(char*)
+                0x00114d42                CS5530_setRstSysSpi2(CS5530_rstSys)
+                0x00114fa2                CS5530_setOpenCircuitDetectorSpi2(CS5530_openCircuitDetector)
+                0x00114fcc                CS5530_setIntGainADConv(int, unsigned char*)
+                0x001159ac                backup_calib_state(unsigned char, unsigned char)
+                0x00115e84                CS5530_sendCmdSpi2(CS5530_command, unsigned char*)
+                0x00117ab4                CS5530_getWatchdogAdcTimer()
+                0x0011559e                CS5530_validDataPresentInADCBufferSpi2()
+                0x00114aa6                CS5530_setInputShort(CS5530_inputShort)
+                0x00114ffe                txBufferIsEmpty()
+                0x00114d1e                CS5530_setPowerSafeModeSpi2(CS5530_powerSaveMode)
+                0x00114cf4                CS5530_setOpenCircuitDetector(CS5530_openCircuitDetector)
+                0x00114d78                CS5530_setLatchBitsSpi2(CS5530_outputLatchBits)
+                0x00114a94                CS5530_setRstSys(CS5530_rstSys)
+                0x00114a1e                CS5530_checkBlockCells(unsigned long*)
+                0x00115bec                get_factory_adc_param()
+                0x00115014                txBufferIsEmptySpi2()
+                0x00115df2                txBufferNotEmptySpi2()
+                0x00115b72                backup_factory_offset_value(unsigned char, unsigned short)
+                0x00115a60                reset_backup_factory_values(unsigned char, unsigned char)
+                0x00114adc                CS5530_setSampleFrequecy(CS5530_sampleFrequecies)
+                0x00114d12                startContinuousConversion()
+                0x001183da                CS5530_EntrySpi1()
+                0x00114aca                CS5530_setLatchBits(CS5530_outputLatchBits)
+                0x00115ac0                backup_factory_gain_param(unsigned char, float, int, int)
+                0x00114ab8                CS5530_setVoltageRef(CS5530_voltageRef)
+                0x001149e4                CS5530_setCounterWaitingData()
+                0x00118f52                CS5530_validDataPresentInADCBuffer()
+                0x001146a6                load_stopSampling()
+                0x00114fe8                CS5530_rstValidDataPresentInADCBufferSpi2()
+                0x00118cfc                adc_serial_init()
+                0x00114d54                CS5530_setInputShortSpi2(CS5530_inputShort)
+                0x00114d30                CS5530_setPowerDownModeSpi2(CS5530_powerDownMode)
+                0x00116c70                SPI_StartTx()
+                0x001149ee                CS5530_getCounterWaitingData()
+                0x00114d06                endContinuousConversion()
+                0x00114ff2                txBufferEmpty()
+                0x00115e16                SPI2_StartTx()
+                0x00114a70                CS5530_setPowerSafeMode(CS5530_powerSaveMode)
+                0x00117ad2                CS5530_EntrySpi2()
+                0x00115096                setPINSPI1mode()
+                0x00114fb4                endContinuousConversionSpi2()
+                0x001150be                setSPI2mode()
+                0x00115daa                get_adc_param()
+                0x00114f90                CS5530_setAdcCodingSpi2(CS5530_adcCoding)
+                0x001159e8                backup_new_offset_value(unsigned char, unsigned short)
+                0x001148a6                CS5530_Spi2Initialization()
+                0x00118ed0                adc_uC_init()
+                0x00114538                samplePower()
+                0x001149f8                CS5530_checkBlockComunication(int)
+                0x00114a4a                CS5530_setWatchdogAdcTimer(unsigned long)
+                0x0011514e                setPINSPI2mode()
+                0x00114d66                CS5530_setVoltageRefSpi2(CS5530_voltageRef)
+                0x00114a82                CS5530_setPowerDownMode(CS5530_powerDownMode)
+ .text          0x0011921e      0x924 obj/PWM.o
+                0x00119798                CloseLineEV(int)
+                0x00119618                getStateCoverM3300Pump()
+                0x0011960e                setStateCoverM3300Pump(bool)
+                0x00119504                getCoverPumpState()
+                0x00119488                enable_MOT(int)
+                0x0011958a                getSpeedPump(int)
+                0x00119972                pwmManager()
+                0x001194e8                reg_pump_vel(unsigned char, unsigned char)
+                0x0011944a                enable_PWM_MOT(int)
+                0x001192de                init_PWM_MOT5()
+                0x001192d8                init_PWM_MOT2()
+                0x001198e4                EVsManager()
+                0x001192dc                init_PWM_MOT4()
+                0x0011956e                setSpeedPump(int, unsigned char)
+                0x00119552                getRampPump(int)
+                0x0011951a                setBlockRelay(int, int)
+                0x0011953a                setRampPump(int, unsigned char)
+                0x001193fa                enable_PWM_EV()
+                0x001192da                init_PWM_MOT3()
+                0x001194b2                disable_PWM_MOT(int)
+                0x001193d2                changeEVstatus(unsigned char)
+                0x001195a2                setPwmCycle(int, unsigned char)
+                0x00119428                disable_PWM_EV()
+                0x001195dc                setPwmMotCycle(int, int)
+                0x00119622                OpenLineEV(int)
+                0x0011921e                init_PWM_MOT1()
+                0x0011939e                set_PWM_EVuC(unsigned char)
+                0x001192e0                init_PWM_EVuC()
+ .text          0x00119b42     0x165c obj/QUEUEUART.o
+                0x0011b13a                RingBuffer::RingBuffer(unsigned int)
+                0x0011a62e                QueueUart::GetNumBytesInTransmissionBuffer()
+                0x00119dda                UartDeviceAbstraction::SetTransmissionBuffer(unsigned char)
+                0x0011a356                UartDeviceAbstraction::TransmitData(unsigned char)
+                0x0011a93a                QueueUart::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
+                0x0011ac36                UartDeviceAbstraction::SelectUart1()
+                0x0011a3ce                UartDeviceAbstraction::ReceiveData()
+                0x00119c4e                UartDeviceAbstraction::TurnOn()
+                0x0011aa70                QueueUart::TransmitData(unsigned char const*)
+                0x00119eec                UartDeviceAbstraction::IrqHandUA2T(int)
+                0x00119bac                RingBuffer::Equals(unsigned char const*, unsigned int)
+                0x0011a4d2                QueueUart::TransmitLock()
+                0x0011a70e                QueueUart::SetTransmitCallBack(void (*)(UartDeviceAbstraction*, bool))
+                0x00119db8                UartDeviceAbstraction::IsTransmissionBufferEmpty()
+                0x0011ad32                UartDeviceAbstraction::SelectUart0()
+                0x0011a314                UartDeviceAbstraction::StartTransmission()
+                0x0011a87a                QueueUart::ReceiveData(unsigned char&)
+                0x0011a458                QueueUart::StartTransmission()
+                0x0011b11c                RingBuffer::~RingBuffer()
+                0x0011a2f8                UartDeviceAbstraction::TransmitLock()
+                0x0011a806                QueueUart::ReceiveData(unsigned short*, int&)
+                0x0011ae1a                UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x0011a5c6                QueueUart::TransmitData(unsigned char const*, int)
+                0x00119f1a                UartDeviceAbstraction::IrqHandUA0R(int)
+                0x0011a946                QueueUart::GetNumBytesInReceptionBuffer()
+                0x0011b076                QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice)
+                0x00119bf2                UartDeviceAbstraction::Init()
+                0x0011a940                QueueUart::GetReceptionBufferSize()
+                0x0011aaba                UartDeviceAbstraction::~UartDeviceAbstraction()
+                0x00119e0c                UartDeviceAbstraction::GetReceptionError()
+                0x0011a306                UartDeviceAbstraction::TransmitUnlock()
+                0x0011a628                QueueUart::GetTransmissionBufferSize()
+                0x0011a18a                UartDeviceAbstraction::SetBaudRate(UartDeviceAbstraction::UARTBaudRate, bool)
+                0x0011a3c0                UartDeviceAbstraction::ReceiveUnlock()
+                0x00119d54                UartDeviceAbstraction::~UartDeviceAbstraction()
+                0x00119cf0                UartDeviceAbstraction::~UartDeviceAbstraction()
+                0x0011a74e                QueueUart::ReceiveUnlock()
+                0x0011a33c                UartDeviceAbstraction::StartTransmission(unsigned char)
+                0x00119e90                UartDeviceAbstraction::IrqHandUA0T(int)
+                0x0011a77e                QueueUart::ClearReceptionBuffer()
+                0x0011b0fe                RingBuffer::~RingBuffer()
+                0x0011a550                QueueUart::TransmitData(unsigned char)
+                0x0011a714                QueueUart::ReceiveLock()
+                0x0011a686                QueueUart::TransmitCallback(UartDeviceAbstraction*)
+                0x0011a436                QueueUart::~QueueUart()
+                0x00119fb2                UartDeviceAbstraction::IrqHandUA2R(int)
+                0x00119ffe                UartDeviceAbstraction::SetParity(UartDeviceAbstraction::UARTParity, bool)
+                0x0011a3b2                UartDeviceAbstraction::ReceiveLock()
+                0x0011a3a6                UartDeviceAbstraction::ClearError()
+                0x0011a520                QueueUart::TransmitUnlock()
+                0x0011af04                UartDeviceAbstraction::UartDeviceAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x00119df0                UartDeviceAbstraction::GetReceptionBuffer()
+                0x0011a8c6                QueueUart::ReceiveData(unsigned char*, int&)
+                0x0011a0b2                UartDeviceAbstraction::SetFrameBits(UartDeviceAbstraction::UARTFrameBits, bool)
+                0x00119b42                RingBuffer::Clear(bool)
+                0x0011a63c                QueueUart::GetFreeBytesInTransmissionBuffer()
+                0x0011a954                QueueUart::GetFreeBytesInReceptionBuffer()
+                0x0011a9dc                QueueUart::ReceiveCallback(UartDeviceAbstraction*, unsigned int)
+                0x0011a79c                QueueUart::ClearTransmissionBuffer()
+                0x00119f66                UartDeviceAbstraction::IrqHandUA1R(int)
+                0x0011a11e                UartDeviceAbstraction::SetStopBits(UartDeviceAbstraction::UARTStopBits, bool)
+                0x0011a7be                QueueUart::ReceiveData(unsigned short&)
+                0x00119ebe                UartDeviceAbstraction::IrqHandUA1T(int)
+                0x0011ab56                UartDeviceAbstraction::SelectUart2()
+                0x0011a40e                UartDeviceAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
+                0x0011b16c                RingBuffer::RingBuffer(unsigned int)
+                0x00119b7a                RingBuffer::Insert(unsigned char)
+                0x00119ca6                UartDeviceAbstraction::TurnOff()
+                0x0011ab24                QueueUart::~QueueUart()
+                0x0011a414                QueueUart::~QueueUart()
+                0x0011a3ac                UartDeviceAbstraction::SetTransmitCallBack(void (*)(UartDeviceAbstraction*))
+                0x0011a99e                QueueUart::resetFifo()
+                0x0011afee                QueueUart::QueueUart(UartDeviceAbstraction::UARTDevice)
+ .text          0x0011b19e      0x756 obj/PROTOCOLSTDUART.o
+                0x0011b2fe                stdUartProtocolAbstraction::addDataToReceiveBuffer(unsigned char*, int, int)
+                0x0011b758                stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x0011b714                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
+                0x0011b590                stdUartProtocolAbstraction::checkTimeOutElapsed()
+                0x0011b736                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
+                0x0011b1a4                stdUartProtocolAbstraction::SetReceiveCallBack(void (*)(UartDeviceAbstraction*, unsigned int))
+                0x0011b4be                stdUartProtocolAbstraction::SendCommand(unsigned char*, int, int)
+                0x0011b6e2                stdUartProtocolAbstraction::~stdUartProtocolAbstraction()
+                0x0011b29a                stdUartProtocolAbstraction::rstError()
+                0x0011b826                stdUartProtocolAbstraction::stdUartProtocolAbstraction(UartDeviceAbstraction::UARTDevice)
+                0x0011b434                stdUartProtocolAbstraction::popPacketReceived(int&)
+                0x0011b1ac                stdUartProtocolAbstraction::restoreIntialCondition()
+                0x0011b19e                stdUartProtocolAbstraction::SetDataAnalyseCallBack(bool (*)(unsigned short, stdUartProtocolAbstraction*))
+                0x0011b2f6                stdUartProtocolAbstraction::IsTransmissionAvailable()
+                0x0011b1bc                stdUartProtocolAbstraction::setError(int, bool)
+                0x0011b2b4                stdUartProtocolAbstraction::getLastError()
+                0x0011b612                stdUartProtocolAbstraction::Manager()
+                0x0011b550                stdUartProtocolAbstraction::setLastDataReceivedBuffer(int)
+                0x0011b490                stdUartProtocolAbstraction::calculateChecksum(unsigned char*, unsigned char)
+                0x0011b1aa                stdUartProtocolAbstraction::stdUartProtocolAbstractionReceiveCallback(UartDeviceAbstraction*, unsigned int)
+                0x0011b2fa                stdUartProtocolAbstraction::IsReceptionAvailable()
+                0x0011b474                stdUartProtocolAbstraction::getNewPacketReceived()
+                0x0011b35c                stdUartProtocolAbstraction::setReceivedOpCode(int)
+                0x0011b2ba                stdUartProtocolAbstraction::popError()
+                0x0011b47a                stdUartProtocolAbstraction::rstNewPacketReceived()
+ .text          0x0011b8f4     0x1eb2 obj/PROTOCOLSIFRA.o
+                0x0011bf38                SIFRAProtocol::getMsg()
+                0x0011bc3c                SIFRAProtocol::SIFRA_getStatusCmdDecode()
+                0x0011bfa0                SIFRAProtocol::jumpToLoaderHandler()
+                0x0011ba86                SIFRAProtocol::SIFRA_getInfoCmdDecode()
+                0x0011d70a                SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
+                0x0011be8a                SIFRAProtocol::checksum(unsigned char, unsigned char, unsigned char)
+                0x0011b9de                SIFRAProtocol::SIFRA_decodeScalesPhaseCmd(unsigned char*)
+                0x0011bddc                SIFRAProtocol::getLastRemoteNodeID()
+                0x0011bcea                SIFRAProtocol::SIFRA_setZeroCell8_Cell15()
+                0x0011bcc2                SIFRAProtocol::SIFRA_setResetCalib()
+                0x0011b8f4                SIFRAProtocol::SIFRA_decodeStartCmd(unsigned char*)
+                0x0011bbdc                SIFRAProtocol::SIFRA_setScalesNotCalib()
+                0x0011bc9c                SIFRAProtocol::SIFRA_setZeroVerification()
+                0x0011bd38                SIFRAProtocol::SIFRA_setGainCell15()
+                0x0011cd0c                SIFRAProtocol::Manager()
+                0x0011b9be                SIFRAProtocol::SIFRA_decodeWeightSensibilityCmd(unsigned char*)
+                0x0011bec4                SIFRAProtocol::sendMsg(int)
+                0x0011bde2                SIFRAProtocol::checkOpCode(unsigned char, int, int&)
+                0x0011c9a8                SIFRAProtocol::sendSIFRAStatus()
+                0x0011b9ce                SIFRAProtocol::SIFRA_decodeRestartFormulaCmd(unsigned char*)
+                0x0011c11e                SIFRAProtocol::sendSIFRARamDebug()
+                0x0011d260                SIFRAProtocol::SIFRADataAnalyse(unsigned short, stdUartProtocolAbstraction*)
+                0x0011bd60                SIFRAProtocol::SIFRA_setJumpToLoader()
+                0x0011bad2                SIFRAProtocol::SIFRA_getDebugStartCmdDecode()
+                0x0011bb1e                SIFRAProtocol::SIFRA_getDebugRamCmdDecode()
+                0x0011bdd6                SIFRAProtocol::setLastRemoteNodeID(unsigned char)
+                0x0011d66e                SIFRAProtocol::SIFRAProtocol(UartDeviceAbstraction::UARTDevice, int)
+                0x0011bdd0                SIFRAProtocol::getLocalNodeID()
+                0x0011c64a                SIFRAProtocol::sendSIFRAViaDebug()
+                0x0011bd88                SIFRAProtocol::resetApplicationHandler()
+                0x0011cbf4                SIFRAProtocol::sendSIFRAStart()
+                0x0011bb6a                SIFRAProtocol::SIFRA_restartWeightCoverControl()
+                0x0011d63c                SIFRAProtocol::~SIFRAProtocol()
+                0x0011c0bc                SIFRAProtocol::sendAcknowledge()
+                0x0011bb44                SIFRAProtocol::SIFRA_setWeightSensibility()
+                0x0011bc62                SIFRAProtocol::SIFRA_setStart()
+                0x0011d5f8                SIFRAProtocol::~SIFRAProtocol()
+                0x0011d61a                SIFRAProtocol::~SIFRAProtocol()
+                0x0011bbb6                SIFRAProtocol::SIFRA_setScalesPhase()
+                0x0011b9fa                SIFRAProtocol::sendSIFRALoadSamples(float)
+                0x0011c532                SIFRAProtocol::sendSIFRAStartDebug()
+                0x0011bdca                SIFRAProtocol::setLocalNodeID(unsigned char)
+                0x0011c836                SIFRAProtocol::sendSIFRAInfo()
+                0x0011baf8                SIFRAProtocol::SIFRA_getDebugStatusCmdDecode()
+                0x0011baac                SIFRAProtocol::SIFRA_getDebugViaCmdDecode()
+                0x0011bd10                SIFRAProtocol::SIFRA_setGainCell8()
+                0x0011bb90                SIFRAProtocol::SIFRA_restartFormula()
+                0x0011bc02                SIFRAProtocol::SIFRA_set_Stop_All()
+                0x0011c2f2                SIFRAProtocol::sendSIFRAStatusDebug()
+ .text          0x0011d7a6     0x9720 obj/CPUSIFRA_MANAGER.o
+                0x0011d8d8                SIFRA_Manager::SIFRAMsg_startAcquisitionHandler()
+                0x0011d7aa                SIFRA_Manager::SIFRABreak_Manager()
+                0x001217a4                SIFRA_Manager::SIFRARisciacquo_Manager(int)
+                0x0011f8ee                SIFRA_Manager::Verifica_encoder_motori()
+                0x0011da72                SIFRA_Manager::readLoadInLine8()
+                0x0011de0a                SIFRA_Manager::Find_Num_of_Enabled_Lines(unsigned char)
+                0x00122c86                SIFRA_Manager::SIFRASacca_Manager()
+                0x0011e0ee                SIFRA_Manager::salva_rapporto_flussopeso(int)
+                0x001214e8                SIFRA_Manager::SIFRAService_Manager()
+                0x0011ddc2                SIFRA_Manager::controllo_vuoto(int)
+                0x0011e04c                SIFRA_Manager::calc_flusso_pompa()
+                0x0011da5c                SIFRA_Manager::SifraStopTimers()
+                0x0011e93e                SIFRA_Manager::SIFRA_resetStatusErrorStop()
+                0x00123a6c                SIFRA_Manager::SIFRAMsg_debugRamAskedHandler()
+                0x0011dbba                SIFRA_Manager::setErrorEEpromReading()
+                0x0012396e                SIFRA_Manager::SIFRATest_OpenMoreEVs()
+                0x001215e8                SIFRA_Manager::SIFRAST_Manager(int)
+                0x0011fffa                SIFRA_Manager::Read_Param_Backup()
+                0x0011f820                SIFRA_Manager::calc_next_theor_weight(int)
+                0x00126b12                SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)
+                0x0011e9c4                SIFRA_Manager::set_unstable_threshold(unsigned char)
+                0x0011dd2e                SIFRA_Manager::getSIFRApreviousStatus()
+                0x0011d7a8                SIFRA_Manager::~SIFRA_Manager()
+                0x0012026e                SIFRA_Manager::Backup_StatoStart()
+                0x0011dd38                SIFRA_Manager::getSIFRAphase()
+                0x00123adc                SIFRA_Manager::SIFRAMsg_infoAskedHandler()
+                0x0011d966                SIFRA_Manager::SifraResetViaStatus()
+                0x0011e00c                SIFRA_Manager::ResetMotorStepCounter()
+                0x0011f9f8                SIFRA_Manager::controllo_non_cala(int, int)
+                0x0011fd5c                SIFRA_Manager::SIFRARampe_Manager(unsigned char, unsigned char)
+                0x00124dd0                SIFRA_Manager::SIFRATest_FlussoPompa(int)
+                0x00120904                SIFRA_Manager::readZeroInBothLine()
+                0x00123af8                SIFRA_Manager::SIFRAMsg_statusAskedHandler()
+                0x0011feca                SIFRA_Manager::SifraResetStateMachine()
+                0x0011e612                SIFRA_Manager::calc_param_weight(ChannelsBackupParam*)
+                0x00123b4c                SIFRA_Manager::Decode_StartMsg()
+                0x0011e478                SIFRA_Manager::check_volume_error(int)
+                0x0011fcd4                SIFRA_Manager::SIFRASpeedPump_Manager(unsigned char)
+                0x0012536a                SIFRA_Manager::SIFRACalibr_Manager()
+                0x00121356                SIFRA_Manager::SIFRAOpenLineEV(int)
+                0x0011dd42                SIFRA_Manager::controllo_flussopeso(long, unsigned short, float)
+                0x0011dbc6                SIFRA_Manager::GetSystemLoad(unsigned long*)
+                0x0011d9b2                SIFRA_Manager::SifraResetStartCmd()
+                0x00120c7c                SIFRA_Manager::DefaultSystemReset()
+                0x0011e03a                SIFRA_Manager::getStatePump(int)
+                0x0011d8e2                SIFRA_Manager::SIFRAMsg_resetApplicationHandler()
+                0x0011e8c2                SIFRA_Manager::Encoder_counter()
+                0x00120d9a                SIFRA_Manager::SIFRATestPinch()
+                0x0011e294                SIFRA_Manager::Init_Variables()
+                0x00120ca2                SIFRA_Manager::SIFRAStop_Manager()
+                0x0011e1c8                SIFRA_Manager::Set_START_Erogazione(int)
+                0x0011d93a                SIFRA_Manager::SIFRAMsg_protocolErrorHandler()
+                0x00120d82                SIFRA_Manager::SIFRACloseLineEV(int)
+                0x001225d4                SIFRA_Manager::SIFRAManual_Manager(int)
+                0x0011e752                SIFRA_Manager::AdattaPesoSpecifico(unsigned short)
+                0x0011dcc2                SIFRA_Manager::SIFRASetScalesPhase(unsigned char, unsigned char)
+                0x0011fb6e                SIFRA_Manager::FlashLed_hw_error()
+                0x0011e6a2                SIFRA_Manager::aggiorna_capacita(unsigned short, unsigned short, float)
+                0x0011d9e6                SIFRA_Manager::SifraResetFillingData()
+                0x0011ffaa                SIFRA_Manager::Read_Param_Encoder()
+                0x0011eb7c                SIFRA_Manager::Verifica_peso_massimo()
+                0x00120c24                SIFRA_Manager::SifraResetSystemParams()
+                0x0011e964                SIFRA_Manager::SIFRA_resetStatusError()
+                0x001201fa                SIFRA_Manager::default_struttura_flussopeso()
+                0x0011ea36                SIFRA_Manager::SIFRAPhase_manager()
+                0x0011e8f0                SIFRA_Manager::EncoderPumpsControl()
+                0x0011ec76                SIFRA_Manager::Verifica_celle()
+                0x0012566e                SIFRA_Manager::SIFRASetScalesNotCalib()
+                0x00121204                SIFRA_Manager::SIFRAError_Manager()
+                0x0012004e                SIFRA_Manager::DownLoad_StatoStart()
+                0x0011da10                SIFRA_Manager::SifraResetServiceData()
+                0x0011e230                SIFRA_Manager::set_air_alarm(int)
+                0x0011de4a                SIFRA_Manager::Find_Enable_line(unsigned char)
+                0x0011e172                SIFRA_Manager::setta_led_pannello(int, bool)
+                0x0011fe94                SIFRA_Manager::setStatePump(int, int)
+                0x001256c6                SIFRA_Manager::SIFRASample_Manager()
+                0x0012053c                SIFRA_Manager::readLoadInLine15()
+                0x0011e3fa                SIFRA_Manager::check_conditions(int)
+                0x0011d924                SIFRA_Manager::SIFRAMsg_hwErrorHandler()
+                0x0011e720                SIFRA_Manager::ViaDaEseguire()
+                0x0012675e                SIFRA_Manager::SIFRA_Manager(SIFRAProtocol*)
+                0x00123b14                SIFRA_Manager::SIFRAMsg_setStartHandler()
+                0x0011d7a6                SIFRA_Manager::~SIFRA_Manager()
+                0x001261f2                SIFRA_Manager::Manager()
+                0x00120bf0                SIFRA_Manager::SifraResetStatus()
+                0x00120156                SIFRA_Manager::Write_Param_Encoder()
+                0x0011e984                SIFRA_Manager::Set_weight_threshold()
+                0x0011def8                SIFRA_Manager::read_encoder_motors(int)
+                0x00125d20                SIFRA_Manager::SIFRAcheck_new_command()
+                0x0011dc9a                SIFRA_Manager::changeSIFRAstatus(unsigned char)
+                0x0011da1e                SIFRA_Manager::SifraResetBackup()
+                0x0011ed40                SIFRA_Manager::SIFRAAirIn_Manager()
+                0x001201a6                SIFRA_Manager::Write_Param_Backup()
+                0x0011d950                SIFRA_Manager::SIFRAMsg_unknownErrorHandler()
+                0x0011eb1e                SIFRA_Manager::SIFRACalibResetData()
+                0x00120336                SIFRA_Manager::VerificaESD_Damage()
+                0x00123aa4                SIFRA_Manager::SIFRAMsg_debugStartAskedHandler()
+                0x0011f17c                SIFRA_Manager::SIFRATestLed_Manager()
+                0x00121d3a                SIFRA_Manager::SIFRART_Manager(int)
+                0x0011de68                SIFRA_Manager::Setta_filtro_peso(int)
+                0x001204e6                SIFRA_Manager::SetHardwareVersion()
+                0x001213f6                SIFRA_Manager::SIFRATestEMC_Manager()
+                0x0011d820                SIFRA_Manager::SIFRAWeightControlRestart(char)
+                0x00124716                SIFRA_Manager::SIFRALed_Manager()
+                0x0011dd24                SIFRA_Manager::getSIFRAstatus()
+                0x00123b30                SIFRA_Manager::SIFRAMsg_setStopAllHandler()
+                0x00124f22                SIFRA_Manager::SIFRATest_Pompe(int)
+                0x00123ac0                SIFRA_Manager::SIFRAMsg_debugViaAskedHandler()
+                0x0011e998                SIFRA_Manager::LoadControl()
+                0x0011ff34                SIFRA_Manager::Verifica_apertura_sportello()
+                0x0011e202                SIFRA_Manager::reset_state_this_led(int, bool)
+                0x0011e6f6                SIFRA_Manager::controllo_capacita_iniziale(unsigned short)
+                0x00123a88                SIFRA_Manager::SIFRAMsg_debugStatusAskedHandler()
+                0x0011e7aa                SIFRA_Manager::UpdateDebugStruct()
+                0x0011df44                SIFRA_Manager::encoder_updateCnt()
+ .text          0x00126ec6      0x792 obj/NVRDRV.o
+                0x00126f94                _nvr_chkRead
+                0x001273b0                _nvr_readUserChkBlock
+                0x0012706c                _nvr_writeUserChkBlock
+                0x0012700c                _drv_writeMem
+                0x0012747e                _nvr_readParam
+                0x00126ec6                _nvr_init
+                0x00127110                _nvr_writeParam
+                0x00127278                _nvr_chkVerify
+                0x00127046                _nvr_chkWrite
+                0x00126efe                _nvr_setDeviceAddress
+                0x0012723a                _nvr_writeUserMem
+                0x00126fce                _nvr_readUserMem
+                0x00126ee8                _nvr_errors
+                0x00126f5a                _drv_readMem
+                0x00126f1c                _nvr_chkCalcBuf
+ .text          0x00127658      0x2aa obj/LEDS_PANEL.o
+                0x001277b8                _switchoff_leds
+                0x00127658                _LedDrivers_clearFifo
+                0x001276b0                _switchon_red_leds
+                0x00127760                _switchon_leds
+                0x0012789c                _LedDrivers_init
+                0x00127676                _LedDrivers_sendData
+                0x00127800                _LedDrivers_DisplayTest
+                0x00127708                _switchon_green_leds
+ .text          0x00127902       0x20 c:\gcc850\lib\libc.a(lib_a-atoi.o)
+                0x00127912                _atoi
+                0x00127902                __atoi_r
+ .text          0x00127922       0x20 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+                0x00127922                _memcpy
+ .text          0x00127942       0x1a c:\gcc850\lib\libc.a(lib_a-memset.o)
+                0x00127942                _memset
+ .text          0x0012795c       0xa6 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+                0x0012795c                _sprintf
+                0x001279b2                __sprintf_r
+ .text          0x00127a02       0x34 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+                0x00127a02                _strcmp
+ .text          0x00127a36       0x20 c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+                0x00127a36                _strcpy
+ .text          0x00127a56       0x1a c:\gcc850\lib\libc.a(lib_a-strlen.o)
+                0x00127a56                _strlen
+ .text          0x00127a70      0x226 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+                0x00127c7c                _strtol
+                0x00127a70                __strtol_r
+ .text          0x00127c96     0x1a6a c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+                0x00127e40                __svfprintf_r
+ .text          0x00129700        0x0 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+ .text          0x00129700     0x1530 c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+                0x0012990e                __dtoa_r
+ .text          0x0012ac30      0x324 c:\gcc850\lib\libc.a(lib_a-freer.o)
+                0x0012ac30                __malloc_trim_r
+                0x0012ad00                __free_r
+ .text          0x0012af54        0x0 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ .text          0x0012af54       0x9a c:\gcc850\lib\libc.a(lib_a-locale.o)
+                0x0012afd8                _setlocale
+                0x0012af72                __setlocale_r
+                0x0012af54                ___locale_charset
+                0x0012af68                _localeconv
+                0x0012af5e                __localeconv_r
+ .text          0x0012afee      0x6a8 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+                0x0012afee                __malloc_r
+ .text          0x0012b696       0x32 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+                0x0012b696                _memchr
+ .text          0x0012b6c8       0x48 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+                0x0012b6c8                _memmove
+ .text          0x0012b710        0x4 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+                0x0012b710                ___malloc_lock
+                0x0012b712                ___malloc_unlock
+ .text          0x0012b714      0xbc8 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+                0x0012bb44                ___d2b
+                0x0012ba6c                ___any_on
+                0x0012b7fe                ___mcmp
+                0x0012be52                ___multiply
+                0x0012b88e                ___b2d
+                0x0012ba1e                ___copybits
+                0x0012bc44                ___mdiff
+                0x0012c21c                ___s2b
+                0x0012b782                ___lo0bits
+                0x0012bad6                __Balloc
+                0x0012b9c4                __mprec_log10
+                0x0012c096                ___multadd
+                0x0012b950                ___ratio
+                0x0012c07c                ___i2b
+                0x0012c15a                ___pow5mult
+                0x0012bd70                ___lshift
+                0x0012b714                __Bfree
+                0x0012b732                ___hi0bits
+                0x0012b83a                ___ulp
+ .text          0x0012c2dc      0x452 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+                0x0012c2dc                __realloc_r
+ .text          0x0012c72e       0x26 c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+                0x0012c72e                ___isinfd
+ .text          0x0012c754       0x1e c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+                0x0012c754                ___isnand
+ .text          0x0012c772       0x2a c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+                0x0012c772                __sbrk_r
+ .text          0x0012c79c       0x16 c:\gcc850\lib\libc.a(lib_a-stat.o)
+                0x0012c79c                __stat
+ .text          0x0012c7b2       0x12 c:\gcc850\lib\libc.a(lib_a-trap.o)
+                0x0012c7b2                ___trap0
+ .text          0x0012c7c4       0x8a c:\gcc850\lib\libc.a(lib_a-callocr.o)
+                0x0012c7c4                __calloc_r
+ .text          0x0012c84e       0x5e c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+                0x0012c84e                __sbrk
+ .text          0x0012c8ac       0x16 c:\gcc850\lib\libc.a(lib_a-write.o)
+                0x0012c8ac                __write
+ .text          0x0012c8c2       0x10 c:\gcc850\lib\libc.a(lib_a-abort.o)
+                0x0012c8c2                _abort
+ .text          0x0012c8d2      0x1a8 c:\gcc850\lib\libc.a(lib_a-signal.o)
+                0x0012c8d2                __raise_r
+                0x0012ca04                ___sigtramp
+                0x0012c93e                _raise
+                0x0012c990                __init_signal
+                0x0012c9a0                ___sigtramp_r
+                0x0012ca64                _signal
+                0x0012ca16                __signal_r
+                0x0012c950                __init_signal_r
+ .text          0x0012ca7a       0x3a c:\gcc850\lib\libc.a(lib_a-signalr.o)
+                0x0012ca7a                __getpid_r
+                0x0012ca86                __kill_r
+ .text          0x0012cab4       0x4a c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+                0x0012cab4                __exit
+ .text          0x0012cafe        0x4 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+                0x0012cafe                __getpid
+ .text          0x0012cb02       0x18 c:\gcc850\lib\libc.a(lib_a-kill.o)
+                0x0012cb02                __kill
+ .text          0x0012cb1a       0x3e c:\gcc850\lib\libgcc.a(_mulsi3.o)
+                0x0012cb1a                ___mulsi3
+ .text          0x0012cb58       0x32 c:\gcc850\lib\libgcc.a(_divsi3.o)
+                0x0012cb58                ___divsi3
+ .text          0x0012cb8a       0x36 c:\gcc850\lib\libgcc.a(_udivsi3.o)
+                0x0012cb8a                ___udivsi3
+ .text          0x0012cbc0       0x2a c:\gcc850\lib\libgcc.a(_modsi3.o)
+                0x0012cbc0                ___modsi3
+ .text          0x0012cbea       0x2a c:\gcc850\lib\libgcc.a(_umodsi3.o)
+                0x0012cbea                ___umodsi3
+ .text          0x0012cc14       0x68 c:\gcc850\lib\libgcc.a(_save_20c.o)
+                0x0012cc48                __return_r20_r31
+                0x0012cc14                __save_r20_r31
+ .text          0x0012cc7c       0x50 c:\gcc850\lib\libgcc.a(_save_23c.o)
+                0x0012cc7c                __save_r23_r31
+                0x0012cca4                __return_r23_r31
+ .text          0x0012cccc       0x40 c:\gcc850\lib\libgcc.a(_save_25c.o)
+                0x0012ccec                __return_r25_r31
+                0x0012cccc                __save_r25_r31
+ .text          0x0012cd0c       0x38 c:\gcc850\lib\libgcc.a(_save_26c.o)
+                0x0012cd28                __return_r26_r31
+                0x0012cd0c                __save_r26_r31
+ .text          0x0012cd44       0x30 c:\gcc850\lib\libgcc.a(_save_27c.o)
+                0x0012cd44                __save_r27_r31
+                0x0012cd5c                __return_r27_r31
+ .text          0x0012cd74       0x28 c:\gcc850\lib\libgcc.a(_save_28c.o)
+                0x0012cd74                __save_r28_r31
+                0x0012cd88                __return_r28_r31
+ .text          0x0012cd9c       0x20 c:\gcc850\lib\libgcc.a(_save_29c.o)
+                0x0012cdac                __return_r29_r31
+                0x0012cd9c                __save_r29_r31
+ .text          0x0012cdbc       0x18 c:\gcc850\lib\libgcc.a(_save_31c.o)
+                0x0012cdc8                __return_r31
+                0x0012cdbc                __save_r31
+ .text          0x0012cdd4       0x14 c:\gcc850\lib\libgcc.a(_save_varargs.o)
+                0x0012cdd4                __save_r6_r9
+ .text          0x0012cde8       0x36 c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+                0x0012cde8                ___fixunssfsi
+ .text          0x0012ce1e      0x25e c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+                0x0012cfc4                ___subsf3
+                0x0012d026                ___addsf3
+ .text          0x0012d07c      0x174 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+                0x0012d07c                ___mulsf3
+ .text          0x0012d1f0      0x11c c:\gcc850\lib\libgcc.a(_div_sf.o)
+                0x0012d1f0                ___divsf3
+ .text          0x0012d30c       0x66 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+                0x0012d30c                ___nesf2
+ .text          0x0012d372       0x60 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+                0x0012d372                ___gtsf2
+ .text          0x0012d3d2       0x60 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+                0x0012d3d2                ___gesf2
+ .text          0x0012d432       0x66 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+                0x0012d432                ___ltsf2
+ .text          0x0012d498       0x66 c:\gcc850\lib\libgcc.a(_le_sf.o)
+                0x0012d498                ___lesf2
+ .text          0x0012d4fe       0x70 c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+                0x0012d4fe                ___floatsisf
+ .text          0x0012d56e       0x82 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+                0x0012d56e                ___fixsfsi
+ .text          0x0012d5f0        0x0 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+ .text          0x0012d5f0       0x7a c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+                0x0012d5f0                ___floatunsisf
+ .text          0x0012d66a      0x3fa c:\gcc850\lib\libgcc.a(_addsub_df.o)
+                0x0012d99c                ___subdf3
+                0x0012da06                ___adddf3
+ .text          0x0012da64      0x270 c:\gcc850\lib\libgcc.a(_mul_df.o)
+                0x0012da64                ___muldf3
+ .text          0x0012dcd4      0x188 c:\gcc850\lib\libgcc.a(_div_df.o)
+                0x0012dcd4                ___divdf3
+ .text          0x0012de5c       0x6e c:\gcc850\lib\libgcc.a(_eq_df.o)
+                0x0012de5c                ___eqdf2
+ .text          0x0012deca       0x6e c:\gcc850\lib\libgcc.a(_ne_df.o)
+                0x0012deca                ___nedf2
+ .text          0x0012df38       0x68 c:\gcc850\lib\libgcc.a(_gt_df.o)
+                0x0012df38                ___gtdf2
+ .text          0x0012dfa0       0x68 c:\gcc850\lib\libgcc.a(_ge_df.o)
+                0x0012dfa0                ___gedf2
+ .text          0x0012e008       0x6e c:\gcc850\lib\libgcc.a(_lt_df.o)
+                0x0012e008                ___ltdf2
+ .text          0x0012e076       0x9e c:\gcc850\lib\libgcc.a(_si_to_df.o)
+                0x0012e076                ___floatsidf
+ .text          0x0012e114       0xaa c:\gcc850\lib\libgcc.a(_df_to_si.o)
+                0x0012e114                ___fixdfsi
+ .text          0x0012e1be        0x0 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+ .text          0x0012e1be       0xc2 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+                0x0012e1be                ___floatunsidf
+ .text          0x0012e280       0x12 c:\gcc850\lib\libgcc.a(_ucmpdi2.o)
+                0x0012e280                ___ucmpdi2
+ .text          0x0012e292       0xde c:\gcc850\lib\libgcc.a(_muldi3.o)
+                0x0012e292                ___muldi3
+ .text          0x0012e370       0x58 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+                0x0012e370                ___clzsi2
+ .text          0x0012e3c8      0x118 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+                0x0012e3c8                ___pack_f
+ .text          0x0012e4e0       0xaa c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+                0x0012e4e0                ___unpack_f
+ .text          0x0012e58a       0x8c c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+                0x0012e58a                ___fpcmp_parts_f
+ .text          0x0012e616      0x1fc c:\gcc850\lib\libgcc.a(_pack_df.o)
+                0x0012e616                ___pack_d
+ .text          0x0012e812       0xda c:\gcc850\lib\libgcc.a(_unpack_df.o)
+                0x0012e812                ___unpack_d
+ .text          0x0012e8ec       0xa4 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+                0x0012e8ec                ___fpcmp_parts_d
+ .text          0x0012e990        0x0 c:\gcc850\lib\libgcc.a(_clz.o)
                 0x0012e990                . = ALIGN (0x10)
- *fill*         0x0012e98c        0x4 00
  *(.call_table_text)
  *(.gnu.warning)
  *(.gnu.linkonce.t*)
@@ -1645,178 +1644,178 @@ LOAD obj/startup.o
 .disk
  *(.disk)
 
-.stab           0x00000000    0x43c5c
+.stab           0x00000000    0x43c68
  *(.stab)
  .stab          0x00000000      0x7e0 obj/crt1.o
- .stab          0x000007e0     0x1f50 obj/main.o
-                               0x1f5c (size before relaxing)
- .stab          0x00002730     0x3eac obj/IRQSG2.o
+ .stab          0x000007e0     0x1f5c obj/main.o
+                               0x1f68 (size before relaxing)
+ .stab          0x0000273c     0x3eac obj/IRQSG2.o
                                0x3eb8 (size before relaxing)
- .stab          0x000065dc      0xc54 obj/ALLOC.o
+ .stab          0x000065e8      0xc54 obj/ALLOC.o
                                 0xc60 (size before relaxing)
- .stab          0x00007230      0x924 obj/NEW.o
+ .stab          0x0000723c      0x924 obj/NEW.o
                                 0x930 (size before relaxing)
- .stab          0x00007b54      0xf0c obj/STRCLASS.o
+ .stab          0x00007b60      0xf0c obj/STRCLASS.o
                                 0xf18 (size before relaxing)
- .stab          0x00008a60      0xaec obj/SWTIM.o
+ .stab          0x00008a6c      0xaec obj/SWTIM.o
                                 0xaf8 (size before relaxing)
- .stab          0x0000954c     0x1608 obj/util.o
+ .stab          0x00009558     0x1608 obj/util.o
                                0x1614 (size before relaxing)
- .stab          0x0000ab54      0xce4 obj/I2C_SW.o
+ .stab          0x0000ab60      0xce4 obj/I2C_SW.o
                                 0xcf0 (size before relaxing)
- .stab          0x0000b838     0x10f8 obj/I2Ceeprom.o
+ .stab          0x0000b844     0x10f8 obj/I2Ceeprom.o
                                0x1104 (size before relaxing)
- .stab          0x0000c930     0x1c68 obj/sioSG2.o
+ .stab          0x0000c93c     0x1c68 obj/sioSG2.o
                                0x1c74 (size before relaxing)
- .stab          0x0000e598      0xe64 obj/SOUND.o
+ .stab          0x0000e5a4      0xe64 obj/SOUND.o
                                 0xe70 (size before relaxing)
- .stab          0x0000f3fc     0x756c obj/ADC.o
+ .stab          0x0000f408     0x756c obj/ADC.o
                                0x7578 (size before relaxing)
- .stab          0x00016968     0x19e0 obj/PWM.o
+ .stab          0x00016974     0x19e0 obj/PWM.o
                                0x19ec (size before relaxing)
- .stab          0x00018348     0x3a08 obj/QUEUEUART.o
+ .stab          0x00018354     0x3a08 obj/QUEUEUART.o
                                0x3a14 (size before relaxing)
- .stab          0x0001bd50     0x2130 obj/PROTOCOLSTDUART.o
+ .stab          0x0001bd5c     0x2130 obj/PROTOCOLSTDUART.o
                                0x213c (size before relaxing)
- .stab          0x0001de80     0x3e64 obj/PROTOCOLSIFRA.o
+ .stab          0x0001de8c     0x3e64 obj/PROTOCOLSIFRA.o
                                0x3e70 (size before relaxing)
- .stab          0x00021ce4     0xca2c obj/CPUSIFRA_MANAGER.o
+ .stab          0x00021cf0     0xca2c obj/CPUSIFRA_MANAGER.o
                                0xca38 (size before relaxing)
- .stab          0x0002e710     0x1338 obj/NVRDRV.o
+ .stab          0x0002e71c     0x1338 obj/NVRDRV.o
                                0x1344 (size before relaxing)
- .stab          0x0002fa48      0xbdc obj/LEDS_PANEL.o
+ .stab          0x0002fa54      0xbdc obj/LEDS_PANEL.o
                                 0xbe8 (size before relaxing)
- .stab          0x00030624      0x45c c:\gcc850\lib\libc.a(lib_a-atoi.o)
+ .stab          0x00030630      0x45c c:\gcc850\lib\libc.a(lib_a-atoi.o)
                                 0x468 (size before relaxing)
- .stab          0x00030a80      0x1b0 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
+ .stab          0x00030a8c      0x1b0 c:\gcc850\lib\libc.a(lib_a-memcpy.o)
                                 0x1bc (size before relaxing)
- .stab          0x00030c30      0x228 c:\gcc850\lib\libc.a(lib_a-memset.o)
+ .stab          0x00030c3c      0x228 c:\gcc850\lib\libc.a(lib_a-memset.o)
                                 0x42c (size before relaxing)
- .stab          0x00030e58      0x6b4 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
+ .stab          0x00030e64      0x6b4 c:\gcc850\lib\libc.a(lib_a-sprintf.o)
                                 0x8e8 (size before relaxing)
- .stab          0x0003150c      0x1e0 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
+ .stab          0x00031518      0x1e0 c:\gcc850\lib\libc.a(lib_a-strcmp.o)
                                 0x408 (size before relaxing)
- .stab          0x000316ec      0x1bc c:\gcc850\lib\libc.a(lib_a-strcpy.o)
+ .stab          0x000316f8      0x1bc c:\gcc850\lib\libc.a(lib_a-strcpy.o)
                                 0x3e4 (size before relaxing)
- .stab          0x000318a8      0x1d4 c:\gcc850\lib\libc.a(lib_a-strlen.o)
+ .stab          0x000318b4      0x1d4 c:\gcc850\lib\libc.a(lib_a-strlen.o)
                                 0x3fc (size before relaxing)
- .stab          0x00031a7c      0x594 c:\gcc850\lib\libc.a(lib_a-strtol.o)
+ .stab          0x00031a88      0x594 c:\gcc850\lib\libc.a(lib_a-strtol.o)
                                 0x828 (size before relaxing)
- .stab          0x00032010     0x2034 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
+ .stab          0x0003201c     0x2034 c:\gcc850\lib\libc.a(lib_a-svfprintf.o)
                                0x24f0 (size before relaxing)
- .stab          0x00034044      0x114 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
+ .stab          0x00034050      0x114 c:\gcc850\lib\libc.a(lib_a-ctype_.o)
                                 0x120 (size before relaxing)
- .stab          0x00034158     0x1d1c c:\gcc850\lib\libc.a(lib_a-dtoa.o)
+ .stab          0x00034164     0x1d1c c:\gcc850\lib\libc.a(lib_a-dtoa.o)
                                0x2190 (size before relaxing)
- .stab          0x00035e74      0x750 c:\gcc850\lib\libc.a(lib_a-freer.o)
+ .stab          0x00035e80      0x750 c:\gcc850\lib\libc.a(lib_a-freer.o)
                                 0xbac (size before relaxing)
- .stab          0x000365c4      0x174 c:\gcc850\lib\libc.a(lib_a-impure.o)
+ .stab          0x000365d0      0x174 c:\gcc850\lib\libc.a(lib_a-impure.o)
                                 0x3d8 (size before relaxing)
- .stab          0x00036738      0x4e0 c:\gcc850\lib\libc.a(lib_a-locale.o)
+ .stab          0x00036744      0x4e0 c:\gcc850\lib\libc.a(lib_a-locale.o)
                                 0x6cc (size before relaxing)
- .stab          0x00036c18      0xee8 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
+ .stab          0x00036c24      0xee8 c:\gcc850\lib\libc.a(lib_a-mallocr.o)
                                0x1344 (size before relaxing)
- .stab          0x00037b00      0x258 c:\gcc850\lib\libc.a(lib_a-memchr.o)
+ .stab          0x00037b0c      0x258 c:\gcc850\lib\libc.a(lib_a-memchr.o)
                                 0x480 (size before relaxing)
- .stab          0x00037d58      0x258 c:\gcc850\lib\libc.a(lib_a-memmove.o)
+ .stab          0x00037d64      0x258 c:\gcc850\lib\libc.a(lib_a-memmove.o)
                                 0x480 (size before relaxing)
- .stab          0x00037fb0      0x204 c:\gcc850\lib\libc.a(lib_a-mlock.o)
+ .stab          0x00037fbc      0x204 c:\gcc850\lib\libc.a(lib_a-mlock.o)
                                 0x420 (size before relaxing)
- .stab          0x000381b4     0x2448 c:\gcc850\lib\libc.a(lib_a-mprec.o)
+ .stab          0x000381c0     0x2448 c:\gcc850\lib\libc.a(lib_a-mprec.o)
                                0x2958 (size before relaxing)
- .stab          0x0003a5fc      0xa20 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
+ .stab          0x0003a608      0xa20 c:\gcc850\lib\libc.a(lib_a-reallocr.o)
                                 0xe7c (size before relaxing)
- .stab          0x0003b01c      0x1ec c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
+ .stab          0x0003b028      0x1ec c:\gcc850\lib\libc.a(lib_a-s_isinfd.o)
                                 0x618 (size before relaxing)
- .stab          0x0003b208      0x1bc c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
+ .stab          0x0003b214      0x1bc c:\gcc850\lib\libc.a(lib_a-s_isnand.o)
                                 0x60c (size before relaxing)
- .stab          0x0003b3c4      0x270 c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
+ .stab          0x0003b3d0      0x270 c:\gcc850\lib\libc.a(lib_a-sbrkr.o)
                                 0x654 (size before relaxing)
- .stab          0x0003b634      0x450 c:\gcc850\lib\libc.a(lib_a-stat.o)
+ .stab          0x0003b640      0x450 c:\gcc850\lib\libc.a(lib_a-stat.o)
                                 0x624 (size before relaxing)
- .stab          0x0003ba84      0x2e8 c:\gcc850\lib\libc.a(lib_a-callocr.o)
+ .stab          0x0003ba90      0x2e8 c:\gcc850\lib\libc.a(lib_a-callocr.o)
                                 0x744 (size before relaxing)
- .stab          0x0003bd6c      0x2dc c:\gcc850\lib\libc.a(lib_a-sbrk.o)
+ .stab          0x0003bd78      0x2dc c:\gcc850\lib\libc.a(lib_a-sbrk.o)
                                 0x708 (size before relaxing)
- .stab          0x0003c048      0x1f8 c:\gcc850\lib\libc.a(lib_a-write.o)
+ .stab          0x0003c054      0x1f8 c:\gcc850\lib\libc.a(lib_a-write.o)
                                 0x624 (size before relaxing)
- .stab          0x0003c240      0x24c c:\gcc850\lib\libc.a(lib_a-abort.o)
+ .stab          0x0003c24c      0x24c c:\gcc850\lib\libc.a(lib_a-abort.o)
                                 0x66c (size before relaxing)
- .stab          0x0003c48c      0x7bc c:\gcc850\lib\libc.a(lib_a-signal.o)
+ .stab          0x0003c498      0x7bc c:\gcc850\lib\libc.a(lib_a-signal.o)
                                 0xac8 (size before relaxing)
- .stab          0x0003cc48      0x2e8 c:\gcc850\lib\libc.a(lib_a-signalr.o)
+ .stab          0x0003cc54      0x2e8 c:\gcc850\lib\libc.a(lib_a-signalr.o)
                                 0x72c (size before relaxing)
- .stab          0x0003cf30      0x228 c:\gcc850\lib\libc.a(lib_a-_Exit.o)
+ .stab          0x0003cf3c      0x228 c:\gcc850\lib\libc.a(lib_a-_Exit.o)
                                 0x654 (size before relaxing)
- .stab          0x0003d158      0x1c8 c:\gcc850\lib\libc.a(lib_a-getpid.o)
+ .stab          0x0003d164      0x1c8 c:\gcc850\lib\libc.a(lib_a-getpid.o)
                                 0x5f4 (size before relaxing)
- .stab          0x0003d320      0x1e0 c:\gcc850\lib\libc.a(lib_a-kill.o)
+ .stab          0x0003d32c      0x1e0 c:\gcc850\lib\libc.a(lib_a-kill.o)
                                 0x60c (size before relaxing)
- .stab          0x0003d500      0x36c c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
+ .stab          0x0003d50c      0x36c c:\gcc850\lib\libgcc.a(_fixunssfsi.o)
                                 0x378 (size before relaxing)
- .stab          0x0003d86c      0x864 c:\gcc850\lib\libgcc.a(_addsub_sf.o)
+ .stab          0x0003d878      0x864 c:\gcc850\lib\libgcc.a(_addsub_sf.o)
                                 0x90c (size before relaxing)
- .stab          0x0003e0d0      0x5a0 c:\gcc850\lib\libgcc.a(_mul_sf.o)
+ .stab          0x0003e0dc      0x5a0 c:\gcc850\lib\libgcc.a(_mul_sf.o)
                                 0x720 (size before relaxing)
- .stab          0x0003e670      0x4ec c:\gcc850\lib\libgcc.a(_div_sf.o)
+ .stab          0x0003e67c      0x4ec c:\gcc850\lib\libgcc.a(_div_sf.o)
                                 0x66c (size before relaxing)
- .stab          0x0003eb5c      0x228 c:\gcc850\lib\libgcc.a(_ne_sf.o)
+ .stab          0x0003eb68      0x228 c:\gcc850\lib\libgcc.a(_ne_sf.o)
                                 0x3a8 (size before relaxing)
- .stab          0x0003ed84      0x228 c:\gcc850\lib\libgcc.a(_gt_sf.o)
+ .stab          0x0003ed90      0x228 c:\gcc850\lib\libgcc.a(_gt_sf.o)
                                 0x3a8 (size before relaxing)
- .stab          0x0003efac      0x228 c:\gcc850\lib\libgcc.a(_ge_sf.o)
+ .stab          0x0003efb8      0x228 c:\gcc850\lib\libgcc.a(_ge_sf.o)
                                 0x3a8 (size before relaxing)
- .stab          0x0003f1d4      0x228 c:\gcc850\lib\libgcc.a(_lt_sf.o)
+ .stab          0x0003f1e0      0x228 c:\gcc850\lib\libgcc.a(_lt_sf.o)
                                 0x3a8 (size before relaxing)
- .stab          0x0003f3fc      0x228 c:\gcc850\lib\libgcc.a(_le_sf.o)
+ .stab          0x0003f408      0x228 c:\gcc850\lib\libgcc.a(_le_sf.o)
                                 0x3a8 (size before relaxing)
- .stab          0x0003f624      0x2dc c:\gcc850\lib\libgcc.a(_si_to_sf.o)
+ .stab          0x0003f630      0x2dc c:\gcc850\lib\libgcc.a(_si_to_sf.o)
                                 0x45c (size before relaxing)
- .stab          0x0003f900      0x288 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
+ .stab          0x0003f90c      0x288 c:\gcc850\lib\libgcc.a(_sf_to_si.o)
                                 0x408 (size before relaxing)
- .stab          0x0003fb88      0x120 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
+ .stab          0x0003fb94      0x120 c:\gcc850\lib\libgcc.a(_thenan_sf.o)
                                 0x2a0 (size before relaxing)
- .stab          0x0003fca8      0x2c4 c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
+ .stab          0x0003fcb4      0x2c4 c:\gcc850\lib\libgcc.a(_usi_to_sf.o)
                                 0x444 (size before relaxing)
- .stab          0x0003ff6c      0x8e8 c:\gcc850\lib\libgcc.a(_addsub_df.o)
+ .stab          0x0003ff78      0x8e8 c:\gcc850\lib\libgcc.a(_addsub_df.o)
                                 0x990 (size before relaxing)
- .stab          0x00040854      0x5c4 c:\gcc850\lib\libgcc.a(_mul_df.o)
+ .stab          0x00040860      0x5c4 c:\gcc850\lib\libgcc.a(_mul_df.o)
                                 0x744 (size before relaxing)
- .stab          0x00040e18      0x4a4 c:\gcc850\lib\libgcc.a(_div_df.o)
+ .stab          0x00040e24      0x4a4 c:\gcc850\lib\libgcc.a(_div_df.o)
                                 0x624 (size before relaxing)
- .stab          0x000412bc      0x21c c:\gcc850\lib\libgcc.a(_eq_df.o)
+ .stab          0x000412c8      0x21c c:\gcc850\lib\libgcc.a(_eq_df.o)
                                 0x39c (size before relaxing)
- .stab          0x000414d8      0x21c c:\gcc850\lib\libgcc.a(_ne_df.o)
+ .stab          0x000414e4      0x21c c:\gcc850\lib\libgcc.a(_ne_df.o)
                                 0x39c (size before relaxing)
- .stab          0x000416f4      0x228 c:\gcc850\lib\libgcc.a(_gt_df.o)
+ .stab          0x00041700      0x228 c:\gcc850\lib\libgcc.a(_gt_df.o)
                                 0x3a8 (size before relaxing)
- .stab          0x0004191c      0x228 c:\gcc850\lib\libgcc.a(_ge_df.o)
+ .stab          0x00041928      0x228 c:\gcc850\lib\libgcc.a(_ge_df.o)
                                 0x3a8 (size before relaxing)
- .stab          0x00041b44      0x21c c:\gcc850\lib\libgcc.a(_lt_df.o)
+ .stab          0x00041b50      0x21c c:\gcc850\lib\libgcc.a(_lt_df.o)
                                 0x39c (size before relaxing)
- .stab          0x00041d60      0x2f4 c:\gcc850\lib\libgcc.a(_si_to_df.o)
+ .stab          0x00041d6c      0x2f4 c:\gcc850\lib\libgcc.a(_si_to_df.o)
                                 0x474 (size before relaxing)
- .stab          0x00042054      0x270 c:\gcc850\lib\libgcc.a(_df_to_si.o)
+ .stab          0x00042060      0x270 c:\gcc850\lib\libgcc.a(_df_to_si.o)
                                 0x3f0 (size before relaxing)
- .stab          0x000422c4      0x120 c:\gcc850\lib\libgcc.a(_thenan_df.o)
+ .stab          0x000422d0      0x120 c:\gcc850\lib\libgcc.a(_thenan_df.o)
                                 0x2a0 (size before relaxing)
- .stab          0x000423e4      0x300 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
+ .stab          0x000423f0      0x300 c:\gcc850\lib\libgcc.a(_usi_to_df.o)
                                 0x480 (size before relaxing)
- .stab          0x000426e4      0x198 c:\gcc850\lib\libgcc.a(_clzsi2.o)
+ .stab          0x000426f0      0x198 c:\gcc850\lib\libgcc.a(_clzsi2.o)
                                 0x348 (size before relaxing)
- .stab          0x0004287c      0x360 c:\gcc850\lib\libgcc.a(_pack_sf.o)
+ .stab          0x00042888      0x360 c:\gcc850\lib\libgcc.a(_pack_sf.o)
                                 0x4e0 (size before relaxing)
- .stab          0x00042bdc      0x354 c:\gcc850\lib\libgcc.a(_unpack_sf.o)
+ .stab          0x00042be8      0x354 c:\gcc850\lib\libgcc.a(_unpack_sf.o)
                                 0x4d4 (size before relaxing)
- .stab          0x00042f30      0x294 c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
+ .stab          0x00042f3c      0x294 c:\gcc850\lib\libgcc.a(_fpcmp_parts_sf.o)
                                 0x414 (size before relaxing)
- .stab          0x000431c4      0x36c c:\gcc850\lib\libgcc.a(_pack_df.o)
+ .stab          0x000431d0      0x36c c:\gcc850\lib\libgcc.a(_pack_df.o)
                                 0x4ec (size before relaxing)
- .stab          0x00043530      0x33c c:\gcc850\lib\libgcc.a(_unpack_df.o)
+ .stab          0x0004353c      0x33c c:\gcc850\lib\libgcc.a(_unpack_df.o)
                                 0x4bc (size before relaxing)
- .stab          0x0004386c      0x2b8 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
+ .stab          0x00043878      0x2b8 c:\gcc850\lib\libgcc.a(_fpcmp_parts_df.o)
                                 0x438 (size before relaxing)
- .stab          0x00043b24      0x138 c:\gcc850\lib\libgcc.a(_clz.o)
+ .stab          0x00043b30      0x138 c:\gcc850\lib\libgcc.a(_clz.o)
                                 0x2e8 (size before relaxing)
 
 .stabstr        0x00000000    0x3dc37

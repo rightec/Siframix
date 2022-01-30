@@ -104,6 +104,7 @@ CSRC	=\
 	$(Src)/MAIN.CPP\
 	$(Src)/IRQSG2.CPP\
 	$(Src)/ALLOC.CPP\
+	$(Src)/IEETEST.CPP\
 	$(Src)/NEW.CPP\
 	$(Src)/STRCLASS.CPP\
 	$(Src)/SWTIM.CPP\
@@ -128,6 +129,7 @@ EXOBJS	=\
 	$(oDir)/MAIN.o\
 	$(oDir)/IRQSG2.o\
 	$(oDir)/ALLOC.o\
+	$(oDir)/IEETEST.o\
 	$(oDir)/NEW.o\
 	$(oDir)/STRCLASS.o\
 	$(oDir)/SWTIM.o\
@@ -225,6 +227,9 @@ $(oDir)/IRQSG2.o : IRQSG2.CPP global.h error.h IRQSG2.h
 $(oDir)/ALLOC.o : ALLOC.CPP global.h error.h ALLOC.h
 	$(CC)  $(*F)
 	
+$(oDir)/IEETEST.o : IEETEST.CPP global.h  IEETEST.h
+	$(CC)  $(*F)
+
 $(oDir)/NEW.o : NEW.CPP global.h v850sg2.h NEW.h
 	$(CC)  $(*F)
 		
