@@ -3854,7 +3854,7 @@ bool SIFRA_Manager::readZeroInBothLine()
 	{
 		if((m_WeightSample[_ADC1_] > _DELTA_ADC_1_PERC_FS_) && (m_WeightSample[_ADC1_] > _DELTA_ADC_1_PERC_FS_)) // ha misurato qualcosa di diverso da zero, come soglia mettiamo l'1% del fondo scala della cella di carico
 		{
-			if(Chan[_ADC1_].AreCalibrate && Chan[_ADC1_].AreCalibrate)
+			if(Chan[_ADC1_].AreCalibrate && Chan[_ADC2_].AreCalibrate)
 			{
 				if(((int)m_WeightSample[_ADC1_] > ((int)Chan[_ADC1_].WeightFactoryOffset - _DELTA_ADC_0Kg_DEF)) &&
 						((int)m_WeightSample[_ADC1_] < ((int)Chan[_ADC1_].WeightFactoryOffset + _DELTA_ADC_0Kg_DEF)))
@@ -3940,11 +3940,13 @@ bool SIFRA_Manager::readLoadInLine8()
 
 	int adc_gain_cell_8 = 0;
 	int adc_gain_cell_15 = 0;
-	dword  d_adc_gain_cell_8 =0;
-	dword  d_adc_gain_cell_15 = 0;
 	//float this_gain_8;
 	//float this_gain_15;
 	float cal_adc_system;
+	
+#ifdef APPLY_DEBUG
+	dword  d_adc_gain_cell_8 =0;
+	dword  d_adc_gain_cell_15 = 0;
 
 	if (m_WeightSample[_ADC1_] >= weightChan->getOffset(_ADC1_)){
 			d_adc_gain_cell_8 = m_WeightSample[_ADC1_] - weightChan->getOffset(_ADC1_);	
@@ -3964,17 +3966,19 @@ bool SIFRA_Manager::readLoadInLine8()
 			adc_gain_cell_15 = (int)d_adc_gain_cell_15 ;	*/
 			return False;
 	}
+	34rt
 
+#else
 
-
-	// adc_gain_cell_8 = (int)m_WeightSample[_ADC1_] - (int)weightChan->getOffset(_ADC1_);
-	// adc_gain_cell_15 = (int)m_WeightSample[_ADC2_] - (int)weightChan->getOffset(_ADC2_);
+	adc_gain_cell_8 = (int)m_WeightSample[_ADC1_] - (int)weightChan->getOffset(_ADC1_);
+	adc_gain_cell_15 = (int)m_WeightSample[_ADC2_] - (int)weightChan->getOffset(_ADC2_);
 	//this_gain_8 = (2000.0 /(float)((int)m_WeightSample[_ADC1_] - (int)weightChan->getOffset(_ADC1_)));
 	//this_gain_15 = (2000.0 /(float)((int)m_WeightSample[_ADC2_] - (int)weightChan->getOffset(_ADC2_)));
+#endif
 
 	if(StatusCmd.status == STATO_CALIBRAZIONE_FABBRICA)
 	{
-		if(Chan[_ADC1_].AreCalibrate && Chan[_ADC1_].AreCalibrate)
+		if(Chan[_ADC1_].AreCalibrate && Chan[_ADC2_].AreCalibrate)
 		{
 			if((adc_gain_cell_8 > ((int)Chan[_ADC1_].AdcTo2Kg - _DELTA_ADC_0Kg_DEF)) &&
 					(adc_gain_cell_8 < ((int)Chan[_ADC1_].AdcTo2Kg + _DELTA_ADC_0Kg_DEF)))
@@ -4042,11 +4046,13 @@ bool SIFRA_Manager::readLoadInLine15()
 {
 	int adc_gain_cell_8 = 0;
 	int adc_gain_cell_15 = 0;
-	dword  d_adc_gain_cell_8 =0;
-	dword  d_adc_gain_cell_15 = 0;
 	//float this_gain_8;
 	//float this_gain_15;
 	float cal_adc_system;
+	
+#ifdef APPLY_DEBUG
+	dword  d_adc_gain_cell_8 =0;
+	dword  d_adc_gain_cell_15 = 0;
 
 	if (m_WeightSample[_ADC1_] >= weightChan->getOffset(_ADC1_)){
 			d_adc_gain_cell_8 = m_WeightSample[_ADC1_] - weightChan->getOffset(_ADC1_);	
@@ -4066,16 +4072,18 @@ bool SIFRA_Manager::readLoadInLine15()
 			adc_gain_cell_15 = (int)d_adc_gain_cell_15 ;*/
 			return False;
 	}
+	#else
 
-	// adc_gain_cell_8 = (int)m_WeightSample[_ADC1_] - (int)weightChan->getOffset(_ADC1_);
-	//adc_gain_cell_15 = (int)m_WeightSample[_ADC2_] - (int)weightChan->getOffset(_ADC2_);
+		adc_gain_cell_8 = (int)m_WeightSample[_ADC1_] - (int)weightChan->getOffset(_ADC1_);
+		adc_gain_cell_15 = (int)m_WeightSample[_ADC2_] - (int)weightChan->getOffset(_ADC2_);
+	#endif
 	
 	//this_gain_8 = (2000.0 /(float)((int)m_WeightSample[_ADC1_] - (int)weightChan->getOffset(_ADC1_)));
 	//this_gain_15 = (2000.0 /(float)((int)m_WeightSample[_ADC2_] - (int)weightChan->getOffset(_ADC2_)));
 
 	if(StatusCmd.status == STATO_CALIBRAZIONE_FABBRICA)
 	{
-		if(Chan[_ADC1_].AreCalibrate && Chan[_ADC1_].AreCalibrate)
+		if(Chan[_ADC1_].AreCalibrate && Chan[_ADC2_].AreCalibrate)
 		{
 			if((adc_gain_cell_8 > ((int)Chan[_ADC1_].AdcTo2Kg_dx - _DELTA_ADC_0Kg_DEF)) &&
 					(adc_gain_cell_8 < ((int)Chan[_ADC1_].AdcTo2Kg_dx + _DELTA_ADC_0Kg_DEF)))
