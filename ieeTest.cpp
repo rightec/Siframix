@@ -10,7 +10,6 @@
 
 
 #include "ieeTest.h"
-#include "Adc.h"
 
 byte numchan = 0;  // 
 	
@@ -19,7 +18,7 @@ float Gain = 9.5;
 
 int adc2Kg = 2001;
 int adc2Kgdx = 2004;
-byte type_of_calibration = CHAN_CALIB_CHECK_FACTORY_VAL;
+byte type_of_calibration_test = CHAN_CALIB_CHECK_FACTORY_VAL;
 
 
 bool testBase ()
@@ -55,7 +54,7 @@ bool testBase ()
 					// Read type of calib
 					address = ADDRESS_CHAN_ARE_MEM_CALIBRATE + 1 + numchan*BASESTRUCTADDR;
 					bReadDone = EE_random_byte_read(address,&data); 
-					if (data == type_of_calibration){
+					if (data == type_of_calibration_test){
 						// Reading completed OK. The 1st time will always file
 						bReadDone = true;
 					} else {
@@ -99,7 +98,7 @@ bool testBase ()
 						// Read type of calib
 						address = ADDRESS_CHAN_ARE_MEM_CALIBRATE + 1 + numchan*BASESTRUCTADDR;
 						bReadDone = EE_random_byte_read(address,&data); 
-						if (data == type_of_calibration){
+						if (data == type_of_calibration_test){
 							// Reading completed OK. The 1st time will always file
 							bReadDone = true;
 						} else {
@@ -122,7 +121,6 @@ bool testBase ()
 		return false;	
 	}
 
-  
   return bReadDone;
 }
 

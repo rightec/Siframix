@@ -5,8 +5,8 @@
 #=======================================================================
 
 # Target definition:
-#TGTROM = 1		# flash rom compil.
-TGTROM = 				# simulator compil.
+TGTROM = 1		# flash rom compil.
+#TGTROM = 				# simulator compil.
 
 # Standard defines:
 ##################
@@ -215,7 +215,10 @@ $(oDir)/CRT0.o : CRT0.S
 $(oDir)/CRT1.o : CRT1.CPP
 	$(CC)  $(*F)
 
-$(oDir)/MAIN.o : MAIN.CPP global.h v850sg2.h main.h
+$(oDir)/IEETEST.o : ieeTest.CPP ieeTest.H
+	$(CC0)  $(*F)
+
+$(oDir)/MAIN.o : MAIN.CPP main.h 
 	$(CC)  $(*F)
 
 $(oDir)/IRQSG2.o : IRQSG2.CPP global.h error.h IRQSG2.h
@@ -227,8 +230,6 @@ $(oDir)/IRQSG2.o : IRQSG2.CPP global.h error.h IRQSG2.h
 $(oDir)/ALLOC.o : ALLOC.CPP global.h error.h ALLOC.h
 	$(CC)  $(*F)
 	
-$(oDir)/IEETEST.o : IEETEST.CPP global.h  IEETEST.h
-	$(CC)  $(*F)
 
 $(oDir)/NEW.o : NEW.CPP global.h v850sg2.h NEW.h
 	$(CC)  $(*F)
@@ -273,7 +274,7 @@ $(oDir)/PROTOCOLSIFRA.o : PROTOCOLSIFRA.CPP global.h PROTOCOLSIFRA.h
 	$(CC)  $(*F)
 
 $(oDir)/CPUSIFRA_MANAGER.o : CPUSIFRA_MANAGER.CPP global.h CPUSIFRA_MANAGER.h
-	$(CC)  $(*F)
+	$(CC0)  $(*F)
 
 $(oDir)/NVRDRV.o : NVRDRV.CPP global.h NVRDRV.h
 	$(CC)  $(*F)

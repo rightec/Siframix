@@ -7,7 +7,6 @@
 */
 
 #include "main.h"
-#include "ieeTest.h"
 /**
 Application firmware name. Max length 32 bytes
 */
@@ -107,7 +106,7 @@ int	main()
 	asm	( "ei" );					// start a tutte le interruzioni
 	load_startSampling();
 
-	testBase(); // Test case for EEPROM
+	// testBase(); // Test case for EEPROM
 	
 	while( 1 )
 	{

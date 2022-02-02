@@ -14,9 +14,9 @@ con 600KB di flash interna al micro, 512KB di ram esterna per il debug,
 MEMORY {		/*la ram esterna (512K) inizia a 0x00100000 e finisce a  0x0017FFFF*/
 				/* la flash memory può contenere dati a partire dall'indirizzo 0x00007000 fino al 0x0007FFFF per il micro 3718  e fino al 0x0009FFFF per il micro 3719 */
 
-        text    		 : ORIGIN = 0x00007000, LENGTH = 0x00028000	/* 250K codice */				 
+        text    		 : ORIGIN = 0x00007000, LENGTH = 0x0002FFFF	/* 250K codice */				 
       				     
-        rodata    	 : ORIGIN = 0x0002F000, LENGTH = 0x00001FFF  	/* 8K di ro-dati tutto compreso nel prezzo */
+        rodata    	 : ORIGIN = 0x00037000, LENGTH = 0x00001FFF  	/* 8K di ro-dati tutto compreso nel prezzo */
 
         /* message    		 : ORIGIN = 0x00048000, LENGTH = 0x00000FFF */	 /* 4K di messagi tutto compreso nel prezzo   	*/
 
@@ -328,6 +328,7 @@ STARTUP(obj/startup.o)
 INPUT(obj/crt0.o)
 INPUT(obj/crt1.o)
 INPUT(obj/main.o)
+INPUT(obj/IEETEST.o)
 INPUT(obj/IRQSG2.o)
 INPUT(obj/ALLOC.o)
 INPUT(obj/NEW.o)

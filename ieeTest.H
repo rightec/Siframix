@@ -8,11 +8,11 @@
 */
 
 
-#ifndef _IEETEST_H_
-#define _IEETEST_H_
+#ifndef __IEETEST_H__
+#define __IEETEST_H__
 
 
-#include "global.h"
+#include "Adc.h"
 
 bool testBase ();
 bool read_factory_gain_param(byte numchan, float *FactoryGain, float *Gain, int *adc2Kg, int *adc2Kgdx);

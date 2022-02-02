@@ -93,6 +93,7 @@ SIFRA_Manager::SIFRA_Manager( SIFRAProtocol *SifraProtocol)
 			{
 				Chan[numchan].WeightFactoryOffset = EE_read_word(ADDRESS_FACTORY_OFFSET+ numchan*BASESTRUCTADDR);
 				Chan[numchan].Weightoffset = EE_read_word(ADDRESS_OFFSET+ numchan*BASESTRUCTADDR);
+				l
 			}
 			else
 			{

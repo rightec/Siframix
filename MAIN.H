@@ -26,6 +26,8 @@
 #include "protocolSIFRA.h"
 #include "CPUSIFRA_Manager.h"
 #include "pwm.h"
+#include "ieeTest.H"
+
 
 //--------------------------------------------------------//
 // Definizione dei tipi
