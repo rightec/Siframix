@@ -34,12 +34,12 @@ void i2c_delay(void)
 {
 int i;
 	#ifdef __APP_IN_RAM__
-		for(i=0; i< 100; i++)
+		for(i=0; i< 400; i++)
 		{
 			asm("nop");
 		}
 	#else
-		for(i=0; i< 400; i++)
+		for(i=0; i< 4000; i++)
 		{
 			asm("nop");
 		}
